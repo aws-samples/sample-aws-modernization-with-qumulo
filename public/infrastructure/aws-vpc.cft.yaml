@@ -1,0 +1,240 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: VPC Setup for Qumulo Environment
+
+Resources:
+
+  QumuloVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: qumulo-vpc
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: qumulo-igw
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref QumuloVPC
+      InternetGatewayId: !Ref InternetGateway
+
+  PublicSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref QumuloVPC
+      CidrBlock: 10.0.0.0/20
+      AvailabilityZone: us-east-2a
+      Tags:
+        - Key: Name
+          Value: qumulo-subnet-public1-us-east-2a
+
+  PublicSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref QumuloVPC
+      CidrBlock: 10.0.16.0/20
+      AvailabilityZone: us-east-2b
+      Tags:
+        - Key: Name
+          Value: qumulo-subnet-public2-us-east-2b
+
+  PublicSubnetC:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref QumuloVPC
+      CidrBlock: 10.0.32.0/20
+      AvailabilityZone: us-east-2c
+      Tags:
+        - Key: Name
+          Value: qumulo-subnet-public3-us-east-2c
+
+  PrivateSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref QumuloVPC
+      CidrBlock: 10.0.128.0/20
+      AvailabilityZone: us-east-2a
+      Tags:
+        - Key: Name
+          Value: qumulo-subnet-private1-us-east-2a
+
+  PrivateSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref QumuloVPC
+      CidrBlock: 10.0.144.0/20
+      AvailabilityZone: us-east-2b
+      Tags:
+        - Key: Name
+          Value: qumulo-subnet-private2-us-east-2b
+
+  PrivateSubnetC:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref QumuloVPC
+      CidrBlock: 10.0.160.0/20
+      AvailabilityZone: us-east-2c
+      Tags:
+        - Key: Name
+          Value: qumulo-subnet-private3-us-east-2c
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref QumuloVPC
+      Tags:
+        - Key: Name
+          Value: qumulo-rtb-public
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  EIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: qumulo-eip-us-east-2a
+
+  NatGateway:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt EIP.AllocationId
+      SubnetId: !Ref PublicSubnetA
+      Tags:
+        - Key: Name
+          Value: qumulo-nat-public1-us-east-2a
+
+  PrivateRouteTableA:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref QumuloVPC
+      Tags:
+        - Key: Name
+          Value: qumulo-rtb-private1-us-east-2a
+
+  PrivateRouteA:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PrivateRouteTableA
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NatGateway
+
+  # Repeat for PrivateRouteTableB and C as above...
+
+  VPCEndpointS3:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref QumuloVPC
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.s3"
+      VpcEndpointType: Gateway
+      RouteTableIds:
+        - !Ref PrivateRouteTableA
+        # Add other private route tables here
+      Tags:
+        - Key: Name
+          Value: qumulo-vpce-s3
+  
+  LinuxSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Linux SG
+      VpcId: !Ref QumuloVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: linux-sg
+
+  WindowsSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Windows SG
+      VpcId: !Ref QumuloVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3268
+          ToPort: 3268
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 3389
+          ToPort: 3389
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 389
+          ToPort: 389
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 88
+          ToPort: 88
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 636
+          ToPort: 636
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 445
+          ToPort: 445
+          CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: windows-sg
+
+  LinuxAllowFromWindows:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref LinuxSecurityGroup
+      IpProtocol: -1
+      SourceSecurityGroupId: !Ref WindowsSecurityGroup
+
+  WindowsAllowFromLinux:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref WindowsSecurityGroup
+      IpProtocol: -1
+      SourceSecurityGroupId: !Ref LinuxSecurityGroup
+
+  LinuxInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0b4624933067d393a  # Amazon Linux 2 in us-east-2
+      InstanceType: m5.large
+      SubnetId: !Ref PublicSubnetA
+      SecurityGroupIds:
+        - !Ref LinuxSecurityGroup
+      Tags:
+        - Key: Name
+          Value: qumulo-linux-instance
+
+  WindowsInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-05188fcabea1c2e9f  # Windows Base image in us-east-2
+      InstanceType: t3.xlarge
+      SubnetId: !Ref PublicSubnetA
+      SecurityGroupIds:
+        - !Ref WindowsSecurityGroup
+      Tags:
+        - Key: Name
+          Value: qumulo-windows-instance
