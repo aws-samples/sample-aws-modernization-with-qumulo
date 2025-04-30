@@ -218,6 +218,7 @@ Resources:
   LinuxInstance:
     Type: AWS::EC2::Instance
     Properties:
+      KeyName: qumulo-keypair
       ImageId: ami-0b4624933067d393a  # Amazon Linux 2 in us-east-2
       InstanceType: m5.large
       SubnetId: !Ref PublicSubnetA
@@ -230,6 +231,7 @@ Resources:
   WindowsInstance:
     Type: AWS::EC2::Instance
     Properties:
+      KeyName: qumulo-keypair
       ImageId: ami-05188fcabea1c2e9f  # Windows Base image in us-east-2
       InstanceType: t3.xlarge
       SubnetId: !Ref PublicSubnetA
