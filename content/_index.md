@@ -30,7 +30,7 @@ This workshop is designed for **storage administrators, cloud architects, DevOps
 By the end of this session, you will have hands-on experience with **deploying, managing, and scaling Qumulo in AWS**, ensuring you’re equipped to harness the power of **cloud-native storage solutions**.  
 
 ## **Let's Get Started!**  
-We’re excited to have you here. Let’s dive in and explore how Qumulo on AWS can help you **simplify data management, enhance performance, and achieve cloud agility at scale**.  
+We’re excited to have you here. Let’s dive in and explore how Qumulo on AWS can help you **simplify data management, enhance performance, and achieve cloud agility at scale**. 
 
 
 
