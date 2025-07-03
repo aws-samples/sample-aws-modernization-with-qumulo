@@ -3,15 +3,8 @@ phases:
   install:
     commands:
       - echo "Installing Hugo..."
-      - echo "Fetching Hugo download URL..."
       - HUGO_URL=$(curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest | grep "download_url.*Linux-64bit.tar.gz" | grep -v "extended" | cut -d '"' -f 4)
-      - echo "Hugo download URL: $HUGO_URL"
-      - if [ -z "$HUGO_URL" ]; then echo "Failed to get Hugo download URL" && exit 1; fi
-      - echo "Downloading Hugo..."
       - wget -q "$HUGO_URL" -O hugo.tar.gz
-      - echo "Verifying download..."
-      - ls -la hugo.tar.gz
-      - echo "Extracting Hugo..."
       - tar -xzf hugo.tar.gz
       - chmod +x hugo
       - mv hugo /usr/local/bin/hugo
