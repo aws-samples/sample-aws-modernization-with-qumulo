@@ -5,9 +5,9 @@ weight: 1
 ---
 
 # **Welcome to the Qumulo on AWS Workshop!**  
-<br>
-![Partner Logo](/images/qlogo.png)  <!-- ADD YOUR PARTNER LOGO HERE USING THE INSTRUCTIONS BELOW -->
-<br>
+
+![Partner Logo](../images/qlogo.png)  <!-- ADD YOUR PARTNER LOGO HERE USING THE INSTRUCTIONS BELOW -->
+
 
 ## **Welcome**  
 Welcome, and thank you for joining this **Qumulo on AWS Workshop**! Whether you're exploring Qumulo for the first time or looking to deepen your expertise, this hands-on session will provide you with a clear understanding of how Qumulo's **ScaleAnywhere™ architecture** enables seamless data management across on-premises and cloud environments.  
@@ -30,7 +30,7 @@ This workshop is designed for **storage administrators, cloud architects, DevOps
 By the end of this session, you will have hands-on experience with **deploying, managing, and scaling Qumulo in AWS**, ensuring you’re equipped to harness the power of **cloud-native storage solutions**.  
 
 ## **Let's Get Started!**  
-We’re excited to have you here. Let’s dive in and explore how Qumulo on AWS can help you **simplify data management, enhance performance, and achieve cloud agility at scale**. 
+We’re excited to have you here. Let’s dive in and explore how Qumulo on AWS can help you **simplify data management, enhance performance, and achieve cloud agility at scale**.  
 
 
 

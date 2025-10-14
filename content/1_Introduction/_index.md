@@ -28,6 +28,6 @@ This foundational module will set the stage for the hands-on deployment and mana
 
 
 {{% notice warning %}}
-The examples and sample code provided in this workshop are intended to be consumed as instructional content. These will help you understand how various AWS services can be architected to build a solution while demonstrating best practices along the way. These examples are not intended for use in production environments.
+The examples, scripts and sample code provided in this workshop are intended to be consumed as instructional content. These will help you understand how various AWS services can be architected to build a solution while demonstrating best practices along the way. The scripts used in the workshop are designed to minimize manual configuration for a workshop environment and are not intended for use in production environments.  Contact your Qumulo or AWS account teams for guidance on proper Terraform or CloudFormation cluster deployment in customer environments.
 {{% /notice %}}
 
