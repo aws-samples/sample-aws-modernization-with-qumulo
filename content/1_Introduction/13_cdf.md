@@ -6,7 +6,7 @@ weight: 3
 
 # Introduction to Qumulo Cloud Data Fabric (CDF)
 
-## 1. Introduction
+## Introduction
 
 Qumulo Cloud Data Fabric (CDF) is an enterprise-wide cloud data platform designed to provide access to unstructured data regardless of location. It creates a single, globally-consistent file system that spans edge, core data centers, and cloud environments, enabling teams to share data across long distances with minimal latency and without version conflicts.
 
@@ -16,7 +16,7 @@ CDF provides a transformative approach to data management by:
 * Simplifying data governance through unified access controls
 * Accelerating time-to-value by minimizing data transfer requirements
 
-## 2. CDF Architecture
+## CDF Architecture
 
 ### Hub and Spoke Model
 CDF is built on a hub-and-spoke architecture where:
@@ -50,7 +50,7 @@ This predictive approach ensures that up to 90% of global read requests on spoke
 
 ![NeuralCache Detail](../images/cdf-neuralcache.png)
 
-## 3. CDF Common Use Cases
+## CDF Common Use Cases
 
 ![Common Use Cases](../images/cdf-usecase.png)
 
@@ -74,7 +74,7 @@ This predictive approach ensures that up to 90% of global read requests on spoke
 * **Solution**: Set up portals from edge locations to central hub
 * **Benefit**: Data appears instantly at the hub without full transfer
 
-## 4. Key Takeaways
+## Key Takeaways
 
 * **Global Data Accessibility:** Qumulo Cloud Data Fabric (CDF) provides a single, globally-consistent file system that spans data center, cloud, and edge, enabling real-time data access and collaboration across geographically distributed teams.
 * **Not Traditional Replication:** Unlike legacy solutions, CDF does not replicate entire datasets. Instead, it synchronizes metadata globally and transfers only the required data blocks on demand, minimizing WAN traffic and eliminating version conflicts.
@@ -84,7 +84,7 @@ This predictive approach ensures that up to 90% of global read requests on spoke
 * **Flexible Architecture and Use Cases:** The hub-spoke architecture with data portals supports directory-level sharing and bidirectional synchronization, making CDF ideal for use cases such as real-time collaboration, cloud bursting for AI/ML, and edge data ingest-while differentiating itself from traditional replication-based solutions.
 * **Operational Efficiency and Cost Savings:** By only moving data when it is needed and optimizing resource utilization, CDF reduces infrastructure costs, improves scalability, and accelerates business cycles.
 
-## 5. Next Steps
+## Next Steps
 
 * Review Workshop Prerequisites
 * Set Up Your AWS Environment

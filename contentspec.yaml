@@ -9,7 +9,7 @@ localeCodes:
 # A dictionary of arbitrary parameters that can be referenced in the workshop guide
 # using the params directive.
 params:
-  author: Dylan Souvage
+  author: Qumulo team
   description: Qumulo & AWS - Modernization Workshop
 
 # List of links to display in the workshop guide. Will be rendered on the left hand side navigation menu.
@@ -20,7 +20,7 @@ additionalLinks:
 # START Infrastructure
 infrastructure:
   cloudformationTemplates:
-    - templateLocation: static/infrastructure/aws-vpc.cft.yaml
+    - templateLocation: static/infrastructure/qumulo-workshop-deployment-cft.yaml
       label: Qumulo Workshop CFT Template
 
       #parameters:
