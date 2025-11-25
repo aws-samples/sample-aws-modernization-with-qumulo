@@ -40,7 +40,7 @@ Access Qumulo Care at: [care.qumulo.com](http://care.qumulo.com/)
 
 Manage cluster software updates directly from the interface:
 
-![Software Upgrade Interface](../images/qumulogui/37_01.png)
+![Software Upgrade Interface](/static/images/qumulogui/37_01.png)
 
 ### Upgrade Process
 1. **Download** the latest Qumulo Core release from Nexus

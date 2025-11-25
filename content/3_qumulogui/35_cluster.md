@@ -4,16 +4,15 @@ chapter: false
 weight: 35
 ---
 
-
 The Cluster section provides comprehensive system administration tools for managing your Qumulo environment. From monitoring cluster health to configuring protocols and managing data protection, this section centralizes all core administrative functions.
 
-![Cluster Menu](../images/qumulogui/35_01.png)
+![Cluster Menu](/static/images/qumulogui/35_01.png)
 
 ## Cluster Overview
 
 The overview dashboard provides real-time visibility into your cluster's operational status:
 
-![Cluster Overview Dashboard](../images/qumulogui/35_02.png)
+![Cluster Overview Dashboard](/static/images/qumulogui/35_02.png)
 
 ### Key Information Displayed
 - **Capacity Summary**: Total used, available, and usable storage with visual indicators
@@ -43,9 +42,7 @@ Configure continuous replication between Qumulo clusters for disaster recovery:
 - **Incremental transfers** to minimize bandwidth usage
 - **Bi-directional support** for flexible DR architectures
 
-{{% notice info %}}
-**Note:** Replication relationships require authorization on both source and target clusters before data transfer begins.
-{{% /notice %}}
+::alert[**Note:** Replication relationships require authorization on both source and target clusters before data transfer begins.]
 
 ### Copy to/from S3
 Integrate with cloud storage for backup and archival:
@@ -60,7 +57,7 @@ Configure data movement between your cluster and S3-compatible storage for:
 ### Network Configuration
 Manage cluster networking and connectivity:
 
-![Network Configuration](../images/qumulogui/35_03.png)
+![Network Configuration](/static/images/qumulogui/35_03.png)
 
 - **Static IP configuration** for production environments
 - **DHCP settings** for dynamic addressing

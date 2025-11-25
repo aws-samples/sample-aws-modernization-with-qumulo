@@ -1,12 +1,12 @@
 ---
-title: "Qumulo on AWS Workshop" # MODIFY THIS TO BE THE TITLE OF YOUR WORKSHOP
+title: "Qumulo on AWS Workshop"
 chapter: true
 weight: 1
 ---
 
 # **Welcome to the Qumulo on AWS Workshop!**  
 
-![Partner Logo](../images/qlogo.png)  <!-- ADD YOUR PARTNER LOGO HERE USING THE INSTRUCTIONS BELOW -->
+![Partner Logo](/static/images/qlogo.png)  <!-- ADD YOUR PARTNER LOGO HERE USING THE INSTRUCTIONS BELOW -->
 
 
 ## **Welcome**  
@@ -34,6 +34,4 @@ We’re excited to have you here. Let’s dive in and explore how Qumulo on AWS 
 
 
 
-{{% notice warning %}}
-The examples and sample code provided in this workshop are intended to be consumed as instructional content. These will help you understand how various AWS services can be architected to build a solution while demonstrating best practices along the way. These examples are not intended for use in production environments.
-{{% /notice %}}
+::alert[The examples and sample code provided in this workshop are intended to be consumed as instructional content. These will help you understand how various AWS services can be architected to build a solution while demonstrating best practices along the way. These examples are not intended for use in production environments.]{type="warning"}

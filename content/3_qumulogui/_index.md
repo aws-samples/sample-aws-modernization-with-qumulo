@@ -1,10 +1,8 @@
 ---
-title: "Qumulo GUI"
+title: "Qumulo GUI Overview"
 chapter: true
 weight: 3
 ---
-
-# Section 3: Qumulo GUI Overview
 
 Welcome to your exploration of the Qumulo Cloud Native (CNQ) user interface. This section introduces you to the powerful web-based management console that serves as your primary tool for administering Qumulo file systems in the cloud.
 
@@ -67,4 +65,4 @@ Ready to explore? Let's begin with logging into your Qumulo cluster and taking y
 
 ---
 
-*For detailed technical documentation on any feature you encounter, refer to the [Qumulo Administrator Guide](https://docs.qumulo.com/administrator-guide/) or use the built-in help system within the Qumulo interface.*
+::alert[For detailed technical documentation on any feature you encounter, refer to the [Qumulo Administrator Guide](https://docs.qumulo.com/administrator-guide/) or use the built-in help system within the Qumulo interface.]

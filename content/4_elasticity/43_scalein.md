@@ -73,7 +73,7 @@ The node removal operation follows these phases:
 - **Cleans up security groups** and network configurations
 - **Finalizes infrastructure** state for the scaled-in cluster
 
-![node remove script execution](../images/elasticity/43_04.png)
+![node remove script execution](/static/images/elasticity/43_04.png)
 
 ### **Expected Output Analysis**
 
@@ -131,7 +131,7 @@ cat terraform.tfvars | grep -E "q_node_count|q_target_node_count"
 - **Maintains cluster quorum** during the removal process
 - **Preserves data integrity** throughout the operation
 
-![phase 1 tfvars](../images/elasticity/43_05.png)
+![phase 1 tfvars](/static/images/elasticity/43_05.png)
 
 #### **Phase 1 Terraform Operations**
 
@@ -162,7 +162,7 @@ cat terraform.tfvars | grep -E "q_node_count|q_target_node_count"
 - **`q_target_node_count = null`** - Signals that the node removal process is complete
 - **Triggers infrastructure cleanup** for the removed nodes
 
-![phase 2 tfvars](../images/elasticity/43_06.png)
+![phase 2 tfvars](/static/images/elasticity/43_06.png)
 
 #### **Phase 2 Terraform Operations**
 
@@ -202,13 +202,9 @@ During script execution, you can observe both phases:
 - **Infrastructure cleanup** messages in terraform output
 - **Final cluster state** with updated node count
 
-{{% notice info %}}
-**Automated Process**: While the script handles both terraform phases automatically, understanding this two-phase approach helps explain why node removal takes longer than node addition - the cache evacuation process ensures no data loss.
-{{% /notice %}}
+::alert[**Automated Process**: While the script handles both terraform phases automatically, understanding this two-phase approach helps explain why node removal takes longer than node addition - the cache evacuation process ensures no data loss.]
 
-{{% notice tip %}}
-**Technical Insight**: The `q_target_node_count` variable acts as a safety mechanism, ensuring cluster operations complete successfully before infrastructure cleanup begins.
-{{% /notice %}}
+::alert[**Technical Insight**: The `q_target_node_count` variable acts as a safety mechanism, ensuring cluster operations complete successfully before infrastructure cleanup begins.]
 
 ---
 
@@ -240,11 +236,11 @@ Access the Qumulo GUI and monitor the following during the node removal operatio
 
 Nodes before removal:
 
-![nodes before removal](../images/elasticity/43_01.png)
+![nodes before removal](/static/images/elasticity/43_01.png)
 
 Nodes after removal:
 
-![nodes after removal](../images/elasticity/43_02.png)
+![nodes after removal](/static/images/elasticity/43_02.png)
 
 ### ** Performance and network Impact**
 
@@ -261,7 +257,7 @@ Monitor the following during scale-in:
 - **Client connectivity** maintained through IP redistribution
 - **DNS resolution** updated for new cluster topology
 
-![performance after removal](../images/elasticity/43_03.png)
+![performance after removal](/static/images/elasticity/43_03.png)
 
 ---
 
@@ -327,14 +323,8 @@ After scale-in:
 - **Monitoring thresholds** should be adjusted for new baseline
 - **Performance expectations** should align with reduced resources
 
-{{% notice info %}}
-**Data Safety**: The node removal process maintains data integrity through automated cache data evacuation before nodes are removed from the cluster. However, always verify cluster health after completion.
-{{% /notice %}}
+::alert[**Data Safety**: The node removal process maintains data integrity through automated cache data evacuation before nodes are removed from the cluster. However, always verify cluster health after completion.]
 
-{{% notice tip %}}
-**Cost Optimization**: Regular capacity planning and scale-in operations help maintain cost efficiency by matching infrastructure to actual performance demand while preserving the ability to scale back up when needed.
-{{% /notice %}}
+::alert[**Cost Optimization**: Regular capacity planning and scale-in operations help maintain cost efficiency by matching infrastructure to actual performance demand while preserving the ability to scale back up when needed.]
 
-{{% notice info %}}
-**Performance Monitoring**: After node removal, establish new performance baselines and monitor cluster utilization to ensure optimal performance with the reduced infrastructure.
-{{% /notice %}}
+::alert[**Performance Monitoring**: After node removal, establish new performance baselines and monitor cluster utilization to ensure optimal performance with the reduced infrastructure.]

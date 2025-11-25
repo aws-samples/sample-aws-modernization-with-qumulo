@@ -4,8 +4,6 @@ chapter: true
 weight: 10
 ---
 
-# Cleanup and Resource Removal
-
 In this final section, we will clean up all resources created during the workshop. This comprehensive cleanup process ensures that **all Qumulo clusters are destroyed** and **all persistent storage buckets are emptied and removed** through Terraform, preparing the infrastructure for complete termination when the workshop account is removed.
 
 This cleanup process demonstrates several key benefits:
@@ -39,9 +37,7 @@ To execute the complete cleanup process, run the following command from your wor
 
 
 
-{{% notice warning %}}
-**WARNING: This operation will DESTROY ALL CLUSTER RESOURCES and is NOT REVERSIBLE**: Execution of this script effectively renders the workshop environment unuseable
-{{% /notice %}}
+::alert[**WARNING: This operation will DESTROY ALL CLUSTER RESOURCES and is NOT REVERSIBLE**: Execution of this script effectively renders the workshop environment unuseable.]{type="warning"}
 
 
 
@@ -50,7 +46,7 @@ cd /home/ssm-user/qumulo-workshop/scripts
 ./cleanup-qumulo-environment.sh
 ```
 
-![cleanup script](../images/cleanup/100_01.png)
+![cleanup script](/static/images/cleanup/100_01.png)
 
 
 The cleanup script will automatically handle both the compute and storage layer removal across all deployed clusters.

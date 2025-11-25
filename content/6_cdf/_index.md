@@ -4,8 +4,6 @@ chapter: true
 weight: 6
 ---
 
-# Cloud Data Fabric 
-
 ## **Cloud Data Fabric (CDF) Overview**
 Qumulo Cloud Data Fabric (CDF) provides a unified, global file system that spans edge, core data center, and cloud environments. CDF enables organizations to share, access, and manage unstructured data seamlessly across locations with real-time collaboration, strict consistency, and minimal data movement.
 
@@ -189,6 +187,4 @@ Check for this data on the hub which was written to the spoke.  Notice the size 
 
 Proceed to **Section 10.0 – Resource Cleanup** to end the workshop and cleanup the environment.
 
-{{% notice warning %}}
-The examples, scripts, and sample code provided in this workshop are intended for instructional use in a controlled environment. For production deployments, always consult your Qumulo or AWS account teams for recommended practices and cluster provisioning.
-{{% /notice %}}
+::alert[The examples, scripts, and sample code provided in this workshop are intended for instructional use in a controlled environment. For production deployments, always consult your Qumulo or AWS account teams for recommended practices and cluster provisioning.]{type="warning"}

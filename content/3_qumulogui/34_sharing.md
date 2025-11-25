@@ -10,7 +10,7 @@ The Sharing section provides unified management of how your Qumulo cluster expos
 
 The Sharing menu includes these key components:
 
-![Sharing Menu](../images/qumulogui/34_01.png)
+![Sharing Menu](/static/images/qumulogui/34_01.png)
 
 - **Quotas** - Enforce storage limits on directories
 - **NFS Exports** - POSIX-compliant file access for Linux/Unix clients
@@ -39,17 +39,14 @@ Fill out the share configuration:
 - **Share Permissions**: Leave as default (Everyone - Full Control) for workshop purposes
 - Click **Create Share**
 
-![SMB Share](../images/qumulogui/34_03.png)
+![SMB Share](/static/images/qumulogui/34_03.png)
 
-{{% notice info %}}
-**Workshop Note:** We're using simplified permissions for workshop purposes. In production environments, you should implement proper access controls and consider requiring encryption.
-{{% /notice %}}
-
+::alert[**Workshop Note:** We're using simplified permissions for workshop purposes. In production environments, you should implement proper access controls and consider requiring encryption.]
 ## Directory Quotas Overview
 
 Quotas help manage storage consumption by setting limits on directories:
 
-![Quota Creation](../images/qumulogui/34_02.png)
+![Quota Creation](/static/images/qumulogui/34_02.png)
 
 **Quota Features:**
 - Set storage limits on any directory path
@@ -66,7 +63,7 @@ Quotas help manage storage consumption by setting limits on directories:
 
 NFS exports enable POSIX-compliant access for Linux and Unix clients:
 
-![NFS Export Interface](../images/qumulogui/34_05.png)
+![NFS Export Interface](/static/images/qumulogui/34_05.png)
 
 **Key Capabilities:**
 - **Export any directory** as an NFS mount point

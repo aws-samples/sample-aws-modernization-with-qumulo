@@ -50,11 +50,11 @@ First, we'll create a baseline snapshot of the primary cluster to establish our 
    - **Path**: `/userdata` (root directory - captures entire filesystem)
 4. Click **"Save"**
 
-![take single snapshot](../images/haanddr/52_01.png)
+![take single snapshot](/static/images/haanddr/52_01.png)
 
 The snapshot creation completes almost instantly since it's primarily a metadata operation.
 
-![take single snapshot saved](../images/haanddr/52_02.png)
+![take single snapshot saved](/static/images/haanddr/52_02.png)
 
 ---
 
@@ -80,9 +80,9 @@ Now we'll set up a policy to automatically create frequent snapshots for ongoing
 
 4. Click **"Create Policy"**
 
-![snapshot policy create](../images/haanddr/52_03.png)
+![snapshot policy create](/static/images/haanddr/52_03.png)
 
-![snapshot policy complete](../images/haanddr/52_04.png)
+![snapshot policy complete](/static/images/haanddr/52_04.png)
 
 ### **Understanding Snapshot Schedules**
 
@@ -120,7 +120,7 @@ Policy-generated snapshots use automatic naming:
 - **Format**: `policy-name_YYYY-MM-DD_HH-MM-SS`
 - **Example**: `frequent-protection_2025-07-25_15-10-00`
 
-![snapshots](../images/haanddr/52_05.png)
+![snapshots](/static/images/haanddr/52_05.png)
 
 ---
 
@@ -144,11 +144,11 @@ To demonstrate space efficiency, let's create some file activity:
 5. Wait 1 minute for a new snapshot to be created.
 6. Open the file and make another change by adding a line of text.
 
-![snapshots file creation](../images/haanddr/52_06.png)
+![snapshots file creation](/static/images/haanddr/52_06.png)
 
 Windows Previous Versions shows older "snapshot" versions of files natively.  Right click on the file you created, select Previous Verions tab, and see the older version of your file.  If you click open you will see it without the changes made in step 6 above:
 
-![Previous Versions](../images/haanddr/52_07.png)
+![Previous Versions](/static/images/haanddr/52_07.png)
 
 ### **Observe Space Growth in Qumulo UI**
 
@@ -167,13 +167,13 @@ qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
 qq --host demopri.qumulo.local snapshot_get_total_used_capacity
 ```
 
-![total space consumption](../images/haanddr/52_10.png)
+![total space consumption](/static/images/haanddr/52_10.png)
 
 ```
 qq --host demopri.qumulo.local snapshot_list_snapshots | jq --argjson capacity "$(qq --host demopri.qumulo.local snapshot_get_capacity_used_per_snapshot)" '.entries[] as $snap | $capacity.entries[] | select(.id == $snap.id) | {name: $snap.name, capacity_MB: ((.capacity_used_bytes | tonumber) / 1024 / 1024 | floor), capacity_bytes: (.capacity_used_bytes | tonumber)}' | jq -s 'sort_by(.capacity_bytes) | reverse[]'
 ```
 
-![snapshot space consumption](../images/haanddr/52_09.png)
+![snapshot space consumption](/static/images/haanddr/52_09.png)
 
 This command shows each snapshot with its storage consumption in both megabytes and bytes, sorted by size.
 
@@ -181,7 +181,7 @@ This command shows each snapshot with its storage consumption in both megabytes 
 
 1. Navigate to one of the worker folders and delete some data:
 
-![delete data](../images/haanddr/52_08.png)
+![delete data](/static/images/haanddr/52_08.png)
 
 2. Wait for the next snapshot policy cycle (1 minute)
 
@@ -193,9 +193,7 @@ qq --host demopri.qumulo.local snapshot_get_total_used_capacity
 qq --host demopri.qumulo.local snapshot_list_snapshots | jq --argjson capacity "$(qq --host demopri.qumulo.local snapshot_get_capacity_used_per_snapshot)" '.entries[] as $snap | $capacity.entries[] | select(.id == $snap.id) | {name: $snap.name, capacity_MB: ((.capacity_used_bytes | tonumber) / 1024 / 1024 | floor), capacity_bytes: (.capacity_used_bytes | tonumber)}' | jq -s 'sort_by(.capacity_bytes) | reverse[]'
 ```
 
-{{% notice tip %}}
-**Capacity Analytics**: The Capacity Trends section of the Qumulo GUI provides excellent information about snapshot consumption over time.  This information is rolled up hourly and is highly beneficial in a production envrionment to observe total snapshot space comsumption.
-{{% /notice %}}
+::alert[**Capacity Analytics**: The Capacity Trends section of the Qumulo GUI provides excellent information about snapshot consumption over time.  This information is rolled up hourly and is highly beneficial in a production envrionment to observe total snapshot space comsumption.]
 
 ---
 
@@ -214,7 +212,7 @@ Qumulo makes snapshots accessible through a special hidden directory that client
 
 3. Press **Enter** to access the snapshot directory
 
-![snapshot directory](../images/haanddr/52_11.png)
+![snapshot directory](/static/images/haanddr/52_11.png)
 
 ### **Browse Snapshot Contents**
 
@@ -248,7 +246,7 @@ While we won't perform a full restoration in this workshop, understand these key
 - **Point-in-time consistency** - All files in a directory are from the same snapshot moment
 - **Preserve relationships** - Directory structures and file relationships remain intact
 
-![snapshot directory restore previous verions](../images/haanddr/52_12.png)
+![snapshot directory restore previous verions](/static/images/haanddr/52_12.png)
 
 ---
 
@@ -268,6 +266,4 @@ As you work through this section, note these important characteristics:
 
 In **Section 5.3**, we'll configure continuous replication relationships between your primary and secondary clusters, using snapshots as the foundation for cross-cluster data protection.
 
-{{% notice tip %}}
-**Best Practice**: In production environments, consider multiple snapshot policies with different frequencies and retention periods - for example, frequent snapshots for recent changes and longer-term snapshots for historical recovery points.
-{{% /notice %}}
+::alert[**Best Practice**: In production environments, consider multiple snapshot policies with different frequencies and retention periods - for example, frequent snapshots for recent changes and longer-term snapshots for historical recovery points.]

@@ -55,7 +55,7 @@ The preparation script performs several key functions:
 - **Creates deployment directory structure** for the new cluster
 - **Validates network prerequisites** for Multi-AZ deployment
 
-![maz configuration detail](../images/elasticity/41_01.png)
+![maz configuration detail](/static/images/elasticity/41_01.png)
 
 ### **Expected Output Analysis**
 
@@ -78,8 +78,8 @@ You will notice the original cluster var file has been copied over and we've upd
 - **q_replacement_cluster** set to true to initiate a cluster replace operation
 - **q_existing_deployment_unique_name** set to the SingleAZ cluster unique deployment name
 
-![maz tfvars 1](../images/elasticity/41_03.png)
-![maz tfvars 2](../images/elasticity/41_04.png)
+![maz tfvars 1](/static/images/elasticity/41_03.png)
+![maz tfvars 2](/static/images/elasticity/41_04.png)
 
 ---
 
@@ -126,7 +126,7 @@ The cluster replace operation follows these phases:
 - **Updates S3 bucket policies** for least privilege access
 - **Finalizes configuration** for the new Multi-AZ cluster
 
-![maz cluster replace success](../images/elasticity/41_07.png)
+![maz cluster replace success](/static/images/elasticity/41_07.png)
 
 ### **Key Monitoring Points**
 
@@ -170,7 +170,7 @@ cd /home/ssm-user/qumulo-workshop/terraform_deployment_primary_maz
 cat terraform.tfvars
 ```
 
-![maz cluster replace success](../images/elasticity/41_15.png)
+![maz cluster replace success](/static/images/elasticity/41_15.png)
 
 ### **Understanding the Replacement Cluster Variable**
 
@@ -205,13 +205,9 @@ terraform state list
 
 This command will show only the resources for the new Multi-AZ cluster, confirming the old infrastructure has been properly removed.
 
-{{% notice info %}}
-**Automated Process**: The cluster replace script handles all terraform configuration updates and cleanup automatically. Participants observe the process but don't need to manually execute these steps like you would in production.
-{{% /notice %}}
+::alert[**Automated Process**: The cluster replace script handles all terraform configuration updates and cleanup automatically. Participants observe the process but don't need to manually execute these steps like you would in production.]
 
-{{% notice tip %}}
-**Understanding Note**: The `q_replacement_cluster` variable is a safety mechanism that prevents accidental destruction of infrastructure during the cluster replace process. Only after successful deployment does the script set it to false and trigger cleanup.
-{{% /notice %}}
+::alert[**Understanding Note**: The `q_replacement_cluster` variable is a safety mechanism that prevents accidental destruction of infrastructure during the cluster replace process. Only after successful deployment does the script set it to false and trigger cleanup.]
 
 ---
 
@@ -225,25 +221,25 @@ Access the Qumulo GUI and monitor the following during the cluster replace opera
 
 #### **Cluster Overview Dashboard**
 - **Node status transitions** as new Multi-AZ nodes join you will notice under Client Activity on the main dashboard your node names will change from Node 1 - 3 to Node 4 - 6:
-![GUI node additions](../images/elasticity/41_11.png)
+![GUI node additions](/static/images/elasticity/41_11.png)
 - **Capacity and performance metrics** updating in real-time.  You might notice decreased latencies and increased IOPs/Throughput from the load test instances taking advantage of the i7i infrastructure.  
-![GUI performance changes](../images/elasticity/41_06.png)
+![GUI performance changes](/static/images/elasticity/41_06.png)
 - **Availability zone distribution** showing the new Multi-AZ topology and updated instance types can be seen in the AWS EC2 console:
-![multiaz instances](../images/elasticity/41_12.png)
+![multiaz instances](/static/images/elasticity/41_12.png)
 - **Service health indicators** confirming operational status can be checked from the Cluster Overview section of the GUI
-![cluster health](../images/elasticity/41_13.png)
+![cluster health](/static/images/elasticity/41_13.png)
 #### **Network Configuration**
 - **Floating IP address removal** examining the terraform output will show that the floating IPs were removed in favor of a network load balancer configuration:
 ```
 cd /home/ssm-user/qumulo-workshop/terraform_deployment_primary_maz/
 terraform output
 ```
-![cluster health](../images/elasticity/41_10.png)
+![cluster health](/static/images/elasticity/41_10.png)
 
 You can also see the floating IPs are no longer in the network configuration from the Cluster Network page in the GUI:
-![GUI floating IPs](../images/elasticity/41_14.png)
+![GUI floating IPs](/static/images/elasticity/41_14.png)
 - **DNS resolution** confirming proper client access paths.  Our script automatically updates the demopri.qumulo.local record in DNS to be a CNAME to the NLB hostname replacing the round robin A record.  This enables clients to continue to use the same DNS name to access the storage:
-![route53 host record update](../images/elasticity/41_09.png)
+![route53 host record update](/static/images/elasticity/41_09.png)
 
 ### **Validation Checkpoints**
 
@@ -275,10 +271,6 @@ The new Multi-AZ cluster may require:
 - **Network optimization** for inter-AZ communication
 - **Monitoring baseline establishment** for the new configuration
 
-{{% notice info %}}
-**Production Note**: The cluster replace process maintains data integrity and service availability, but because floating IPs are removed in favor of NLB configurations, hosts will need to resolve DNS names again.  Consider turning down TTL on DNS records before this type of operation. Be sure to plan accordingly for production deployments.
-{{% /notice %}}
+::alert[**Production Note**: The cluster replace process maintains data integrity and service availability, but because floating IPs are removed in favor of NLB configurations, hosts will need to resolve DNS names again.  Consider turning down TTL on DNS records before this type of operation. Be sure to plan accordingly for production deployments.]
 
-{{% notice tip %}}
-**Performance Tip**: Multi-AZ deployments provide enhanced fault tolerance but may have slightly higher latency for cross-AZ operations. Monitor performance metrics to establish new baselines.  However true Multi-AZ applications may experience improved performance from having cluster nodes available in the AZ that they reside.  
-{{% /notice %}}
+::alert[**Performance Tip**: Multi-AZ deployments provide enhanced fault tolerance but may have slightly higher latency for cross-AZ operations. Monitor performance metrics to establish new baselines.  However true Multi-AZ applications may experience improved performance from having cluster nodes available in the AZ that they reside.]

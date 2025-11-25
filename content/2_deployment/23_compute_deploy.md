@@ -4,8 +4,6 @@ chapter: true
 weight: 23
 ---
 
-# Compute Storage Deployment
-
 ## **Learning Objective**
 By the end of this section, you will:
 - Master the deployment of CNQ compute nodes that provide file system services, exploring both Single-AZ and Multi-AZ configurations while understanding how compute resources connect to the persistent storage layer to deliver scalable file services.
@@ -63,7 +61,7 @@ cat terraform.tfvars
 - **`private_subnet_id`** - **Single subnet ID** for SAZ deployment
 - **`term_protection`** - Set to false for workshop - true required for production
 
-![compute tfvars configuration](../images/deployment/23_01.png)
+![compute tfvars configuration](/static/images/deployment/23_01.png)
 
 **Qumulo Cluster Variables**
 - **`q_cluster_name`** - Qumulo cluster identifier
@@ -75,11 +73,9 @@ cat terraform.tfvars
 - **`q_instance_type`** - EC2 instance type (i4i.xlarge for workshop, not recommended for production)
 - **`q_node_count`** - Number of cluster nodes (3, can be 1 or more)
 
-![compute tfvars configuration cont.](../images/deployment/23_02.png)
+![compute tfvars configuration cont.](/static/images/deployment/23_02.png)
 
-{{% notice info %}}
-**Single-AZ Deployment**: Notice that `private_subnet_id` contains only **one subnet ID**. This creates a Single-AZ cluster where all nodes are deployed in the same availability zone for this initial deployment.
-{{% /notice %}}
+::alert[**Single-AZ Deployment**: Notice that `private_subnet_id` contains only **one subnet ID**. This creates a Single-AZ cluster where all nodes are deployed in the same availability zone for this initial deployment.]
 
 ---
 
@@ -94,7 +90,7 @@ After the compute deployment completes, EC2 instances are created to run your Qu
 3. **View Running Instances**
 4. **Filter by your deployment name** to see Qumulo instances
 
-![AWS EC2 cluster compute instances](../images/deployment/23_03.png)
+![AWS EC2 cluster compute instances](/static/images/deployment/23_03.png)
 
 ### **Understanding Instance Architecture**
 
@@ -106,7 +102,7 @@ Your Qumulo compute deployment creates **multiple EC2 instances**:
 - **Availability Zone**: All instances in **same AZ** (Single-AZ deployment)
 - **Security Groups**: Pre-configured for Qumulo cluster communication
 
-![AWS EC2 cluster compute availability zone placement](../images/deployment/23_04.png)
+![AWS EC2 cluster compute availability zone placement](/static/images/deployment/23_04.png)
 
 ### **Single-AZ Deployment Characteristics**
 
@@ -119,9 +115,7 @@ Your Qumulo compute deployment creates **multiple EC2 instances**:
 - **Availability**: Single point of failure at AZ level
 - **Workload Colocation**: Workloads should also live in the same AZ as the Qumulo cluster
 
-{{% notice warning %}}
-**Single-AZ Limitation**: While cost-effective and performant, Single-AZ deployments are vulnerable to availability zone outages. This workshop will later demonstrate converting to Multi-AZ for higher availability.
-{{% /notice %}}
+::alert[**Single-AZ Limitation**: While cost-effective and performant, Single-AZ deployments are vulnerable to availability zone outages. This workshop will later demonstrate converting to Multi-AZ for higher availability.]{type="warning"}
 
 ---
 
@@ -129,9 +123,7 @@ Your Qumulo compute deployment creates **multiple EC2 instances**:
 
 One of Qumulo's key features is **floating IP addresses** that provide seamless client connectivity and load distribution across cluster nodes.  Floating IP addresses can be added and removed depending on your specific cluster node count.  Single node clusters do not deploy floating IP addresses.  
 
-{{% notice tip %}}
-**Workshop Insight**: Floating IPs enable Qumulo to provide consistent client access even as the cluster scales or nodes are replaced in Single AZ Deployments. Clients connect to floating IPs, not directly to instance IPs.  In a Multi AZ deployment Qumulo leverages Network Load Balancers for dynamic cluster access and traffic distribution.
-{{% /notice %}}
+::alert[**Workshop Insight**: Floating IPs enable Qumulo to provide consistent client access even as the cluster scales or nodes are replaced in Single AZ Deployments. Clients connect to floating IPs, not directly to instance IPs.  In a Multi AZ deployment Qumulo leverages Network Load Balancers for dynamic cluster access and traffic distribution.]
 
 ### **What are Floating IPs?**
 
@@ -150,17 +142,17 @@ cd /home/ssm-user/qumulo-workshop/terraform_deployment_primary_saz
 terraform output
 ```
 
-![compute floating and primary ip addresses](../images/deployment/23_05.png)
+![compute floating and primary ip addresses](/static/images/deployment/23_05.png)
 
 Floating IP addresses assigned to individual compute instances can be seen in the instance information in the AWS console:
 
-![compute floating ip address details](../images/deployment/23_06.png)
+![compute floating ip address details](/static/images/deployment/23_06.png)
 
 Floating IP addresses are utilized with round robin DNS or internal Qumulo Authoritative DNS (QDNS).  
 https://docs.qumulo.com/administrator-guide/network-configuration/configuring-authoritative-dns.html
 For the purposes of this workshop we are utilizing round robin DNS in a private hosted Route53 zone file.  
 
-![round robin dns settings in Route53](../images/deployment/23_11.png)
+![round robin dns settings in Route53](/static/images/deployment/23_11.png)
 
 ### **Key IP Address Types**
 
@@ -185,11 +177,11 @@ The deployment stores detailed IP address information in Systems Manager Paramet
 aws ssm get-parameters --names $(aws ssm describe-parameters --parameter-filters Key=Name,Values="/qumulo/qum-wks-cls-pri",Option=Contains --query "Parameters[?contains(Name, 'float-ips') || contains(Name, 'node-ips')].Name" --output text)
 ```
 
-![ssm parameter store CLI output](../images/deployment/23_07.png)
+![ssm parameter store CLI output](/static/images/deployment/23_07.png)
 
 These can also be viewed in the AWS Console by navigating to Systems Manager, Parameter Store, and filtering for the cluster name: Name: contains: ```/qumulo/qum-wks-cls-pri```
 
-![ssm parameter store console output](../images/deployment/23_08.png)
+![ssm parameter store console output](/static/images/deployment/23_08.png)
 
 ### **Understanding IP Address Distribution**
 
@@ -199,9 +191,7 @@ These can also be viewed in the AWS Console by navigating to Systems Manager, Pa
 - **IP-to-Node Mapping** - Which floating IPs are currently on which nodes
 - **Subnet Information** - Network placement details
 
-{{% notice tip %}}
-**Workshop Insight**: Floating IPs enable Qumulo to provide consistent client access even as the cluster scales or nodes are replaced. Clients connect to floating IPs, not directly to instance IPs.
-{{% /notice %}}
+::alert[**Workshop Insight**: Floating IPs enable Qumulo to provide consistent client access even as the cluster scales or nodes are replaced. Clients connect to floating IPs, not directly to instance IPs.]
 
 ---
 
@@ -216,20 +206,20 @@ With compute deployment complete, the next step is to verify cluster connectivit
 # Check cluster access information
 cat /home/ssm-user/qumulo-workshop/cluster-access-info.txt
 ```
-![cluster access info text file](../images/deployment/23_09.png)
+![cluster access info text file](/static/images/deployment/23_09.png)
 
 **From the Windows Instance:**
 1. **RDP to Windows instance** using Fleet Manager
 2. **Open browser** to the cluster web UI URL
 3. **Login** with admin credentials from access info
 
-![locate the windows instance connect button](../images/deployment/23_12.png)
+![locate the windows instance connect button](/static/images/deployment/23_12.png)
 
-![connect using RDP fleet manager](../images/deployment/23_13.png)
+![connect using RDP fleet manager](/static/images/deployment/23_13.png)
 
-![log into windows instance](../images/deployment/23_14.png)
+![log into windows instance](/static/images/deployment/23_14.png)
 
-![Qumulo cluster login screen](../images/deployment/23_15.png)
+![Qumulo cluster login screen](/static/images/deployment/23_15.png)
 
 ---
 
@@ -260,6 +250,4 @@ With your Single-AZ cluster deployed and verified, you're ready to:
 
 The compute infrastructure now provides a fully functional Qumulo cluster, demonstrating how CNQ separates storage durability (S3) from compute services (EC2) while delivering enterprise file system capabilities.
 
-{{% notice tip %}}
-**Workshop Advantage**: This Single-AZ deployment provides the foundation for understanding Qumulo's architecture before exploring Multi-AZ configurations that provide higher availability across multiple data centers.
-{{% /notice %}}
+::alert[**Workshop Advantage**: This Single-AZ deployment provides the foundation for understanding Qumulo's architecture before exploring Multi-AZ configurations that provide higher availability across multiple data centers.]

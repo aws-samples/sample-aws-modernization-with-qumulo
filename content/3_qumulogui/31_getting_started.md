@@ -20,7 +20,7 @@ To make our GUI exploration more meaningful, we'll start some background activit
 
 You should see output confirming the load testing has begun:
 
-![Start Load Testing](../images/qumulogui/31_03.png)
+![Start Load Testing](/static/images/qumulogui/31_03.png)
 
 This script generates various types of file system activity including:
 - File creation and deletion
@@ -40,13 +40,13 @@ Now let's connect to your cluster's web interface:
 
 3. **Navigate to your cluster** by clicking on **"Primary Qumulo"** under the Managed Bookmarks toolbar
 
-![Qumulo Login Page](../images/qumulogui/31_01.png)
+![Qumulo Login Page](/static/images/qumulogui/31_01.png)
 
 4. **Log in using the default credentials:**
    - **Username:** `admin`  
    - **Password:** `!Qumulo123`
 
-![Qumulo Login Screen](../images/qumulogui/31_02.png)
+![Qumulo Login Screen](/static/images/qumulogui/31_02.png)
 
 5. **Click "Sign In"** to access the management interface
 

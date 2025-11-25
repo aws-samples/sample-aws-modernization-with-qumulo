@@ -4,8 +4,6 @@ chapter: true
 weight: 21
 ---
 
-# Prerequisites
-
 Before deploying Cloud Native Qumulo (CNQ) on AWS, you need to ensure that your AWS environment meets the essential infrastructure and permission requirements. This section covers the foundational prerequisites that enable successful CNQ deployment and operation.
 
 ## **Learning Objective**
@@ -28,9 +26,7 @@ Cloud Native Qumulo supports **two primary deployment methods** on AWS:
 - **Integration**: Seamless integration with AWS services and console
 - **Enterprise Use**: Popular for AWS-centric organizations
 
-{{% notice info %}}
-**Workshop Focus**: While CNQ supports both deployment methods, this workshop concentrates on **Terraform deployment** as it represents the most common customer implementation pattern. The pre-configured workshop environment includes ready-to-use Terraform configurations.
-{{% /notice %}}
+::alert[**Workshop Focus**: While CNQ supports both deployment methods, this workshop concentrates on **Terraform deployment** as it represents the most common customer implementation pattern. The pre-configured workshop environment includes ready-to-use Terraform configurations.]
 
 ---
 
@@ -107,17 +103,15 @@ Throughout this workshop you will be using a pre-created Linux instance.  This i
 1. **Connect to Instance** using Session Manager
 2. **Set the Bash Environment** to properly configure the user interface - required every time you connect to the instance through session manager  ```bash -l```
 
-![locate the linux instance connect button](../images/deployment/21_01.png)
+![locate the linux instance connect button](/static/images/deployment/21_01.png)
 
-![connect using session manager](../images/deployment/21_02.png)
+![connect using session manager](/static/images/deployment/21_02.png)
 
-![set the bash shell environment](../images/deployment/21_03.png)
+![set the bash shell environment](/static/images/deployment/21_03.png)
 
 ---
 
 ## **Next Steps**
 With prerequisites understood, you're ready to explore the **pre-configured workshop infrastructure** that eliminates manual setup complexity while demonstrating real-world CNQ deployment patterns.
 
-{{% notice tip %}}
-**Workshop Advantage**: The automated workshop environment handles all prerequisite setup, allowing you to focus on understanding CNQ architecture and deployment workflows rather than infrastructure configuration.
-{{% /notice %}}
+::alert[**Workshop Advantage**: The automated workshop environment handles all prerequisite setup, allowing you to focus on understanding CNQ architecture and deployment workflows rather than infrastructure configuration.]
