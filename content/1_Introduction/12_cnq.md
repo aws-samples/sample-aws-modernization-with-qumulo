@@ -1,10 +1,8 @@
 ---
-title: "Cloud-Native Qumulo" 
+title: "Cloud-Native Qumulo (CNQ) Introduction" 
 chapter: true
 weight: 2 
 ---
-
-# Cloud-Native Qumulo (CNQ)
 
 ## 1. Overview
 Cloud Native Qumulo (CNQ) on AWS is the only file data service that offers the performance and scale your most demanding workloads need, at a comparable total cost of ownership to on-premises storage.
@@ -21,10 +19,10 @@ access to your data. Within those regions or local zones CNQ can be deployed in 
 
 ## 2. Cloud-Native Qumulo Architecture
 Cloud-Native Qumulo (CNQ) Single-Availablity Zone (SAZ) Deployment 
-![CNQ single az architecture](../images/CNQSAZ.png)
+![CNQ single az architecture](/static/images/CNQSAZ.png)
 
 Cloud-Native Qumulo (CNQ) Multi-Availablity Zone (MAZ) Deployment
-![CNQ multi az architecture](../images/CNQMAZ.png)
+![CNQ multi az architecture](/static/images/CNQMAZ.png)
 
 ## 3. Disruptive features without disruptions
 CNQ can also be dynamically reconfigured without taking services offline, so you can boost performance temporarily as needed, or permanently if your workloads change. A CNQ instance originally deployed as a disaster recovery or archive target can be converted from a low-cost, high-capacity service to a high-performance data platform in seconds.

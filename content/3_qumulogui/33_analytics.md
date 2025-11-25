@@ -6,7 +6,7 @@ weight: 33
 
 The Analytics section provides comprehensive monitoring and insights into your Qumulo cluster's performance, capacity usage, and activity patterns. This powerful toolset helps administrators understand system behavior, identify bottlenecks, and make data-driven decisions.
 
-![Analytics Main Screen](../images/qumulogui/33_01.png)
+![Analytics Main Screen](/static/images/qumulogui/33_01.png)
 
 ## What Analytics Provides
 
@@ -20,7 +20,7 @@ The Analytics section offers three main categories of insight:
 
 The main analytics view displays current cluster activity with real-time updates:
 
-![Analytics Dashboard](../images/qumulogui/33_02.png)
+![Analytics Dashboard](/static/images/qumulogui/33_02.png)
 
 Key metrics visible at a glance:
 - **Current throughput** (read/write operations)
@@ -32,21 +32,18 @@ Key metrics visible at a glance:
 
 Navigate storage usage with interactive visualizations that respond to your exploration:
 
-![Capacity Explorer](../images/qumulogui/33_03.png)
+![Capacity Explorer](/static/images/qumulogui/33_03.png)
 
-![Capacity Explorer Detail](../images/qumulogui/33_04.png)
+![Capacity Explorer Detail](/static/images/qumulogui/33_04.png)
 
-{{% notice info %}}
-**Interactive Tip:** Try clicking on directory segments and graph elements - the interface is highly responsive and will drill down into more detailed views.
-{{% /notice %}}
+::alert[**Interactive Tip:** Try clicking on directory segments and graph elements - the interface is highly responsive and will drill down into more detailed views.]
 
 ## Capacity Trends
 
 ### Historical Usage
 
-{{% notice info %}}
-**Note:** Historical useages is not real time, this is updated hourly so there may be no data in this section.  Check back later in the lab to see information.
-{{% /notice %}}
+::alert[**Note:** Historical useages is not real time, this is updated hourly so there may be no data in this section.  Check back later in the lab to see information.]
+
 Track storage consumption over selectable time periods:
 - **72 hours** - Short-term usage patterns
 - **30 days** - Monthly growth analysis  
@@ -54,7 +51,7 @@ Track storage consumption over selectable time periods:
 
 The timeline shows breakdown by data, metadata, and snapshots with interactive point-in-time details.
 
-![Capacity Trends](../images/qumulogui/33_05.png)
+![Capacity Trends](/static/images/qumulogui/33_05.png)
 
 ### Capacity Changes
 Monitor data flow with **data-in** and **data-out** visualizations that help identify:
@@ -63,7 +60,7 @@ Monitor data flow with **data-in** and **data-out** visualizations that help ide
 - Trends that may require attention
 - Ability to select changes to see where in the filesystem those changes happened
 
-![Capacity Changes](../images/qumulogui/33_06.png)
+![Capacity Changes](/static/images/qumulogui/33_06.png)
 
 ## Activity Analysis
 

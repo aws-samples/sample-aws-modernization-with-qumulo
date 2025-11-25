@@ -4,8 +4,6 @@ chapter: true
 weight: 22
 ---
 
-# Persistent Storage Deployment
-
 ## **Learning Objective**
 By the end of this section, you will:
 - Comprehend the role of persistent storage in CNQ architecture and gain hands-on experience deploying the storage layer using Terraform configurations, understanding how this foundation supports data durability and cluster operations.
@@ -53,11 +51,9 @@ cat terraform.tfvars
 - **`prevent_destroy`** - Protection setting for storage buckets, this is set to false in this workshop, however in production and by default this shold be set to true
 - **`tags`** - Resource tagging for organization and cost tracking - there are examples in this workshop, all resources will be tagged with this information
 
-{{% notice tip %}}
-**Workshop Insight**: Notice how the deployment name creates a unique identifier that will be referenced by the compute infrastructure. This separation allows the compute configurations to be managed (and scaled) independently of the persistent storage configuration.
-{{% /notice %}}
+::alert[**Workshop Insight**: Notice how the deployment name creates a unique identifier that will be referenced by the compute infrastructure. This separation allows the compute configurations to be managed (and scaled) independently of the persistent storage configuration.]
 
-![storage terraform.tfvars](../images/deployment/22_01.png)
+![storage terraform.tfvars](/static/images/deployment/22_01.png)
 
 ---
 
@@ -71,7 +67,7 @@ After the persistent storage deployment completes, multiple S3 buckets are creat
 2. **Navigate to S3** service
 3. **Search for buckets** containing your deployment name
 
-![storage s3 buckets](../images/deployment/22_02.png)
+![storage s3 buckets](/static/images/deployment/22_02.png)
 
 ### **Understanding Bucket Architecture**
 
@@ -89,11 +85,9 @@ Your Qumulo persistent storage creates **multiple buckets** for optimal performa
 - **Encryption**: Server-side encryption enabled by default
 - **Tags**: These match the tags set in the tfvars file
 
-![storage s3 bucket details](../images/deployment/22_03.png)
+![storage s3 bucket details](/static/images/deployment/22_03.png)
 
-{{% notice info %}}
-**Important**: These S3 buckets contain the actual file system data. They persist independently of the compute infrastructure, enabling cluster replacement and scaling operations without data loss.
-{{% /notice %}}
+::alert[**Important**: These S3 buckets contain the actual file system data. They persist independently of the compute infrastructure, enabling cluster replacement and scaling operations without data loss.]
 
 ---
 
@@ -107,7 +101,7 @@ The persistent storage deployment creates **Systems Manager (SSM) parameters** t
 2. **Select Parameter Store** from the left navigation
 3. **Filter parameters** by your deployment unique name ```/qumulo/qum-wks-cls-pri```
 
-![storage SSM parameter store](../images/deployment/22_04.png)
+![storage SSM parameter store](/static/images/deployment/22_04.png)
 
 ### **Key Storage Parameters Created**
 
@@ -119,7 +113,7 @@ The persistent storage deployment creates several critical parameters:
 - **Storage configuration** - Technical settings for bucket access
 - **Encryption keys** - KMS key information for data encryption
 
-![storage SSM parameter store detail](../images/deployment/22_05.png)
+![storage SSM parameter store detail](/static/images/deployment/22_05.png)
 
 ### **Parameter Usage Pattern**
 
@@ -134,9 +128,7 @@ These parameters follow a specific naming convention:
 - **Configuration Consistency**: Ensures compute and storage configurations match
 - **Security**: Encryption keys and access patterns stored securely
 
-{{% notice warning %}}
-**Workshop Note**: These parameters are automatically created and managed by Terraform. Manual modification can break the connection between storage and compute infrastructure.
-{{% /notice %}}
+::alert[**Workshop Note**: These parameters are automatically created and managed by Terraform. Manual modification can break the connection between storage and compute infrastructure.]{type="warning"}
 
 ---
 
@@ -154,7 +146,7 @@ ls -la terraform.tfstate*
 terraform output
 ```
 
-![storage terraform output results](../images/deployment/22_06.png)
+![storage terraform output results](/static/images/deployment/22_06.png)
 
 ### **Key Outputs from Storage Deployment**
 
@@ -190,6 +182,4 @@ With persistent storage successfully deployed and explored, you're ready to:
 
 The persistent storage layer now provides the durable foundation for your Qumulo cluster, ready to support the compute infrastructure that will provide file system services.
 
-{{% notice tip %}}
-**Workshop Advantage**: This pre-deployed storage demonstrates how CNQ's architecture enables flexible compute scaling while maintaining data persistence - a key advantage over traditional storage systems.
-{{% /notice %}}
+::alert[**Workshop Advantage**: This pre-deployed storage demonstrates how CNQ's architecture enables flexible compute scaling while maintaining data persistence - a key advantage over traditional storage systems.]

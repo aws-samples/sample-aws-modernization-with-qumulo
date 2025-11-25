@@ -3,10 +3,6 @@ title: "Replication Relationships"
 weight: 53
 ---
 
-
-
----
-
 ## Understanding Qumulo Replication Types
 
 Before diving into continuous replication, it's important to understand the three replication approaches Qumulo offers:
@@ -81,9 +77,7 @@ When a replication relationship is created:
 
 ### **Root Directory Considerations**
 
-{{% notice warning %}}
-**Warning**: Replicating to the root directory (`/`) makes the entire target cluster read-only and may impact administrative functions like upgrades.
-{{% /notice %}}
+::alert[**Warning**: Replicating to the root directory (`/`) makes the entire target cluster read-only and may impact administrative functions like upgrades.]{type="warning"}
 
 ---
 
@@ -100,7 +94,7 @@ Now let's create a continuous replication relationship between your primary and 
 
 1. In the left sidebar, navigate to **Cluster > Replication**
 
-![Create Replication Relationship](../images/haanddr/53_01.png)
+![Create Replication Relationship](/static/images/haanddr/53_01.png)
 
 2. Click **"Create Relationship"** button
 
@@ -110,16 +104,16 @@ Now let's create a continuous replication relationship between your primary and 
 2. **Target Directory Path**: `userdata/`
 3. **Target IP Address**: Copy this IP address from the demosec.qumulo.local cluster browser window
 
-![Replication destination ip](../images/haanddr/53_05.png)
+![Replication destination ip](/static/images/haanddr/53_05.png)
 
-![Replication details 1](../images/haanddr/53_02.png)
+![Replication details 1](/static/images/haanddr/53_02.png)
 
 4. **Port Number**: Select Default
 5. **Replication Mode**: Snapshot Policy with Continuous Replication
 6. **Snapshot Policies**: Select Frequent-protection created in the last section.
 7. **Expire Snapshot on Target**: Select "Same as Policy"
 
-![Replication details 2](../images/haanddr/53_03.png)
+![Replication details 2](/static/images/haanddr/53_03.png)
 
 8. **Enable Replication**: Ensure this is checked
 
@@ -128,7 +122,7 @@ Now let's create a continuous replication relationship between your primary and 
 - **NFS ID Mapping**: Checked
 - **Blackout Windows**: None configured initially
 
-![Advanced Settings](../images/haanddr/53_04.png)
+![Advanced Settings](/static/images/haanddr/53_04.png)
 
 ### **Create the Relationship**
 
@@ -136,7 +130,7 @@ Now let's create a continuous replication relationship between your primary and 
 2. Click **"Create Relationship"**
 3. The relationship will be created with a "Pending Authorization" status
 
-![Relationship Created](../images/haanddr/53_06.png)
+![Relationship Created](/static/images/haanddr/53_06.png)
 
 ---
 
@@ -155,11 +149,11 @@ The replication relationship must be authorized on the target cluster before dat
 2. You should see the pending relationship
 3. Click **"Authorize"** next to the relationship
 
-![Authorize Relationship](../images/haanddr/53_07.png)
+![Authorize Relationship](/static/images/haanddr/53_07.png)
 
 4. Confirm the authorization by clicking **"Authorize Relationship"**
 
-![Confirm Authorization](../images/haanddr/53_08.png)
+![Confirm Authorization](/static/images/haanddr/53_08.png)
 
 ### **Monitor Initial Synchronization**
 
@@ -169,7 +163,7 @@ Once authorized, the initial synchronization begins automatically:
 2. Navigate back to **Cluster > Replication**
 3. Observe the relationship status change from "Pending" to "Running"
 
-![Replication Running](../images/haanddr/53_09.png)
+![Replication Running](/static/images/haanddr/53_09.png)
 
 The initial sync transfers all data from `/userdata` on the primary cluster to `/userdata` on the secondary cluster.
 
@@ -179,13 +173,13 @@ The initial sync transfers all data from `/userdata` on the primary cluster to `
 
 The replication monitoring interface provides detailed status information:
 
-![replication monitoring](../images/haanddr/53_10.png)
+![replication monitoring](/static/images/haanddr/53_10.png)
 
 #### **Status Indicators**
 
 Observe the various status icons and their meanings:
 
-![replication status](../images/haanddr/53_11.png)
+![replication status](/static/images/haanddr/53_11.png)
 
 #### **Progress Tracking**
 
@@ -208,8 +202,8 @@ The destination share needs to be created.
 
 1. **Create the userdata share** on demosec.qumulo.local select Sharing -> SMB Shares.  Select create share and type userdata for the folder and share name.  Click **Create Share**
 
-![share permissions](../images/haanddr/53_20.png)
-![share permissions 2](../images/haanddr/53_22.png)
+![share permissions](/static/images/haanddr/53_20.png)
+![share permissions 2](/static/images/haanddr/53_22.png)
 
 2. **Connect your Windows desktop SMB to the userdata share with admin privledges**
 
@@ -225,7 +219,7 @@ net use \\demosec.qumulo.local\userdata /user:admin !Qumulo123
 1. **In the secondary cluster UI**, navigate to **Integrated Analytics**
 2. Browse to the root directory and look for `/userdata` to see that the replication data has appeared on the secondary cluster.
 
-![replica view analytics](../images/haanddr/53_12.png)
+![replica view analytics](/static/images/haanddr/53_12.png)
 
 3. **Browse to the share on the secondary cluster `\\demosec.qumulo.local\userdata`
 4. **Note**: The directory should appear but will be **read-only** for client access
@@ -238,11 +232,11 @@ net use \\demosec.qumulo.local\userdata /user:admin !Qumulo123
 2. Attempt to access `\\demosec.qumulo.local\userdata`
 3. You should be able to **read files** but **not write** to the replicated directory
 
-![Target Directory](../images/haanddr/53_13.png)
+![Target Directory](/static/images/haanddr/53_13.png)
 
 4. **Verify replica destination snapshots** by accessing `\\demosec.qumulo.local\userdata\.snapshot`.  You will notice destination snapshots are replicated and accessible.
 
-![Target Directory snapshots](../images/haanddr/53_14.png)
+![Target Directory snapshots](/static/images/haanddr/53_14.png)
 
 ---
 
@@ -256,7 +250,7 @@ Generate some file activity to observe continuous replication in action.
 2. Create a new folder: `replicationtest`
 3. Add several files (right click, create files)
 
-![Create Test Files](../images/haanddr/53_14.png)
+![Create Test Files](/static/images/haanddr/53_14.png)
 
 ### **Monitor Replication Activity**
 
@@ -265,7 +259,7 @@ Generate some file activity to observe continuous replication in action.
 3. Observe how the **files transferred count** increases
 4. Note the **throughput metrics** during active replication
 
-![Active Replication](../images/haanddr/53_15.png)
+![Active Replication](/static/images/haanddr/53_15.png)
 
 ### **Optional CLI Monitoring**
 
@@ -280,7 +274,7 @@ qq --host demopri.qumulo.local replication_list_source_relationships
 
 Make note of the replication relationship ID
 
-![Active Replication CLI](../images/haanddr/53_16.png)
+![Active Replication CLI](/static/images/haanddr/53_16.png)
 
 **Get specific information about a source relationship**
 
@@ -290,11 +284,9 @@ qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
 qq --host demopri.qumulo.local replication_get_source_relationship_status --id {}}
 ```
 
-![Active Replication CLI Details](../images/haanddr/53_17.png)
+![Active Replication CLI Details](/static/images/haanddr/53_17.png)
 
-{{% notice info %}}
-**Good to know:**: A full list of qq cli commands can be found in the Qumulo command line reference guide: https://docs.qumulo.com/qq-cli-command-guide/
-{{% /notice %}}
+::alert[**Good to know:**: A full list of qq cli commands can be found in the Qumulo command line reference guide: https://docs.qumulo.com/qq-cli-command-guide/]
 
 ---
 
@@ -314,11 +306,11 @@ Failing over involves **removing the replication relationship** from the source 
 2. Locate the `userdata-disaster-recovery` relationship (or your chosen replication relationship).
 3. Click the **ellipsis (...)** menu next to the relationship and select **Delete**.
    
-   ![Delete Replication Relationship](../images/haanddr/53_18.png)
+   ![Delete Replication Relationship](/static/images/haanddr/53_18.png)
 
 4. Confirm deletion. You’ll see a warning about converting the destination to read-write.
 
-   ![Confirm Relationship Deletion](../images/haanddr/53_19.png)
+   ![Confirm Relationship Deletion](/static/images/haanddr/53_19.png)
 
 #### **Alternate: Break the Relationship from the Secondary Cluster**
 
@@ -337,7 +329,7 @@ Once the relationship is removed, the target directory is instantly switched fro
 3. Try to create a new folder or file inside `userdata`.
    - **Success means failover is complete.**
 
-   ![Write Access Enabled](../images/haanddr/53_21.png)
+   ![Write Access Enabled](/static/images/haanddr/53_21.png)
 
    ---
 

@@ -4,8 +4,6 @@ chapter: true
 weight: 5
 ---
 
-# Disaster Recovery with Qumulo
-
 ## Overview
 
 This module explores Qumulo's comprehensive disaster recovery and data protection capabilities, demonstrating how to safeguard your data across multiple environments and ensure business continuity. You'll learn to implement various protection strategies, from point-in-time snapshots to continuous cross-cluster replication and cloud-based archival solutions.
@@ -65,13 +63,9 @@ The workshop provides hands-on experience with disaster recovery scenarios using
 
 This practical approach allows you to experience real-world disaster recovery operations while understanding the underlying concepts and best practices for production deployments.
 
-{{% notice warning %}}
-The examples and sample code provided in this workshop are intended to be consumed as instructional content. These will help you understand how disaster recovery strategies can be implemented while demonstrating best practices. These examples are not intended for use in production environments without proper testing and validation.
-{{% /notice %}}
+::alert[The examples and sample code provided in this workshop are intended to be consumed as instructional content. These will help you understand how disaster recovery strategies can be implemented while demonstrating best practices. These examples are not intended for use in production environments without proper testing and validation.]{type="warning"}
 
-{{% notice info %}}
-**Production Consideration**: Continuous replication increases cluster load and can cause latency delays depending on applications in use. Regular testing and validation of failover/failback procedures is essential for ensuring reliable disaster recovery capabilities in production environments.
-{{% /notice %}}
+::alert[**Production Consideration**: Continuous replication increases cluster load and can cause latency delays depending on applications in use. Regular testing and validation of failover/failback procedures is essential for ensuring reliable disaster recovery capabilities in production environments.]
 
 ## Next Steps
 

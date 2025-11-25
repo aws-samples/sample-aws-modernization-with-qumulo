@@ -1,12 +1,8 @@
 ---
-title: "Cloud Data Fabric Introduction" 
+title: "Cloud Data Fabric (CDF) Introduction" 
 chapter: true
 weight: 3
 ---
-
-# Introduction to Qumulo Cloud Data Fabric (CDF)
-
-## Introduction
 
 Qumulo Cloud Data Fabric (CDF) is an enterprise-wide cloud data platform designed to provide access to unstructured data regardless of location. It creates a single, globally-consistent file system that spans edge, core data centers, and cloud environments, enabling teams to share data across long distances with minimal latency and without version conflicts.
 
@@ -24,7 +20,7 @@ CDF is built on a hub-and-spoke architecture where:
 * **Spoke**: Remote Qumulo instances that can access the hub's data
 * **Portal**: Connection between hub and spoke that defines which directories are shared
 
-![Hub and Spoke Model](../images/cdf-portals.png)
+![Hub and Spoke Model](/static/images/cdf-portals.png)
 
 ### Data Portal Details
 * Defined at a directory level (not entire file systems)
@@ -32,7 +28,7 @@ CDF is built on a hub-and-spoke architecture where:
 * Each portal supports one hub folder and up to 32 spokes
 * Directories within a portal appear as if they're local to spoke clients
 
-![Data Portal Details](../images/cdf-portal2.png)
+![Data Portal Details](/static/images/cdf-portal2.png)
 
 ### Data Synchronization Process
 1. **Metadata First**: Directory structure and file metadata are synchronized immediately
@@ -40,7 +36,7 @@ CDF is built on a hub-and-spoke architecture where:
 3. **Local Caching**: Accessed data is cached locally on the spoke for future requests
 4. **Block-Level Changes**: Only modified blocks are synchronized, not entire files
 
-![Data Synchronization Process](../images/cdf-caching.png)
+![Data Synchronization Process](/static/images/cdf-caching.png)
 
 ### NeuralCache Intelligence in the CDF Portal Relationship
 
@@ -48,11 +44,11 @@ Within Qumulo Cloud Data Fabric (CDF), NeuralCache is the predictive caching eng
 
 This predictive approach ensures that up to 90% of global read requests on spoke endpoints are served directly from local cache, significantly reducing WAN traffic and latency. NeuralCache’s heat-scoring system dynamically prioritizes and retains the most active data in cache, while evicting less frequently used blocks, further enhancing performance and scalability for distributed teams. As a result, users experience local-like performance when accessing remote data through CDF portals, enabling real-time collaboration and efficient workflows across geographically dispersed environments.
 
-![NeuralCache Detail](../images/cdf-neuralcache.png)
+![NeuralCache Detail](/static/images/cdf-neuralcache.png)
 
 ## CDF Common Use Cases
 
-![Common Use Cases](../images/cdf-usecase.png)
+![Common Use Cases](/static/images/cdf-usecase.png)
 
 ### Cloud Bursting for Compute-Intensive Workloads
 * **Challenge**: Need more computing power for rendering or analysis

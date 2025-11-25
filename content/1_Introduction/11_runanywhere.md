@@ -4,12 +4,6 @@ chapter: true
 weight: 1 
 ---
 
-<!-- MORE SUBMODULES CAN BE ADDED TO DIVIDE UP THE SETUP INTO SMALLER SECTIONS -->
-<!-- COPY AND PASTE THIS SUBMODULE FILE, RENAME, AND CHANGE THE CONTENTS AS NECESSARY -->
-
-
-# Qumulo RunAnywhere
-
 ## 1. Overview
 RunAnywhere is Qumulo’s deployment flexibility program that allows Qumulo software to run on:
 + Certified OEM hardware (HPE, Arrow, Supermicro, etc.)
@@ -17,7 +11,7 @@ RunAnywhere is Qumulo’s deployment flexibility program that allows Qumulo soft
 + Public cloud platforms such as AWS through Cloud Native Qumulo (CNQ)
 + Instead of being locked into a single appliance model, RunAnywhere gives organizations freedom of choice while ensuring the same features, user experience, and performance across all environments.
 
-![RunAnywhere](../images/RunAnywhere-IG1.png)
+![RunAnywhere](/static/images/RunAnywhere-IG1.png)
 
 ## 2. Key Capabilities
 

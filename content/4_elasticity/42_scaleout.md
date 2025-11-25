@@ -55,7 +55,7 @@ The node addition operation follows these phases:
 - **Prepares deployment environment** for additional resources
 - **Checks resource availability** in target availability zones
 
-![node add tfvars](../images/elasticity/42_01.png)
+![node add tfvars](/static/images/elasticity/42_01.png)
 
 #### **Phase 2: Infrastructure Provisioning (2-3 minutes)**
 - **Launches new EC2 instances** across availability zones
@@ -69,7 +69,7 @@ The node addition operation follows these phases:
 - **Validates node health** and connectivity
 - **Begins cache data rebalancing** across expanded cluster
 
-![node add terraform output](../images/elasticity/42_05.png)
+![node add terraform output](/static/images/elasticity/42_05.png)
 
 ### **Expected Output Analysis**
 
@@ -117,20 +117,18 @@ Access the Qumulo GUI and monitor the following during the node addition operati
 - **Cache performance** improvement with expanded cache pools
 - **Load distribution** across the enlarged cluster
 
-![node add GUI 1](../images/elasticity/42_02.png)
+![node add GUI 1](/static/images/elasticity/42_02.png)
 
-![node add GUI 2](../images/elasticity/42_03.png)
+![node add GUI 2](/static/images/elasticity/42_03.png)
 
-{{% notice info %}}
-**Why does it appear that no clients are rebalanced to new nodes??** In Multi-AZ clusters we utilize Network Load Blancing to direct clients to nodes.  Stick sessions are enabled and thus existing clients being directed to specific cluster nodes will not immediately get directed to added nodes.  As connections are started, stopped, and added over time they will begin to be directed by AWS NLB to the new nodes.  
+::alert[**Why does it appear that no clients are rebalanced to new nodes??** In Multi-AZ clusters we utilize Network Load Blancing to direct clients to nodes.  Stick sessions are enabled and thus existing clients being directed to specific cluster nodes will not immediately get directed to added nodes.  As connections are started, stopped, and added over time they will begin to be directed by AWS NLB to the new nodes.  
 
-In a Single-AZ cluster we use floating IP addresses, those will move with node adds and clients using those migrated floating IPs will immediately begin using the new nodes.
-{{% /notice %}}
+In a Single-AZ cluster we use floating IP addresses, those will move with node adds and clients using those migrated floating IPs will immediately begin using the new nodes.]
 
 
 You can also see new nodes in the EC2 console of AWS:
 
-![node add EC2 console](../images/elasticity/42_04.png)
+![node add EC2 console](/static/images/elasticity/42_04.png)
 
 ---
 
@@ -196,14 +194,8 @@ Consider for future operations:
 - **Upgrade procedures** will require coordination across more nodes
 - **Security policies** must be validated for new nodes
 
-{{% notice info %}}
-**Performance Note**: Data rebalancing occurs automatically in the background after node addition. While this process doesn't impact service availability, it may take time to complete depending on existing data volume.
-{{% /notice %}}
+::alert[**Performance Note**: Data rebalancing occurs automatically in the background after node addition. While this process doesn't impact service availability, it may take time to complete depending on existing data volume.]
 
-{{% notice tip %}}
-**Scaling Tip**: Adding nodes in three (3, 6, 9) is often more efficient for Multi-AZ deployments as it maintains balanced distribution across availability zones.
-{{% /notice %}}
+::alert[**Scaling Tip**: Adding nodes in three (3, 6, 9) is often more efficient for Multi-AZ deployments as it maintains balanced distribution across availability zones.]
 
-{{% notice warning %}}
-**Cost Awareness**: Each additional node increases ongoing operational costs. Monitor usage patterns to ensure the scale-out provides appropriate value for your workload requirements.
-{{% /notice %}}
+::alert[**Cost Awareness**: Each additional node increases ongoing operational costs. Monitor usage patterns to ensure the scale-out provides appropriate value for your workload requirements.]{type="warning"}

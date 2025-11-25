@@ -1,3 +1,19 @@
+# MIT No Attribution
+
+# Copyright Amazon.com, Inc., Qumulo or its affiliates. All Rights Reserved.
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software is furnished to do so.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Qumulo Workshop Environment Setup with Initial Cluster Deployment via Terraform
 
@@ -250,11 +266,7 @@ Resources:
         - IpProtocol: tcp
           FromPort: 443
           ToPort: 443
-          SourceSecurityGroupId: !Ref LinuxSecurityGroup
-        - IpProtocol: tcp
-          FromPort: 443
-          ToPort: 443
-          SourceSecurityGroupId: !Ref WindowsSecurityGroup
+          SourceSecurityGroupId: !Ref DefaultInstanceSecurityGroup
       Tags:
         - Key: Name
           Value: ssm-vpc-endpoint-sg
@@ -406,74 +418,21 @@ Resources:
       HostedZoneTags:
         - Key: Name
           Value: qumulo-workshop-private-zone
-
-  LinuxSecurityGroup:
+  
+  DefaultInstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupDescription: Linux SG
+      GroupDescription: Instance SG
       VpcId: !Ref QumuloVPC
       SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 22
-          ToPort: 22
-          CidrIp: 0.0.0.0/0
+        - IpProtocol: -1
+          CidrIp: 10.0.0.0/16
       SecurityGroupEgress:
         - IpProtocol: -1
           CidrIp: 0.0.0.0/0
       Tags:
         - Key: Name
-          Value: linux-sg
-
-  WindowsSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Windows SG
-      VpcId: !Ref QumuloVPC
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 3268
-          ToPort: 3268
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 3389
-          ToPort: 3389
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 389
-          ToPort: 389
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 88
-          ToPort: 88
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 636
-          ToPort: 636
-          CidrIp: 0.0.0.0/0
-        - IpProtocol: tcp
-          FromPort: 445
-          ToPort: 445
-          CidrIp: 0.0.0.0/0
-      SecurityGroupEgress:
-        - IpProtocol: -1
-          CidrIp: 0.0.0.0/0
-      Tags:
-        - Key: Name
-          Value: windows-sg
-
-  LinuxAllowFromWindows:
-    Type: AWS::EC2::SecurityGroupIngress
-    Properties:
-      GroupId: !Ref LinuxSecurityGroup
-      IpProtocol: -1
-      SourceSecurityGroupId: !Ref WindowsSecurityGroup
-
-  WindowsAllowFromLinux:
-    Type: AWS::EC2::SecurityGroupIngress
-    Properties:
-      GroupId: !Ref WindowsSecurityGroup
-      IpProtocol: -1
-      SourceSecurityGroupId: !Ref LinuxSecurityGroup
+          Value: instance-default-sg
 
   # CLEAN: Linux Instance with workshop environment setup
   LinuxInstance:
@@ -485,7 +444,7 @@ Resources:
       IamInstanceProfile: !Ref EC2SSMInstanceProfile
       SubnetId: !Ref PrivateSubnetA
       SecurityGroupIds:
-        - !Ref LinuxSecurityGroup
+        - !Ref DefaultInstanceSecurityGroup
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
@@ -599,7 +558,7 @@ Resources:
       IamInstanceProfile: !Ref EC2SSMInstanceProfile
       SubnetId: !Ref PrivateSubnetA
       SecurityGroupIds:
-        - !Ref WindowsSecurityGroup
+        - !Ref DefaultInstanceSecurityGroup
       UserData:
         Fn::Base64: !Sub |
           <powershell>
@@ -798,7 +757,7 @@ Resources:
       IamInstanceProfile: !Ref EC2SSMInstanceProfile
       SubnetId: !Ref PrivateSubnetA
       SecurityGroupIds:
-        - !Ref LinuxSecurityGroup
+        - !Ref DefaultInstanceSecurityGroup
       UserData:
         Fn::Base64: !Sub |
           #!/bin/bash
@@ -831,7 +790,7 @@ Resources:
       InstanceType: t3.medium
       SubnetId: !Ref PrivateSubnetB
       SecurityGroupIds:
-        - !Ref LinuxSecurityGroup
+        - !Ref DefaultInstanceSecurityGroup
       IamInstanceProfile: !Ref EC2SSMInstanceProfile
       UserData:
         Fn::Base64: !Sub |
@@ -865,7 +824,7 @@ Resources:
       InstanceType: t3.medium
       SubnetId: !Ref PrivateSubnetC
       SecurityGroupIds:
-        - !Ref LinuxSecurityGroup
+        - !Ref DefaultInstanceSecurityGroup
       IamInstanceProfile: !Ref EC2SSMInstanceProfile
       UserData:
         Fn::Base64: !Sub |
@@ -899,7 +858,7 @@ Resources:
       InstanceType: t3.medium
       SubnetId: !Ref PrivateSubnetA
       SecurityGroupIds:
-        - !Ref LinuxSecurityGroup
+        - !Ref DefaultInstanceSecurityGroup
       IamInstanceProfile: !Ref EC2SSMInstanceProfile
       UserData:
         Fn::Base64: !Sub |
@@ -933,7 +892,7 @@ Resources:
       InstanceType: t3.medium
       SubnetId: !Ref PrivateSubnetB
       SecurityGroupIds:
-        - !Ref LinuxSecurityGroup
+        - !Ref DefaultInstanceSecurityGroup
       IamInstanceProfile: !Ref EC2SSMInstanceProfile
       UserData:
         Fn::Base64: !Sub |
@@ -1055,21 +1014,13 @@ Resources:
       Value: !Ref AWS::Region
       Description: AWS Region for the workshop
 
-  WindowsSecurityGroupParameter:
+  DefaultInstanceSecurityGroupParameter:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: !Sub "/${AWS::StackName}/windows-security-group"
+      Name: !Sub "/${AWS::StackName}/default-instance-security-group"
       Type: String
-      Value: !Ref WindowsSecurityGroup
-      Description: Windows Security Group ID
-
-  LinuxSecurityGroupParameter:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: !Sub "/${AWS::StackName}/linux-security-group"
-      Type: String
-      Value: !Ref LinuxSecurityGroup
-      Description: Linux Security Group ID
+      Value: !Ref DefaultInstanceSecurityGroup
+      Description: Default instance security group ID
 
   WorkshopUtilityBucketParameter:
     Type: AWS::SSM::Parameter
@@ -1196,17 +1147,11 @@ Outputs:
     Export:
       Name: !Sub "${AWS::StackName}-WindowsInstanceId"
   
-  LinuxSecurityGroup:
-    Description: Security Group ID for Linux instances
-    Value: !Ref LinuxSecurityGroup
+  DefaultInstanceSecurityGroup:
+    Description: default security group for workshop instances
+    Value: !Ref DefaultInstanceSecurityGroup
     Export:
-      Name: !Sub "${AWS::StackName}-LinuxSecurityGroup"
-  
-  WindowsSecurityGroup:
-    Description: Security Group ID for Windows instances
-    Value: !Ref WindowsSecurityGroup
-    Export:
-      Name: !Sub "${AWS::StackName}-WindowsSecurityGroup"
+      Name: !Sub "${AWS::StackName}-DefaultInstanceSecurityGroup"
   
   WorkshopUtilityBucket:
     Description: S3 bucket containing workshop content
@@ -1272,18 +1217,12 @@ Outputs:
     Export:
       Name: !Sub "${AWS::StackName}-AWSRegionParameter"
   
-  WindowsSecurityGroupParameter:
-    Description: SSM Parameter Store path for Windows Security Group
-    Value: !Sub "/${AWS::StackName}/windows-security-group"
+  DefaultInstanceSecurityGroupParameter:
+    Description: SSM Parameter Store path for Default Instance Security Group
+    Value: !Sub "/${AWS::StackName}/default-instance-security-group"
     Export:
-      Name: !Sub "${AWS::StackName}-WindowsSecurityGroupParameter"
-  
-  LinuxSecurityGroupParameter:
-    Description: SSM Parameter Store path for Linux Security Group
-    Value: !Sub "/${AWS::StackName}/linux-security-group"
-    Export:
-      Name: !Sub "${AWS::StackName}-LinuxSecurityGroupParameter"
-  
+      Name: !Sub "${AWS::StackName}-DefaultInstanceSecurityGroupParameter"
+ 
   WorkshopUtilityBucketParameter:
     Description: SSM Parameter Store path for Workshop Utility Bucket
     Value: !Sub "/${AWS::StackName}/utility-bucket-name"

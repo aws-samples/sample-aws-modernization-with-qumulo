@@ -18,7 +18,7 @@ cd /home/ssm-user/qumulo-workshop/scripts
 ./secondary-qumulo-cluster-tf-configuration.sh
 ```
 
-![create single cluster config](../images/haanddr/51_01.png)
+![create single cluster config](/static/images/haanddr/51_01.png)
 
 This utility:
 
@@ -29,7 +29,7 @@ This utility:
 
 Inspect `compute.tfvars` if you are curious; note the variable `node_count = 1` that enables a one-node deployment.
 
-![node count 1](../images/haanddr/51_02.png)
+![node count 1](/static/images/haanddr/51_02.png)
 
 ---
 
@@ -71,7 +71,7 @@ qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
 qq --host demopri.qumulo.local nodes_list
 ```
 
-![primary cluster node list](../images/haanddr/51_04.png)
+![primary cluster node list](/static/images/haanddr/51_04.png)
 
 The second command returns the node table for the primary (multi-node) cluster.
 
@@ -82,7 +82,7 @@ qq --host demosec.qumulo.local login --u admin --p '!Qumulo123'
 qq --host demosec.qumulo.local nodes_list
 ```
 
-![secondary cluster node list](../images/haanddr/51_05.png)
+![secondary cluster node list](/static/images/haanddr/51_05.png)
 
 You should see **exactly one node** in the output, confirming the single-node deployment.
 

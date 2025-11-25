@@ -4,8 +4,6 @@ chapter: true
 weight: 4
 ---
 
-# Scaling Qumulo in the Cloud
-
 ## **Overview**
 This module demonstrates **Qumulo's flexible cloud architecture** and its ability to dynamically scale to meet evolving workload demands. You'll gain hands-on experience with critical scaling operations including Single AZ to Multi AZ cluster conversion, node addition and removal (scale-out and scale-in), and instance optimization (scale-out)—all essential skills for managing enterprise-scale storage deployments in production environments.
 
@@ -36,10 +34,6 @@ The workshop provides **automated scaling scripts** that demonstrate:
 
 This hands-on approach allows you to experience enterprise-grade scaling operations in a controlled environment, building confidence for production deployments.
 
-{{% notice info %}}
-**Production Consideration**: While these examples demonstrate scaling capabilities without interruption to workloads, production scaling should always be planned and coordinated with application teams to minimize impact on active workloads.
-{{% /notice %}}
+::alert[**Production Consideration**: While these examples demonstrate scaling capabilities without interruption to workloads, production scaling should always be planned and coordinated with application teams to minimize impact on active workloads.]
 
-{{% notice warning %}}
-The examples and sample code provided in this workshop are intended to be consumed as instructional content. These will help you understand how various AWS services can be architected to build a solution while demonstrating best practices along the way. These examples are not intended for use in production environments.
-{{% /notice %}}
+::alert[The examples and sample code provided in this workshop are intended to be consumed as instructional content. These will help you understand how various AWS services can be architected to build a solution while demonstrating best practices along the way. These examples are not intended for use in production environments.]{type="warning"}

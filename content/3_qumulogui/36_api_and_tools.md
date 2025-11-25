@@ -17,9 +17,7 @@ The built-in API explorer provides comprehensive documentation for all REST API 
 - **Authentication guidance** for secure API access
 - **OpenAPI 3.0 specification** for integration with development tools
 
-{{% notice info %}}
-**Preview APIs:** Methods prefixed with `[preview]` are under active development and may change without notice.
-{{% /notice %}}
+::alert[**Preview APIs:** Methods prefixed with `[preview]` are under active development and may change without notice.]
 
 ## Available Development Tools
 

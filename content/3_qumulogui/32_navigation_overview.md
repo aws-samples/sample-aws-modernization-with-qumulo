@@ -10,7 +10,7 @@ The Qumulo GUI is organized into logical sections that provide intuitive access 
 
 The Qumulo interface follows a clean, modern design with consistent navigation elements:
 
-![Header and Navigation](../images/qumulogui/32_01.png)
+![Header and Navigation](/static/images/qumulogui/32_01.png)
 
 ### Top Header Bar
 - **Settings** - Global system configuration options
@@ -34,21 +34,21 @@ The primary navigation is organized across the top of the interface with these m
 The dashboard serves as your primary view into cluster health and activity:
 
 ### Cluster Overview
-![Overview](../images/qumulogui/32_02.png)
+![Overview](/static/images/qumulogui/32_02.png)
 
 Displays real-time metrics including:
 - Storage capacity and utilization
 - Metadata overview information
 
 ### Activity Panel
-![Activity](../images/qumulogui/32_03.png)
+![Activity](/static/images/qumulogui/32_03.png)
 
 Shows current system activity:
 - File operations in progress
 - Throughput, IOPS, and Latency details
 
 ### Historical Data Controls
-![Historical Data](../images/qumulogui/32_04.png)
+![Historical Data](/static/images/qumulogui/32_04.png)
 
 Use the time selector to view:
 - **Last 24 hours** (default view)
