@@ -1,5 +1,5 @@
 ---
-title: "Introduction" # MODIFY THIS TITLE IF APPLICABLE
+title: "Introduction"
 chapter: true
 weight: 1
 ---

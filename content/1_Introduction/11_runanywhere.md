@@ -11,7 +11,7 @@ RunAnywhere is Qumulo’s deployment flexibility program that allows Qumulo soft
 + Public cloud platforms such as AWS through Cloud Native Qumulo (CNQ)
 + Instead of being locked into a single appliance model, RunAnywhere gives organizations freedom of choice while ensuring the same features, user experience, and performance across all environments.
 
-![RunAnywhere](/static/images/RunAnywhere-IG1.png)
+![RunAnywhere](/static/images/qumulo-runanywhere.png)
 
 ## 2. Key Capabilities
 
