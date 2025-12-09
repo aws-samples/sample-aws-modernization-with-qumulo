@@ -18,11 +18,10 @@ access to your data. Within those regions or local zones CNQ can be deployed in 
 
 
 ## 2. Cloud-Native Qumulo Architecture
-Cloud-Native Qumulo (CNQ) Single-Availablity Zone (SAZ) Deployment 
-![CNQ single az architecture](/static/images/CNQSAZ.png)
+Cloud-Native Qumulo (CNQ) can deploy as a Single-Availablity Zone (SAZ) or Multi-Availablity Zone (MAZ) Deployment 
+![CNQ architecture SAZ](/static/images/CNQ_SAZ.png)
 
-Cloud-Native Qumulo (CNQ) Multi-Availablity Zone (MAZ) Deployment
-![CNQ multi az architecture](/static/images/CNQMAZ.png)
+![CNQ architecture MAZ](/static/images/CNQ_MAZ.png)
 
 ## 3. Disruptive features without disruptions
 CNQ can also be dynamically reconfigured without taking services offline, so you can boost performance temporarily as needed, or permanently if your workloads change. A CNQ instance originally deployed as a disaster recovery or archive target can be converted from a low-cost, high-capacity service to a high-performance data platform in seconds.
