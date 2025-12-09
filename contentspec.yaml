@@ -37,8 +37,8 @@ awsAccountConfig:
   serviceLinkedRoles:
     - appsync.amazonaws.com
   participantRole:
-    iamPolicies:
-      - static/iam_policy.json
+    #     iamPolicies:
+    #       - static/iam_policy.json
     managedPolicies:
       - "arn:aws:iam::aws:policy/AdministratorAccess"
       - "arn:aws:iam::aws:policy/IAMReadOnlyAccess"
