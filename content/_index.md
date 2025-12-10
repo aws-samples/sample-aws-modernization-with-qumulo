@@ -31,8 +31,18 @@ This workshop is designed for **storage administrators, cloud architects, DevOps
 
 By the end of this session, you will have hands-on experience with **deploying, managing, and scaling Qumulo in AWS**, ensuring you’re equipped to harness the power of **cloud-native storage solutions**.  
 
+## **Workshop Environment Diagram** 
+
+The diagram below illustrates the environment that is deployed throughout the workshop.  Cloud Native Qumulo leverages many native AWS services to manage and scale the storage infrastructure.  The Linux workstation runs Terraform with the Qumulo deployment harness to deploy and scale Qumulo clusters.  All access to resources happens through AWS SSM for secure resource access.
+
+![workshop architecture](/static/images/qumulo-workshop-diagram.png)
+
 ## **Estimated Workshop Cost**
-This workshop is designed to be cost-effective. However, please note that running AWS resources may incur charges based on usage. The estimated cost for this workshop is approximately $43 per day ($1305.06 per month), depending on the duration and the specific AWS services utilized.  In a production environment the customer will also incur metered useage for Qumulo software on top of the referenced AWS infrastructure charges.  A breakdown is as follows:
+This workshop is designed to be cost-effective. However, please note that running AWS resources may incur charges based on usage. The estimated cost for this workshop is approximately $43 per day ($1305.06 per month), depending on the duration and the specific AWS services utilized.  In a production environment the customer will also incur metered useage for Qumulo software on top of the referenced AWS infrastructure charges.  
+
+Please ** Cleanup your Environment ** to avoid excessive charges.  (10_cleanup.html)
+
+A breakdown is as follows:
 
 | Service | Description                                        | Monthly Cost |
 |---------|----------------------------------------------------|-------------:|
