@@ -205,7 +205,7 @@ The destination share needs to be created.
 ![share permissions](/static/images/haanddr/53_20.png)
 ![share permissions 2](/static/images/haanddr/53_22.png)
 
-2. **Connect your Windows desktop SMB to the userdata share with admin privledges**
+2. **Connect your Windows desktop SMB to the userdata share with admin privileges**
 
 ```
 net use \\demopri.qumulo.local\userdata /delete /y

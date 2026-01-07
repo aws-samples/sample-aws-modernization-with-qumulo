@@ -38,7 +38,7 @@ The diagram below illustrates the environment that is deployed throughout the wo
 ![workshop architecture](/static/images/qumulo-workshop-diagram.png)
 
 ## **Estimated Workshop Cost**
-This workshop is designed to be cost-effective. However, please note that running AWS resources may incur charges based on usage. The estimated cost for this workshop is approximately $43 per day ($1305.06 per month), depending on the duration and the specific AWS services utilized.  In a production environment the customer will also incur metered useage for Qumulo software on top of the referenced AWS infrastructure charges.  
+This workshop is designed to be cost-effective. However, please note that running AWS resources may incur charges based on usage. The estimated cost for this workshop is approximately $43 per day ($1305.06 per month), depending on the duration and the specific AWS services utilized.  In a production environment the customer will also incur metered usage for Qumulo software on top of the referenced AWS infrastructure charges.  
 
 Please ** Cleanup your Environment ** to avoid excessive charges.  (10_cleanup.html)
 

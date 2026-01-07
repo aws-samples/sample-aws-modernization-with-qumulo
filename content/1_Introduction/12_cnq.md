@@ -14,11 +14,11 @@ Beyond the inherent scalability and dynamic elasticity in every deployment, CNQ 
 CNQ is also the only file service on AWS that can run in any
 AWS Local Zone as easily as in any AWS region worldwide,
 giving even your on-premises data centers the fastest possible
-access to your data. Within those regions or local zones CNQ can be deployed in a Single Availablity Zone (SAZ) or for production worloads or those instances where availablity is paramount CNQ can be deployed in a Multi-Availablity configuration without the need to duplicate data.
+access to your data. Within those regions or local zones CNQ can be deployed in a Single Availability Zone (SAZ) or for production workloads or those instances where availability is paramount CNQ can be deployed in a Multi-Availability configuration without the need to duplicate data.
 
 
 ## 2. Cloud-Native Qumulo Architecture
-Cloud-Native Qumulo (CNQ) can deploy as a Single-Availablity Zone (SAZ) or Multi-Availablity Zone (MAZ) Deployment 
+Cloud-Native Qumulo (CNQ) can deploy as a Single-Availability Zone (SAZ) or Multi-Availability Zone (MAZ) Deployment 
 ![CNQ architecture SAZ](/static/images/CNQ_SAZ.png)
 
 ![CNQ architecture MAZ](/static/images/CNQ_MAZ.png)

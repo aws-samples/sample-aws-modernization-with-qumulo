@@ -48,7 +48,7 @@ Cloud Native Qumulo supports **two primary deployment methods** on AWS:
 
 ### **Security Configuration**
 - **Security Groups** with appropriate ingress/egress rules
-- **IAM Roles and Policies** for CNQ servic operations
+- **IAM Roles and Policies** for CNQ service operations
 - **KMS Keys** for encryption (optional but recommended)
 - **SSH Key Pairs** for instance access
 
@@ -97,7 +97,7 @@ For comprehensive prerequisite information and deployment guidance:
 
 ## **Connecting to the Workshop Linux Instance**
 
-Throughout this workshop you will be using a pre-created Linux instance.  This instance serves as both the terraform configuration server and a platform to test and view NFS based workloads.  You should connect to the instance through AwS Session Manager.  This enables you to access the Linux environment through your browser without external access and managing SSH security keys.
+Throughout this workshop you will be using a pre-created Linux instance.  This instance serves as both the terraform configuration server and a platform to test and view NFS based workloads.  You should connect to the instance through AWS Session Manager.  This enables you to access the Linux environment through your browser without external access and managing SSH security keys.
 
 ### **Linux Instance Connection**
 1. **Connect to Instance** using Session Manager

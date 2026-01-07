@@ -28,7 +28,7 @@ CDF synchronizes **metadata instantly** while transferring **file data blocks** 
 
 ### **Step 1: Connect to Secondary Cluster and Create Data Directory with Test Data**
 
-Connect your Windows desktop SMB to the userdata share with admin privledges
+Connect your Windows desktop SMB to the userdata share with admin privileges
 
 ```
 net use \\demopri.qumulo.local\userdata /delete /y

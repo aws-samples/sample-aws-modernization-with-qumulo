@@ -146,7 +146,7 @@ To demonstrate space efficiency, let's create some file activity:
 
 ![snapshots file creation](/static/images/haanddr/52_06.png)
 
-Windows Previous Versions shows older "snapshot" versions of files natively.  Right click on the file you created, select Previous Verions tab, and see the older version of your file.  If you click open you will see it without the changes made in step 6 above:
+Windows Previous Versions shows older "snapshot" versions of files natively.  Right click on the file you created, select Previous Versions tab, and see the older version of your file.  If you click open you will see it without the changes made in step 6 above:
 
 ![Previous Versions](/static/images/haanddr/52_07.png)
 
@@ -193,7 +193,7 @@ qq --host demopri.qumulo.local snapshot_get_total_used_capacity
 qq --host demopri.qumulo.local snapshot_list_snapshots | jq --argjson capacity "$(qq --host demopri.qumulo.local snapshot_get_capacity_used_per_snapshot)" '.entries[] as $snap | $capacity.entries[] | select(.id == $snap.id) | {name: $snap.name, capacity_MB: ((.capacity_used_bytes | tonumber) / 1024 / 1024 | floor), capacity_bytes: (.capacity_used_bytes | tonumber)}' | jq -s 'sort_by(.capacity_bytes) | reverse[]'
 ```
 
-::alert[**Capacity Analytics**: The Capacity Trends section of the Qumulo GUI provides excellent information about snapshot consumption over time.  This information is rolled up hourly and is highly beneficial in a production envrionment to observe total snapshot space comsumption.]
+::alert[**Capacity Analytics**: The Capacity Trends section of the Qumulo GUI provides excellent information about snapshot consumption over time.  This information is rolled up hourly and is highly beneficial in a production environment to observe total snapshot space consumption.]
 
 ---
 
@@ -246,7 +246,7 @@ While we won't perform a full restoration in this workshop, understand these key
 - **Point-in-time consistency** - All files in a directory are from the same snapshot moment
 - **Preserve relationships** - Directory structures and file relationships remain intact
 
-![snapshot directory restore previous verions](/static/images/haanddr/52_12.png)
+![snapshot directory restore previous versions](/static/images/haanddr/52_12.png)
 
 ---
 

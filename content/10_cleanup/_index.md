@@ -20,7 +20,7 @@ From the workshop Terraform directory, we execute:
 - `update terraform.tfvars` and set term_protection = false
 - `terraform init` to initialize the Terraform configuration
 - `terraform apply` to enable terraform destroy command
-- `terraform destroy` to remove all compute resources, requies setting the term_protection flag to false in the terraform.tfvars file.
+- `terraform destroy` to remove all compute resources, requires setting the term_protection flag to false in the terraform.tfvars file.
 
 ### Step 2: Persistent Storage Removal
 From the terraform persistent_storage directory, we execute:
