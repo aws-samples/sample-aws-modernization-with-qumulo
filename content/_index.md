@@ -60,6 +60,8 @@ A breakdown is as follows:
 | S3      | Bucket Storage for 30 GB (test data)               | $0.70        |
 |         | **Total Estimated Cost (Monthly)**                 | **$1,433.25** |
 
+::alert[**Cross-AZ Data Transfer Charges**: When you convert the primary cluster from Single-AZ to Multi-AZ configuration during the workshop, additional data transfer charges will apply for traffic between Availability Zones. These charges are typically $0.01 per GB transferred and are not included in the cost estimate above.]{type="info"}
+
 ## **Prerequisites and suggested background knowledge**
 The workshop is designed to guide participants with minimal enterprise storage and AWS experience.  However, general knowledge of Microsoft Windows and Linux operating systems is suggested.  
 
