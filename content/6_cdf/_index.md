@@ -28,7 +28,7 @@ CDF synchronizes **metadata instantly** while transferring **file data blocks** 
 
 ### **Step 1: Connect to Secondary Cluster and Create Data Directory with Test Data**
 
-Connect your Windows desktop SMB to the userdata share with admin privileges
+Connect your Windows workstation (`qumulo-workshop-windows-instance`) SMB to the userdata share with admin privileges
 
 ```
 net use \\demopri.qumulo.local\userdata /delete /y
@@ -69,7 +69,7 @@ for ($i=1; $i -le 30; $i++) {
 
 ### **Step 2: Establish Portal Relationships Using qq Commands**
 
-From your Linux instance, run the following bash script to set up a read / write portal to link `/userdata/GlobalData` between your primary (`demopri`) and secondary (`demosec`) clusters:
+From your Linux instance (`qumulo-workshop-linux-instance`), run the following bash script to set up a read / write portal to link `/userdata/GlobalData` between your primary (`demopri`) and secondary (`demosec`) clusters:
 
 ```
 export PATH="$HOME/.local/bin:$PATH"
