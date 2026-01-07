@@ -57,6 +57,9 @@ A breakdown is as follows:
 ## **Prerequisites and suggested background knowledge**
 The workshop is designed to guide participants with minimal enterprise storage and AWS experience.  However, general knowledge of Microsoft Windows and Linux operating systems is suggested.  
 
+## **Estimated Workshop Duration**
+This workshop takes approximately **3-4 hours** to complete, depending on your pace and depth of exploration.
+
 ## **Let's Get Started!**  
 We’re excited to have you here. Let’s dive in and explore how Qumulo on AWS can help you **simplify data management, enhance performance, and achieve cloud agility at scale**.  
 
