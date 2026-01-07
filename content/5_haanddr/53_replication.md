@@ -221,7 +221,7 @@ net use \\demosec.qumulo.local\userdata /user:admin !Qumulo123
 
 ![replica view analytics](/static/images/haanddr/53_12.png)
 
-3. **Browse to the share on the secondary cluster `\\demosec.qumulo.local\userdata`
+3. **Browse to the share on the secondary cluster** `\\demosec.qumulo.local\userdata`
 4. **Note**: The directory should appear but will be **read-only** for client access
 
 
