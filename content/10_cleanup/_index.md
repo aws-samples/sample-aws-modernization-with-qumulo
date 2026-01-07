@@ -37,7 +37,7 @@ To execute the complete cleanup process, run the following command from your wor
 
 
 
-::alert[**WARNING: This operation will DESTROY ALL CLUSTER RESOURCES and is NOT REVERSIBLE**: Execution of this script effectively renders the workshop environment unuseable.]{type="warning"}
+::alert[**WARNING: This operation will DESTROY ALL CLUSTER RESOURCES and is NOT REVERSIBLE**: Execution of this script effectively renders the workshop environment unusable.]{type="warning"}
 
 
 
