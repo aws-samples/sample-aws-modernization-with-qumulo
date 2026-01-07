@@ -97,11 +97,12 @@ For comprehensive prerequisite information and deployment guidance:
 
 ## **Connecting to the Workshop Linux Instance**
 
-Throughout this workshop you will be using a pre-created Linux instance.  This instance serves as both the terraform configuration server and a platform to test and view NFS based workloads.  You should connect to the instance through AWS Session Manager.  This enables you to access the Linux environment through your browser without external access and managing SSH security keys.
+Throughout this workshop you will be using a pre-created Linux instance named **`qumulo-workshop-linux-instance`**.  This instance serves as both the terraform configuration server and a platform to test and view NFS based workloads.  You should connect to the instance through AWS Session Manager.  This enables you to access the Linux environment through your browser without external access and managing SSH security keys.
 
 ### **Linux Instance Connection**
-1. **Connect to Instance** using Session Manager
-2. **Set the Bash Environment** to properly configure the user interface - required every time you connect to the instance through session manager  ```bash -l```
+1. **Navigate to EC2 Console** and locate the instance named **`qumulo-workshop-linux-instance`**
+2. **Connect to Instance** using Session Manager
+3. **Set the Bash Environment** to properly configure the user interface - required every time you connect to the instance through session manager  ```bash -l```
 
 ![locate the linux instance connect button](/static/images/deployment/21_01.png)
 
