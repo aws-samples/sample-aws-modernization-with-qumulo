@@ -44,7 +44,7 @@ The diagram below illustrates the environment that is deployed throughout the wo
 ![workshop architecture](/static/images/qumulo-workshop-diagram.png)
 
 ## **Estimated Workshop Cost**
-This workshop is designed to be cost-effective. However, please note that running AWS resources may incur charges based on usage. The estimated cost for this workshop is approximately $43 per day ($1305.06 per month), depending on the duration and the specific AWS services utilized.  In a production environment the customer will also incur metered usage for Qumulo software on top of the referenced AWS infrastructure charges.  
+This workshop is designed to be cost-effective. However, please note that running AWS resources may incur charges based on usage. The estimated cost for this workshop is approximately $48 per day ($1,433.25 per month), depending on the duration and the specific AWS services utilized.  In a production environment the customer will also incur metered usage for Qumulo software on top of the referenced AWS infrastructure charges.  
 
 Please ** Cleanup your Environment ** to avoid excessive charges.  (10_cleanup.html)
 
@@ -54,11 +54,11 @@ A breakdown is as follows:
 |---------|----------------------------------------------------|-------------:|
 | EC2     | Primary Qumulo Cluster EC2 (i4i.xlarge x 3)        | $751.17      |
 | EC2     | Secondary Qumulo Cluster EC2 (i4i.xlarge x 1)      | $250.39      |
-| EC2     | Windows Workstation (t3.large)                     | $80.88       |
+| EC2     | Windows Workstation (t3.xlarge)                    | $107.84      |
 | EC2     | Linux Workstation (m5.large)                       | $70.08       |
-| EC2     | Load Instances (t3.medium x 3)                     | $151.84      |
+| EC2     | Load Instances (t3.medium x 5)                     | $253.07      |
 | S3      | Bucket Storage for 30 GB (test data)               | $0.70        |
-|         | **Total Estimated Cost (Monthly)**                 | **$1,305.06** |
+|         | **Total Estimated Cost (Monthly)**                 | **$1,433.25** |
 
 ## **Prerequisites and suggested background knowledge**
 The workshop is designed to guide participants with minimal enterprise storage and AWS experience.  However, general knowledge of Microsoft Windows and Linux operating systems is suggested.  
