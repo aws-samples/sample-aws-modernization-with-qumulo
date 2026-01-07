@@ -51,7 +51,7 @@ cd /home/ssm-user/qumulo-workshop/scripts
 
 The preparation script performs several key functions:
 - **Generates Multi-AZ Terraform configuration** based on the original Single-AZ terraform deployment with proper zone distribution
-- **Updates instance types** if specified in the configuration.  We are not only converting from Single-AZ to Multi-AZ, but also changing the instance types from i4i instance generation and going to i7i instance generation.  The i7i instances give a ~20% performance improvement.
+- **Updates instance types** if specified in the configuration.  We are not only converting from Single-AZ to Multi-AZ, but also changing the instance types from i4i instance generation and going to i7i instance generation.  The i7i instances give a ~20% performance improvement
 - **Creates deployment directory structure** for the new cluster
 - **Validates network prerequisites** for Multi-AZ deployment
 

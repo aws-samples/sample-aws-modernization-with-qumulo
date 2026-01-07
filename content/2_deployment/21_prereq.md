@@ -8,7 +8,7 @@ Before deploying Cloud Native Qumulo (CNQ) on AWS, you need to ensure that your 
 
 ## **Learning Objective**
 By the end of this section, you will:
-- Identify and validate the essential AWS infrastructure requirements, IAM permissions, and network configurations needed for successful CNQ deployment, including VPC setup, subnet planning, and security group configurations.
+- Identify and validate the essential AWS infrastructure requirements, IAM permissions, and network configurations needed for successful CNQ deployment, including VPC setup, subnet planning, and security group configurations
 
 ---
 

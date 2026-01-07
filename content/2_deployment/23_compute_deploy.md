@@ -6,7 +6,7 @@ weight: 23
 
 ## **Learning Objective**
 By the end of this section, you will:
-- Master the deployment of CNQ compute nodes that provide file system services, exploring both Single-AZ and Multi-AZ configurations while understanding how compute resources connect to the persistent storage layer to deliver scalable file services.
+- Master the deployment of CNQ compute nodes that provide file system services, exploring both Single-AZ and Multi-AZ configurations while understanding how compute resources connect to the persistent storage layer to deliver scalable file services
 
 ---
 

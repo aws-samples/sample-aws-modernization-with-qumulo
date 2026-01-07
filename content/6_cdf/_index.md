@@ -8,17 +8,17 @@ weight: 6
 Qumulo Cloud Data Fabric (CDF) provides a unified, global file system that spans edge, core data center, and cloud environments. CDF enables organizations to share, access, and manage unstructured data seamlessly across locations with real-time collaboration, strict consistency, and minimal data movement.
 
 CDF uses a **hub-and-spoke architecture**:
-- **Hub:** Central Qumulo cluster hosting source data.
-- **Spoke:** Remote Qumulo clusters accessing shared data.
-- **Portal:** Directory-level links that control which data is shared.
+- **Hub:** Central Qumulo cluster hosting source data
+- **Spoke:** Remote Qumulo clusters accessing shared data
+- **Portal:** Directory-level links that control which data is shared
 
 CDF synchronizes **metadata instantly** while transferring **file data blocks** only when needed. Advanced caching (NeuralCache) serves most read requests locally, ensuring excellent performance and efficient WAN usage.
 
 ## **Key Takeaways**
-- **Global Data Accessibility:** Share and access data everywhere with guaranteed consistency.
-- **Metadata First:** Directory structure and file details appear immediately; blocks of data transfer only on demand.
-- **Intelligent Caching:** NeuralCache predicts and prefetches frequently used data for fast access.
-- **Bidirectional Sync:** Changes at any endpoint are synchronized and reflected instantly.
+- **Global Data Accessibility:** Share and access data everywhere with guaranteed consistency
+- **Metadata First:** Directory structure and file details appear immediately; blocks of data transfer only on demand
+- **Intelligent Caching:** NeuralCache predicts and prefetches frequently used data for fast access
+- **Bidirectional Sync:** Changes at any endpoint are synchronized and reflected instantly
 
 ---
 
@@ -100,14 +100,14 @@ qq --host demopri.qumulo.local portal_accept_hub -i 1 --authorize-hub-roots --sp
 Access the spoke:  
 `\\demosec.qumulo.local\userdata\GlobalData`
 
-- List files and folders (structure and metadata should appear immediately).
-- Check "size on disk": most files will show negligible usage, as only metadata is transferred until files are read.
+- List files and folders (structure and metadata should appear immediately)
+- Check "size on disk": most files will show negligible usage, as only metadata is transferred until files are read
 
 ---
 
 ### **Step 4: Read Files from Spoke and Demonstrate Caching**
 
-- Open `BigTestFile.txt` on the spoke using Notepad (or any text editor).
+- Open `BigTestFile.txt` on the spoke using Notepad (or any text editor)
     - **First access:** File data transfers block-by-block from the hub (may be slower).
     - **Subsequent access:** File is served from local cache (much faster).
 

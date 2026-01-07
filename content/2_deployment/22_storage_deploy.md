@@ -6,7 +6,7 @@ weight: 22
 
 ## **Learning Objective**
 By the end of this section, you will:
-- Comprehend the role of persistent storage in CNQ architecture and gain hands-on experience deploying the storage layer using Terraform configurations, understanding how this foundation supports data durability and cluster operations.
+- Comprehend the role of persistent storage in CNQ architecture and gain hands-on experience deploying the storage layer using Terraform configurations, understanding how this foundation supports data durability and cluster operations
 
 ---
 
