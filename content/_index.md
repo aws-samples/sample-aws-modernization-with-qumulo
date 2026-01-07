@@ -16,6 +16,12 @@ Throughout this workshop, we will cover the **deployment, configuration, scalabi
 
 This workshop can be deployed in a customer owned account or in the Workshop Studio environment.  
 
+## **Supported AWS Regions**
+This workshop is available in the following AWS regions:
+- **us-west-2** (US West - Oregon)
+- **us-east-2** (US East - Ohio)
+- **us-east-1** (US East - N. Virginia)
+
 ## **What to Expect**  
 - **Hands-on Learning**: Deploy and configure Qumulo on AWS using CloudFormation.  
 - **Real-World Scenarios**: Learn best practices for **high availability (HA)**, **disaster recovery (DR)**, and **cloud data fabric (CDF) architectures**.  
