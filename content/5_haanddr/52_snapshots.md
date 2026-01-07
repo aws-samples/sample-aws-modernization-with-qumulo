@@ -129,7 +129,6 @@ Policy-generated snapshots use automatic naming:
 Connect the Windows system to the share as the admin user:
 
 ```
-net use \\demopri.qumulo.local\userdata /delete /y
 net use \\demopri.qumulo.local\userdata /user:admin !Qumulo123
 ```
 
