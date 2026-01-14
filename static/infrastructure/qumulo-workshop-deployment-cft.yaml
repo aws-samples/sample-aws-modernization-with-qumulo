@@ -53,6 +53,90 @@ Resources:
         - Key: Name
           Value: qumulo-workshop-vpc
 
+  VPCFlowLogsKmsKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: KMS key for encrypting VPC flow logs
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: AllowAccountUse
+            Effect: Allow
+            Principal:
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:root"
+            Action: "kms:*"
+            Resource: "*"
+
+          # Allow CloudWatch Logs service to encrypt with this key
+          - Sid: AllowCloudWatchLogsUseOfTheKey
+            Effect: Allow
+            Principal:
+              Service: !Sub "logs.${AWS::Region}.amazonaws.com"
+            Action:
+              - kms:Encrypt
+              - kms:Decrypt
+              - kms:ReEncrypt*
+              - kms:GenerateDataKey*
+              - kms:CreateGrant
+              - kms:DescribeKey
+            Resource: "*"
+            Condition:
+              ArnLike:
+                kms:EncryptionContext:aws:logs:arn: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*"
+
+
+  # CloudWatch Logs log group for VPC Flow Logs (now encrypted)
+  VPCFlowLogsLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/vpc/flow-logs/${QumuloVPC}"
+      RetentionInDays: 14
+      KmsKeyId: !GetAtt VPCFlowLogsKmsKey.Arn
+
+  # IAM role for VPC Flow Logs, scoped to this log group (fixes W11)
+  VPCFlowLogsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: vpc-flow-logs.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: VPCFlowLogsToCloudWatch
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - logs:DescribeLogGroups
+                  - logs:DescribeLogStreams
+                Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/vpc/flow-logs/${QumuloVPC}:*"
+      Tags:
+        - Key: Name
+          Value: qumulo-vpc-flowlogs-role
+
+  # VPC Flow Log
+  QumuloVPCFlowLog:
+    Type: AWS::EC2::FlowLog
+    Properties:
+      ResourceId: !Ref QumuloVPC
+      ResourceType: VPC
+      TrafficType: ALL
+      LogDestinationType: cloud-watch-logs
+      LogGroupName: !Ref VPCFlowLogsLogGroup
+      DeliverLogsPermissionArn: !GetAtt VPCFlowLogsRole.Arn
+      MaxAggregationInterval: 600
+      Tags:
+        - Key: Name
+          Value: qumulo-vpc-flowlog
+
   InternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
@@ -256,75 +340,88 @@ Resources:
         - Key: Name
           Value: qumulo-workshop-vpce-s3
 
-  # SSM VPC Endpoints
-  SSMVPCEndpointSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Security group for SSM VPC endpoints
-      VpcId: !Ref QumuloVPC
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 443
-          ToPort: 443
-          SourceSecurityGroupId: !Ref DefaultInstanceSecurityGroup
-      Tags:
-        - Key: Name
-          Value: ssm-vpc-endpoint-sg
+  # # SSM VPC Endpoints
+  # SSMVPCEndpointSecurityGroup:
+  #   Type: AWS::EC2::SecurityGroup
+  #   Properties:
+  #     GroupDescription: Security group for SSM VPC endpoints
+  #     VpcId: !Ref QumuloVPC
 
-  VPCEndpointSSM:
-    Type: AWS::EC2::VPCEndpoint
-    Properties:
-      VpcId: !Ref QumuloVPC
-      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ssm"
-      VpcEndpointType: Interface
-      SubnetIds:
-        - !Ref PrivateSubnetA
-        - !Ref PrivateSubnetB
-        - !Ref PrivateSubnetC
-      SecurityGroupIds:
-        - !Ref SSMVPCEndpointSecurityGroup
-      PolicyDocument:
-        Statement:
-          - Effect: Allow
-            Principal: '*'
-            Action:
-              - ssm:*
-            Resource: '*'
-      Tags:
-        - Key: Name
-          Value: qumulo-workshop-vpce-ssm
+  #     SecurityGroupIngress:
+  #       - IpProtocol: tcp
+  #         FromPort: 443
+  #         ToPort: 443
+  #         SourceSecurityGroupId: !Ref DefaultInstanceSecurityGroup
+  #         Description: Allow HTTPS from workshop instances to SSM VPC endpoints
 
-  VPCEndpointSSMMessages:
-    Type: AWS::EC2::VPCEndpoint
-    Properties:
-      VpcId: !Ref QumuloVPC
-      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ssmmessages"
-      VpcEndpointType: Interface
-      SubnetIds:
-        - !Ref PrivateSubnetA
-        - !Ref PrivateSubnetB
-        - !Ref PrivateSubnetC
-      SecurityGroupIds:
-        - !Ref SSMVPCEndpointSecurityGroup
-      Tags:
-        - Key: Name
-          Value: qumulo-workshop-vpce-ssmmessages
+  #     # Egress restricted to HTTPS instead of all protocols / all ports
+  #     SecurityGroupEgress:
+  #       - IpProtocol: tcp
+  #         FromPort: 443
+  #         ToPort: 443
+  #         CidrIp: 0.0.0.0/0
+  #         Description: Allow HTTPS egress to the internet for updates and downloads
 
-  VPCEndpointEC2Messages:
-    Type: AWS::EC2::VPCEndpoint
-    Properties:
-      VpcId: !Ref QumuloVPC
-      ServiceName: !Sub "com.amazonaws.${AWS::Region}.ec2messages"
-      VpcEndpointType: Interface
-      SubnetIds:
-        - !Ref PrivateSubnetA
-        - !Ref PrivateSubnetB
-        - !Ref PrivateSubnetC
-      SecurityGroupIds:
-        - !Ref SSMVPCEndpointSecurityGroup
-      Tags:
-        - Key: Name
-          Value: qumulo-workshop-vpce-ec2messages
+  #     Tags:
+  #       - Key: Name
+  #         Value: ssm-vpc-endpoint-sg
+
+
+
+  # VPCEndpointSSM:
+  #   Type: AWS::EC2::VPCEndpoint
+  #   Properties:
+  #     VpcId: !Ref QumuloVPC
+  #     ServiceName: !Sub "com.amazonaws.${AWS::Region}.ssm"
+  #     VpcEndpointType: Interface
+  #     SubnetIds:
+  #       - !Ref PrivateSubnetA
+  #       - !Ref PrivateSubnetB
+  #       - !Ref PrivateSubnetC
+  #     SecurityGroupIds:
+  #       - !Ref SSMVPCEndpointSecurityGroup
+  #     PolicyDocument:
+  #       Statement:
+  #         - Effect: Allow
+  #           Principal: '*'
+  #           Action:
+  #             - ssm:*
+  #           Resource: '*'
+  #     Tags:
+  #       - Key: Name
+  #         Value: qumulo-workshop-vpce-ssm
+
+  # VPCEndpointSSMMessages:
+  #   Type: AWS::EC2::VPCEndpoint
+  #   Properties:
+  #     VpcId: !Ref QumuloVPC
+  #     ServiceName: !Sub "com.amazonaws.${AWS::Region}.ssmmessages"
+  #     VpcEndpointType: Interface
+  #     SubnetIds:
+  #       - !Ref PrivateSubnetA
+  #       - !Ref PrivateSubnetB
+  #       - !Ref PrivateSubnetC
+  #     SecurityGroupIds:
+  #       - !Ref SSMVPCEndpointSecurityGroup
+  #     Tags:
+  #       - Key: Name
+  #         Value: qumulo-workshop-vpce-ssmmessages
+
+  # VPCEndpointEC2Messages:
+  #   Type: AWS::EC2::VPCEndpoint
+  #   Properties:
+  #     VpcId: !Ref QumuloVPC
+  #     ServiceName: !Sub "com.amazonaws.${AWS::Region}.ec2messages"
+  #     VpcEndpointType: Interface
+  #     SubnetIds:
+  #       - !Ref PrivateSubnetA
+  #       - !Ref PrivateSubnetB
+  #       - !Ref PrivateSubnetC
+  #     SecurityGroupIds:
+  #       - !Ref SSMVPCEndpointSecurityGroup
+  #     Tags:
+  #      - Key: Name
+  #        Value: qumulo-workshop-vpce-ec2messages
 
   # New EC2 KeyPair resource
   QumuloWorkshopKeyPair:
@@ -346,22 +443,36 @@ Resources:
             Principal:
               Service: ec2.amazonaws.com
             Action: sts:AssumeRole
+
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+
       Policies:
         - PolicyName: QumuloWorkshopPolicy
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
-              # Workshop utility bucket access
+
+              # ------------------------------------------------------------------
+              # Workshop: utility bucket access (scoped to this bucket)
+              # Used by setup-workshop-environment.sh to read Qumulo version, etc.
+              # ------------------------------------------------------------------
               - Effect: Allow
                 Action:
+                  - s3:DeleteObject
+                  - s3:DeleteObjectVersion
+                  - s3:GetBucketVersioning
                   - s3:GetObject
                   - s3:ListBucket
+                  - s3:ListBucketVersions
                 Resource:
                   - !Sub "arn:aws:s3:::${WorkshopUtilityBucket}"
                   - !Sub "arn:aws:s3:::${WorkshopUtilityBucket}/*"
-              # SSM parameters access for workshop variables AND private key retrieval
+
+              # ------------------------------------------------------------------
+              # Workshop: SSM parameter access (stack + keypair)
+              # /${StackName}/* for environment; /ec2/keypair/* for SSH private key
+              # ------------------------------------------------------------------
               - Effect: Allow
                 Action:
                   - ssm:GetParameter
@@ -369,35 +480,307 @@ Resources:
                 Resource:
                   - !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${AWS::StackName}/*"
                   - !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/ec2/keypair/*"
-              # EC2 describe permissions for KeyPair ID lookup
+
+              # ------------------------------------------------------------------
+              # S3 - Qumulo/QPS buckets (scoped to Qumulo namespaces)
+              # ------------------------------------------------------------------
               - Effect: Allow
                 Action:
+                  - s3:CreateBucket
+                  - s3:DeleteBucket
+                  - s3:DeleteBucketPolicy
+                  - s3:DeleteObject
+                  - s3:DeleteObjectVersion
+                  - s3:GetAccelerateConfiguration
+                  - s3:GetBucketAcl
+                  - s3:GetBucketCORS
+                  - s3:GetBucketLocation
+                  - s3:GetBucketLogging
+                  - s3:GetBucketObjectLockConfiguration
+                  - s3:GetBucketPolicy
+                  - s3:GetBucketPublicAccessBlock
+                  - s3:GetBucketRequestPayment
+                  - s3:GetBucketTagging
+                  - s3:GetBucketVersioning
+                  - s3:GetBucketWebsite
+                  - s3:GetEncryptionConfiguration
+                  - s3:GetLifecycleConfiguration
+                  - s3:GetObject
+                  - s3:GetObjectTagging
+                  - s3:GetObjectVersion
+                  - s3:GetReplicationConfiguration
+                  - s3:ListBucket
+                  - s3:ListBucketVersions
+                  - s3:PutBucketLogging
+                  - s3:PutBucketPolicy
+                  - s3:PutBucketPublicAccessBlock
+                  - s3:PutBucketTagging
+                  - s3:PutBucketVersioning
+                  - s3:PutEncryptionConfiguration
+                  - s3:PutLifecycleConfiguration
+                  - s3:PutObject
+                Resource:
+                  - arn:aws:s3:::*qumulo*
+                  - arn:aws:s3:::*qumulo*/*
+                  - arn:aws:s3:::*qps*
+                  - arn:aws:s3:::*qps*/*
+
+              # ------------------------------------------------------------------
+              # SSM Parameter Store - Qumulo namespace
+              # ------------------------------------------------------------------
+              - Effect: Allow
+                Action:
+                  - ssm:AddTagsToResource
+                  - ssm:DeleteParameter
+                  - ssm:GetParameter
+                  - ssm:GetParameterHistory
+                  - ssm:GetParameters
+                  - ssm:ListTagsForResource
+                  - ssm:PutParameter
+                  - ssm:RemoveTagsFromResource
+                Resource:
+                  - arn:aws:ssm:*:*:parameter/qumulo/*
+
+              # ------------------------------------------------------------------
+              # SSM SendCommand - resource scoped to AWS documents and instances
+              # needed for automation scripts
+              # ------------------------------------------------------------------
+              - Effect: Allow
+                Action:
+                  - ssm:CancelCommand
+                  - ssm:GetCommandInvocation
+                  - ssm:ListCommandInvocations
+                  - ssm:ListCommands
+                  - ssm:SendCommand
+                Resource:
+                  - !Sub "arn:aws:ssm:${AWS::Region}::document/AWS-*"
+                  - !Sub "arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:instance/*"
+
+              # ------------------------------------------------------------------
+              # Secrets Manager - Qumulo secrets
+              # ------------------------------------------------------------------
+              - Effect: Allow
+                Action:
+                  - secretsmanager:CreateSecret
+                  - secretsmanager:DeleteResourcePolicy
+                  - secretsmanager:DeleteSecret
+                  - secretsmanager:DescribeSecret
+                  - secretsmanager:GetResourcePolicy
+                  - secretsmanager:GetSecretValue
+                  - secretsmanager:PutResourcePolicy
+                  - secretsmanager:PutSecretValue
+                  - secretsmanager:RotateSecret
+                  - secretsmanager:TagResource
+                  - secretsmanager:UntagResource
+                  - secretsmanager:UpdateSecret
+                  - secretsmanager:UpdateSecretVersionStage
+                Resource:
+                  - arn:aws:secretsmanager:*:*:secret:/qumulo/*
+                  - arn:aws:secretsmanager:*:*:secret:qumulo-*
+
+              # ------------------------------------------------------------------
+              # Route53 - DNS management (scoped to hosted zones)
+              # ------------------------------------------------------------------
+              - Effect: Allow
+                Action:
+                  - route53:ChangeResourceRecordSets
+                  - route53:ChangeTagsForResource
+                  - route53:CreateHostedZone
+                  - route53:DeleteHostedZone
+                  - route53:GetChange
+                  - route53:GetHostedZone
+                  - route53:ListHostedZones
+                  - route53:ListHostedZonesByName
+                  - route53:ListResourceRecordSets
+                  - route53:ListTagsForResource
+                  - route53:UpdateHostedZoneComment
+                Resource:
+                  - arn:aws:route53:::hostedzone/*
+                  - arn:aws:route53:::change/*
+
+              # ------------------------------------------------------------------
+              # IAM PassRole - scoped to Qumulo-created roles ONLY
+              # required for Terraform to create
+              # instance profiles. Scoped to avoid cfn-nag F38 warning.
+              # ------------------------------------------------------------------
+              - Effect: Allow
+                Action:
+                  - iam:PassRole
+                Resource:
+                  - !Sub "arn:aws:iam::${AWS::AccountId}:role/qum-*-qumulo-cluster"
+                  - !Sub "arn:aws:iam::${AWS::AccountId}:role/qum-*-qumulo-provisioner"
+                Condition:
+                  StringEquals:
+                    iam:PassedToService:
+                      - ec2.amazonaws.com
+
+              # ------------------------------------------------------------------
+              # Core permissions with wildcard resources
+              # Includes: EC2, ELB, IAM (except PassRole), CloudWatch, Route53,
+              #           Resource Groups, KMS, STS, CloudFormation, and Tags
+              # ------------------------------------------------------------------
+              - Effect: Allow
+                Action:
+                  - cloudformation:DescribeStackResources
+                  - cloudformation:DescribeStacks
+                  - ec2:AllocateAddress
+                  - ec2:AssociateAddress
+                  - ec2:AttachNetworkInterface
+                  - ec2:AttachVolume
+                  - ec2:AuthorizeSecurityGroupEgress
+                  - ec2:AuthorizeSecurityGroupIngress
+                  - ec2:CreateNetworkInterface
+                  - ec2:CreatePlacementGroup
+                  - ec2:CreateSecurityGroup
+                  - ec2:CreateTags
+                  - ec2:CreateVolume
+                  - ec2:DeleteNetworkInterface
+                  - ec2:DeletePlacementGroup
+                  - ec2:DeleteSecurityGroup
+                  - ec2:DeleteTags
+                  - ec2:DeleteVolume
+                  - ec2:DescribeAccountAttributes
+                  - ec2:DescribeAddresses
+                  - ec2:DescribeAvailabilityZones
+                  - ec2:DescribeImages
+                  - ec2:DescribeInstanceAttribute
+                  - ec2:DescribeInstanceCreditSpecifications
+                  - ec2:DescribeInstanceStatus
+                  - ec2:DescribeInstanceTypes
+                  - ec2:DescribeInstances
+                  - ec2:DescribeInternetGateways
                   - ec2:DescribeKeyPairs
+                  - ec2:DescribeNetworkInterfaces
+                  - ec2:DescribePlacementGroups
+                  - ec2:DescribePrefixLists
+                  - ec2:DescribeRouteTables
+                  - ec2:DescribeSecurityGroups
+                  - ec2:DescribeSnapshots
+                  - ec2:DescribeSubnets
+                  - ec2:DescribeTags
+                  - ec2:DescribeVolumeAttribute
+                  - ec2:DescribeVolumes
+                  - ec2:DescribeVolumesModifications
+                  - ec2:DescribeVpcAttribute
+                  - ec2:DescribeVpcEndpoints
+                  - ec2:DescribeVpcs
+                  - ec2:DetachNetworkInterface
+                  - ec2:DetachVolume
+                  - ec2:DisassociateAddress
+                  - ec2:GetInstanceUefiData
+                  - ec2:ModifyInstanceAttribute
+                  - ec2:ModifyInstanceCreditSpecification
+                  - ec2:ModifyInstanceMetadataOptions
+                  - ec2:ModifyNetworkInterfaceAttribute
+                  - ec2:ModifyVolume
+                  - ec2:ModifyVolumeAttribute
+                  - ec2:RebootInstances
+                  - ec2:ReleaseAddress
+                  - ec2:RevokeSecurityGroupEgress
+                  - ec2:RevokeSecurityGroupIngress
+                  - ec2:RunInstances
+                  - ec2:StartInstances
+                  - ec2:StopInstances
+                  - ec2:TerminateInstances
+                  - elasticloadbalancing:AddTags
+                  - elasticloadbalancing:CreateListener
+                  - elasticloadbalancing:CreateLoadBalancer
+                  - elasticloadbalancing:CreateTargetGroup
+                  - elasticloadbalancing:DeleteListener
+                  - elasticloadbalancing:DeleteLoadBalancer
+                  - elasticloadbalancing:DeleteTargetGroup
+                  - elasticloadbalancing:DeregisterTargets
+                  - elasticloadbalancing:DescribeCapacityReservation
+                  - elasticloadbalancing:DescribeListenerAttributes
+                  - elasticloadbalancing:DescribeListeners
+                  - elasticloadbalancing:DescribeLoadBalancerAttributes
+                  - elasticloadbalancing:DescribeLoadBalancers
+                  - elasticloadbalancing:DescribeTags
+                  - elasticloadbalancing:DescribeTargetGroupAttributes
+                  - elasticloadbalancing:DescribeTargetGroups
+                  - elasticloadbalancing:DescribeTargetHealth
+                  - elasticloadbalancing:ModifyListener
+                  - elasticloadbalancing:ModifyLoadBalancerAttributes
+                  - elasticloadbalancing:ModifyTargetGroup
+                  - elasticloadbalancing:ModifyTargetGroupAttributes
+                  - elasticloadbalancing:RegisterTargets
+                  - elasticloadbalancing:RemoveTags
+                  - elasticloadbalancing:SetSecurityGroups
+                  - iam:AddRoleToInstanceProfile
+                  - iam:AttachRolePolicy
+                  - iam:CreateInstanceProfile
+                  - iam:CreatePolicy
+                  - iam:CreateRole
+                  - iam:DeleteInstanceProfile
+                  - iam:DeletePolicy
+                  - iam:DeleteRole
+                  - iam:DeleteRolePolicy
+                  - iam:DetachRolePolicy
+                  - iam:GetInstanceProfile
+                  - iam:GetPolicy
+                  - iam:GetPolicyVersion
+                  - iam:GetRole
+                  - iam:GetRolePolicy
+                  - iam:ListAttachedRolePolicies
+                  - iam:ListInstanceProfilesForRole
+                  - iam:ListPolicyVersions
+                  - iam:ListRolePolicies
+                  - iam:ListRoleTags
+                  - iam:ListRoles
+                  - iam:PutRolePolicy
+                  - iam:RemoveRoleFromInstanceProfile
+                  - iam:TagRole
+                  - iam:UntagRole
+                  - iam:UpdateAssumeRolePolicy
+                  - iam:UpdateRole
+                  - kms:CreateGrant
+                  - kms:Decrypt
+                  - kms:Encrypt
+                  - kms:GenerateDataKey
+                  - kms:GenerateDataKeyWithoutPlaintext
+                  - logs:CreateLogGroup
+                  - logs:DeleteLogGroup
+                  - logs:DescribeLogGroups
+                  - logs:PutRetentionPolicy
+                  - logs:TagLogGroup
+                  - logs:UntagLogGroup
+                  - resource-groups:CreateGroup
+                  - resource-groups:DeleteGroup
+                  - resource-groups:GetGroup
+                  - resource-groups:GetGroupConfiguration
+                  - resource-groups:GetGroupQuery
+                  - resource-groups:GetTags
+                  - resource-groups:Tag
+                  - resource-groups:Untag
+                  - resource-groups:UpdateGroup
+                  - route53:GetHostedZoneCount
+                  - route53:ListHostedZones
+                  - route53:ListHostedZonesByName
+                  - route53resolver:AssociateResolverRule
+                  - route53resolver:CreateResolverEndpoint
+                  - route53resolver:CreateResolverRule
+                  - route53resolver:DeleteResolverEndpoint
+                  - route53resolver:DeleteResolverRule
+                  - route53resolver:DisassociateResolverRule
+                  - route53resolver:GetResolverEndpoint
+                  - route53resolver:GetResolverRule
+                  - route53resolver:ListResolverEndpoints
+                  - route53resolver:ListResolverRules
+                  - route53resolver:TagResource
+                  - route53resolver:UntagResource
+                  - route53resolver:UpdateResolverEndpoint
+                  - route53resolver:UpdateResolverRule
+                  - ssm:DescribeInstanceInformation
+                  - ssm:DescribeParameters
+                  - ssm:ListInstanceAssociations
+                  - ssm:UpdateInstanceInformation
+                  - sts:GetCallerIdentity
+                  - tag:GetResources
                 Resource: "*"
-              # Comprehensive Qumulo deployment permissions
-              - Effect: Allow
-                Action:
-                  - cloudformation:*
-                  - ec2:*
-                  - elasticloadbalancing:*
-                  - iam:*
-                  - kms:*
-                  - lambda:*
-                  - logs:*
-                  - resource-groups:*
-                  - route53:*
-                  - route53resolver:*
-                  - s3:*
-                  - secretsmanager:*
-                  - sns:*
-                  - ssm:*
-                  - sts:*
-                Resource: "*"
+
       Tags:
         - Key: Name
           Value: EC2-SSM-Qumulo-Workshop-Role
-
-
 
   EC2SSMInstanceProfile:
     Type: AWS::IAM::InstanceProfile
@@ -547,7 +930,13 @@ Resources:
       Tags:
         - Key: Name
           Value: qumulo-workshop-linux-instance
-    DependsOn: CopyWorkshopFiles
+    DependsOn: 
+      - CopyWorkshopFiles
+      - LoadTestingInstance1IdParameter
+      - LoadTestingInstance2IdParameter
+      - LoadTestingInstance3IdParameter
+      - LoadTestingInstance4IdParameter
+      - LoadTestingInstance5IdParameter
 
   WindowsInstance:
     Type: AWS::EC2::Instance
@@ -918,7 +1307,6 @@ Resources:
         - Key: Name
           Value: qumulo-load-generator-5
 
-  # Workshop utility bucket for storing Qumulo content
   WorkshopUtilityBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -929,11 +1317,24 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
+
+      # Access logging to same bucket
+      #LoggingConfiguration:
+      #  DestinationBucketName: !Ref WorkshopUtilityBucket
+      #  LogFilePrefix: access-logs/
+
+      # Default encryption at rest
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256   # SSE-S3
+
       LifecycleConfiguration:
         Rules:
           - Id: DeleteAfter7Days
             Status: Enabled
             ExpirationInDays: 7
+
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-utility-bucket"

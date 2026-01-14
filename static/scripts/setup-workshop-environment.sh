@@ -214,8 +214,7 @@ get_cloudformation_variables() {
     PRIVATE_SUBNET_B=$(get_parameter "/${stack_name}/private-subnet-b" "$region")
     PRIVATE_SUBNET_C=$(get_parameter "/${stack_name}/private-subnet-c" "$region")
     AWS_REGION_PARAM=$(get_parameter "/${stack_name}/aws-region" "$region")
-    WINDOWS_SECURITY_GROUP=$(get_parameter "/${stack_name}/windows-security-group" "$region")
-    LINUX_SECURITY_GROUP=$(get_parameter "/${stack_name}/linux-security-group" "$region")
+    DEFAULT_SECURITY_GROUP=$(get_parameter "/$stack_name/default-instance-security-group" "$region")
     UTILITY_BUCKET=$(get_parameter "/${stack_name}/utility-bucket-name" "$region")
     PRIVATE_KEY_ID=$(get_parameter "/${stack_name}/private-key-id" "$region")
     STACK_NAME_PARAM=$(get_parameter "/${stack_name}/stack-name" "$region")
@@ -243,8 +242,7 @@ get_cloudformation_variables() {
     echo "  Private Subnet B: $PRIVATE_SUBNET_B" >&2
     echo "  Private Subnet C: $PRIVATE_SUBNET_C" >&2
     echo "  AWS Region: $AWS_REGION" >&2
-    echo "  Windows Security Group: $WINDOWS_SECURITY_GROUP" >&2
-    echo "  Linux Security Group: $LINUX_SECURITY_GROUP" >&2
+    echo "  Default Security Group: $DEFAULT_SECURITY_GROUP" >&2
     echo "  Utility Bucket: $UTILITY_BUCKET" >&2
     echo "  Private Key ID: $PRIVATE_KEY_ID" >&2
     echo "  Stack Name: $STACK_NAME_PARAM" >&2
@@ -308,8 +306,7 @@ export AWSRegion="$region"
 export PrivateHostedZoneId="$PHZ_ZONE_ID"
 
 # Security Groups
-export WindowsSecurityGroup="$WINDOWS_SECURITY_GROUP"
-export LinuxSecurityGroup="$LINUX_SECURITY_GROUP"
+export DefaultSecurityGroup="$DEFAULT_SECURITY_GROUP"
 
 # Workshop Resources
 export WorkshopUtilityBucket="$UTILITY_BUCKET"
@@ -343,8 +340,7 @@ VARS_EOF
   "PrivateSubnetB": "$PRIVATE_SUBNET_B",
   "PrivateSubnetC": "$PRIVATE_SUBNET_C",
   "AWSRegion": "$region",
-  "WindowsSecurityGroup": "$WINDOWS_SECURITY_GROUP",
-  "LinuxSecurityGroup": "$LINUX_SECURITY_GROUP",
+  "DefaultSecurityGroup": "$DEFAULT_SECURITY_GROUP",
   "WorkshopUtilityBucket": "$UTILITY_BUCKET",
   "PrivateKeyID": "$PRIVATE_KEY_ID",
   "PrivateKeyFile": "/home/ssm-user/qumulo-workshop/qumulo-workshop-keypair.pem",

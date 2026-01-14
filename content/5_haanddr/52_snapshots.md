@@ -170,7 +170,7 @@ qq --host demopri.qumulo.local snapshot_get_total_used_capacity
 ![total space consumption](/static/images/haanddr/52_10.png)
 
 ```
-qq --host demopri.qumulo.local snapshot_list_snapshots | jq --argjson capacity "$(qq --host demopri.qumulo.local snapshot_get_capacity_used_per_snapshot)" '.entries[] as $snap | $capacity.entries[] | select(.id == $snap.id) | {name: $snap.name, capacity_MB: ((.capacity_used_bytes | tonumber) / 1024 / 1024 | floor), capacity_bytes: (.capacity_used_bytes | tonumber)}' | jq -s 'sort_by(.capacity_bytes) | reverse[]'
+qq --host demopri.qumulo.local snapshot_list_statuses | jq --argjson capacity "$(qq --host demopri.qumulo.local snapshot_get_capacity_used_per_snapshot)" '.entries[] as $snap | $capacity.entries[] | select(.id == $snap.id) | {name: $snap.name, capacity_MB: ((.capacity_used_bytes | tonumber) / 1024 / 1024 | floor), capacity_bytes: (.capacity_used_bytes | tonumber)}' | jq -s 'sort_by(.capacity_bytes) | reverse[]'
 ```
 
 ![snapshot space consumption](/static/images/haanddr/52_09.png)
@@ -190,7 +190,7 @@ This command shows each snapshot with its storage consumption in both megabytes 
 ```
 qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
 qq --host demopri.qumulo.local snapshot_get_total_used_capacity
-qq --host demopri.qumulo.local snapshot_list_snapshots | jq --argjson capacity "$(qq --host demopri.qumulo.local snapshot_get_capacity_used_per_snapshot)" '.entries[] as $snap | $capacity.entries[] | select(.id == $snap.id) | {name: $snap.name, capacity_MB: ((.capacity_used_bytes | tonumber) / 1024 / 1024 | floor), capacity_bytes: (.capacity_used_bytes | tonumber)}' | jq -s 'sort_by(.capacity_bytes) | reverse[]'
+qq --host demopri.qumulo.local snapshot_list_statuses | jq --argjson capacity "$(qq --host demopri.qumulo.local snapshot_get_capacity_used_per_snapshot)" '.entries[] as $snap | $capacity.entries[] | select(.id == $snap.id) | {name: $snap.name, capacity_MB: ((.capacity_used_bytes | tonumber) / 1024 / 1024 | floor), capacity_bytes: (.capacity_used_bytes | tonumber)}' | jq -s 'sort_by(.capacity_bytes) | reverse[]'
 ```
 
 ::alert[**Capacity Analytics**: The Capacity Trends section of the Qumulo GUI provides excellent information about snapshot consumption over time.  This information is rolled up hourly and is highly beneficial in a production envrionment to observe total snapshot space comsumption.]
