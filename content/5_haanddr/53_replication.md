@@ -281,7 +281,7 @@ Make note of the replication relationship ID
 ```
 qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
 # Make sure to enter your specific replication ID into the following command
-qq --host demopri.qumulo.local replication_get_source_relationship_status --id {}}
+qq --host demopri.qumulo.local replication_get_source_relationship_status --id "insert_id_here"
 ```
 
 ![Active Replication CLI Details](/static/images/haanddr/53_17.png)
