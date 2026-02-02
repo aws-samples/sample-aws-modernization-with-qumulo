@@ -12,7 +12,7 @@ The node addition process allows you to **increase storage performance** by addi
 Multi-AZ deployments have specific node count requirements for optimal performance and fault tolerance:
 - **Minimum 3 nodes** for basic Multi-AZ configuration
 - **Scale to 5 or more nodes** for enhanced fault tolerance
-- **Incompatable node counts** are 1, 2 or 4
+- **Incompatible node counts** are 1, 2 or 4
 
 For this workshop, we'll be adding **2 additional nodes** to demonstrate the scale-out process for Multi-AZ clusters.
 

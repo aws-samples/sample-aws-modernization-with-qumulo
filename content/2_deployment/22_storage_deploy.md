@@ -6,7 +6,7 @@ weight: 22
 
 ## **Learning Objective**
 By the end of this section, you will:
-- Comprehend the role of persistent storage in CNQ architecture and gain hands-on experience deploying the storage layer using Terraform configurations, understanding how this foundation supports data durability and cluster operations.
+- Comprehend the role of persistent storage in CNQ architecture and gain hands-on experience deploying the storage layer using Terraform configurations, understanding how this foundation supports data durability and cluster operations
 
 ---
 
@@ -48,7 +48,7 @@ cat terraform.tfvars
 - **`deployment_name`** - Unique identifier for this storage deployment
 - **`aws_region`** - AWS region where storage will be created
 - **`soft_capacity_limit`** - This is a capacity clamp on the deployed Qumulo cluster, this can be increased in the future, default is 500TB
-- **`prevent_destroy`** - Protection setting for storage buckets, this is set to false in this workshop, however in production and by default this shold be set to true
+- **`prevent_destroy`** - Protection setting for storage buckets, this is set to false in this workshop, however in production and by default this should be set to true
 - **`tags`** - Resource tagging for organization and cost tracking - there are examples in this workshop, all resources will be tagged with this information
 
 ::alert[**Workshop Insight**: Notice how the deployment name creates a unique identifier that will be referenced by the compute infrastructure. This separation allows the compute configurations to be managed (and scaled) independently of the persistent storage configuration.]

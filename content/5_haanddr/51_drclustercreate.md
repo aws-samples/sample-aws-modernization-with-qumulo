@@ -4,7 +4,7 @@ weight: 51
 ---
 
 Section 5’s labs use **a separate, single-node Qumulo cluster** to simulate a remote site for disaster-recovery exercises.  
-You will build that cluster with two helper scripts that ship with the workshop VM.
+You will build that cluster with two helper scripts that ship with the workshop EC2 instance.
 
 > **Why a single node?**  
 > Cloud Native Qumulo can start with just one instance in AWS, allowing you to test replication and recovery workflows without the cost of a full multi-node cluster. You can later scale out by adding more nodes via Terraform or the Qumulo UI.

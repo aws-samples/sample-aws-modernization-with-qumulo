@@ -42,7 +42,7 @@ Navigate storage usage with interactive visualizations that respond to your expl
 
 ### Historical Usage
 
-::alert[**Note:** Historical useages is not real time, this is updated hourly so there may be no data in this section.  Check back later in the lab to see information.]
+::alert[**Note:** Historical usages is not real time, this is updated hourly so there may be no data in this section.  Check back later in the lab to see information.]
 
 Track storage consumption over selectable time periods:
 - **72 hours** - Short-term usage patterns

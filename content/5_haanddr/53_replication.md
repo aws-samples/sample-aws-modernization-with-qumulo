@@ -205,7 +205,7 @@ The destination share needs to be created.
 ![share permissions](/static/images/haanddr/53_20.png)
 ![share permissions 2](/static/images/haanddr/53_22.png)
 
-2. **Connect your Windows desktop SMB to the userdata share with admin privledges**
+2. **Connect your Windows desktop SMB to the userdata share with admin privileges**
 
 ```
 net use \\demopri.qumulo.local\userdata /delete /y
@@ -221,7 +221,7 @@ net use \\demosec.qumulo.local\userdata /user:admin !Qumulo123
 
 ![replica view analytics](/static/images/haanddr/53_12.png)
 
-3. **Browse to the share on the secondary cluster `\\demosec.qumulo.local\userdata`
+3. **Browse to the share on the secondary cluster** `\\demosec.qumulo.local\userdata`
 4. **Note**: The directory should appear but will be **read-only** for client access
 
 

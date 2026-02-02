@@ -26,7 +26,7 @@ The cluster replace methodology ensures a **two-quorum event process** that mini
 
 ### **Pre-Deployment Considerations**
 
-Before initiating the cluster replace process it is important to consider your organization's change management proceedures:
+Before initiating the cluster replace process it is important to consider your organization's change management procedures:
 - **Backup critical data** as a precautionary measure
 - **Schedule during maintenance windows** to minimize impact
 - **Verify network connectivity** between availability zones for Multi-AZ deployments
@@ -50,8 +50,8 @@ cd /home/ssm-user/qumulo-workshop/scripts
 ### **What This Script Does**
 
 The preparation script performs several key functions:
-- **Generates Multi-AZ Terraform configuration** based on the original SingleAZ terraform deployment with proper zone distribution
-- **Updates instance types** if specified in the configuration.  We are not only converting from Single-AZ to Multi-AZ, but also changing the instnace types from i4i instance generation and going to i7i instance generation.  The i7i instances give a ~20% performance improvement.
+- **Generates Multi-AZ Terraform configuration** based on the original Single-AZ terraform deployment with proper zone distribution
+- **Updates instance types** if specified in the configuration.  We are not only converting from Single-AZ to Multi-AZ, but also changing the instance types from i4i instance generation and going to i7i instance generation.  The i7i instances give a ~20% performance improvement
 - **Creates deployment directory structure** for the new cluster
 - **Validates network prerequisites** for Multi-AZ deployment
 
@@ -73,10 +73,10 @@ cat terraform.tfvars
 ```
 
 You will notice the original cluster var file has been copied over and we've updated the following items:
-- **private_subnet_id** updated from a single subnet (denoting SingleAZ deployment) to 3 subnet IDs (denoting MultiAZ deployment)
+- **private_subnet_id** updated from a single subnet (denoting Single-AZ deployment) to 3 subnet IDs (denoting Multi-AZ deployment)
 - **q_instance_type** updated to i7i.xlarge from i4i.xlarge which will replace the cluster with larger nodes (note you could also add additional nodes, but be aware MAZ cluster are 3 nodes or 5 or more nodes - you can't specify 4 or less than 3.)
 - **q_replacement_cluster** set to true to initiate a cluster replace operation
-- **q_existing_deployment_unique_name** set to the SingleAZ cluster unique deployment name
+- **q_existing_deployment_unique_name** set to the Single-AZ cluster unique deployment name
 
 ![maz tfvars 1](/static/images/elasticity/41_03.png)
 ![maz tfvars 2](/static/images/elasticity/41_04.png)

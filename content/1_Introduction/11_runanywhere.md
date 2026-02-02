@@ -19,7 +19,7 @@ RunAnywhere is Qumulo’s deployment flexibility program that allows Qumulo soft
 
 **Cloud Native** – Run Qumulo directly in AWS with full feature parity.
 
-**Hybrid Workflows** – Move and replicate data across on-prem, cloud, and edge.
+**Hybrid Workflows** – Move and replicate data across on-premises, cloud, and edge.
 
 **Unified Experience** – Same Qumulo Core software, APIs, and interface everywhere.
 
