@@ -4,7 +4,7 @@ chapter: true
 weight: 1
 ---
 
-In today’s data-driven world, organizations need a **scalable, high-performance, and flexible storage solution** that seamlessly operates across **on-premisesises, cloud, and hybrid environments**. **Qumulo’s architecture** is designed to meet these needs, providing a unified data platform that delivers **performance, scalability, and real-time analytics**—no matter where your data lives.  
+In today’s data-driven world, organizations need a **scalable, high-performance, and flexible storage solution** that seamlessly operates across **on-premises, cloud, and hybrid environments**. **Qumulo’s architecture** is designed to meet these needs, providing a unified data platform that delivers **performance, scalability, and real-time analytics**—no matter where your data lives.  
 
 This module will introduce the **core principles** of Qumulo’s **ScaleAnywhere and RunAnywhere architecture**, explaining how Qumulo enables **cloud-native, hybrid, and on-premises storage solutions** with a **consistent user experience**. We will also explore **Cloud Data Fabric (CDF)**, which allows organizations to move, manage, and protect data efficiently across different environments.  
 

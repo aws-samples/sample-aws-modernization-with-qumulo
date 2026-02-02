@@ -208,6 +208,8 @@ The destination share needs to be created.
 2. **Connect your Windows desktop SMB to the userdata share with admin privileges**
 
 ```
+net use \\demopri.qumulo.local\userdata /delete /y
+net use \\demosec.qumulo.local\userdata /delete /y
 net use \\demopri.qumulo.local\userdata /user:admin !Qumulo123
 net use \\demosec.qumulo.local\userdata /user:admin !Qumulo123
 ```
