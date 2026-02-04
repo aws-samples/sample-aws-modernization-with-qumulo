@@ -64,7 +64,7 @@ Now we'll set up a policy to automatically create frequent snapshots for ongoing
 
 ### **Create a Snapshot Policy**
 
-1. Still in **Cluster > Snapshots**, click the **"Policies"** tab
+1. Still in **Cluster > Snapshots**, click the **"Snapshot Policies"** link
 2. Click **"Create Policy"** button
 3. Configure the policy settings:
    
