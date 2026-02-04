@@ -34,6 +34,8 @@ Before adding nodes, ensure:
 
 ## **Step 1: Execute Node Addition**
 
+:::alert[**Tip**: Open the Qumulo GUI dashboard now before running the script so you can monitor the node addition in real-time.]{type="info"}
+
 ### **Script Execution**
 
 Run the automated node addition script:
