@@ -126,7 +126,7 @@ Policy-generated snapshots use automatic naming:
 
 ## Explore Snapshot Storage Efficiency
 
-Connect the Windows system to the share as the admin user:
+Connect the Windows system to the share as the admin user. Open **Command Prompt** or **PowerShell** and run:
 
 ```
 net use \\demopri.qumulo.local\userdata /delete /y
