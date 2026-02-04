@@ -276,7 +276,7 @@ Make note of the replication relationship ID
 
 ![Active Replication CLI](/static/images/haanddr/53_16.png)
 
-**Get specific information about a source relationship**
+:::alert[**Tip**: Get specific information about a source relationship using the command below. Make sure to replace `insert_id_here` with your actual replication ID.]{type="info"}
 
 ```
 qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
