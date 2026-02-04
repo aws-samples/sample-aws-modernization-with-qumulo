@@ -6,6 +6,8 @@ weight: 33
 
 The Analytics section provides comprehensive monitoring and insights into your Qumulo cluster's performance, capacity usage, and activity patterns. This powerful toolset helps administrators understand system behavior, identify bottlenecks, and make data-driven decisions.
 
+Use the **Analytics dropdown menu** (shown below) to navigate between the different analytics views: Integrated Analytics, Capacity Explorer, Capacity Trends, and Activity hotspots.
+
 ![Analytics Main Screen](/static/images/qumulogui/33_01.png)
 
 ## What Analytics Provides
