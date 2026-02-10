@@ -85,12 +85,14 @@ When a replication relationship is created:
 
 Now let's create a continuous replication relationship between your primary and secondary clusters to protect the `/userdata` directory.
 
-### **Access the Primary Cluster UI**
+### **Access the Primary and Secondary Cluster UI**
 
 1. On your **Windows workstation**, open Chrome and access the **Primary Qumulo GUI** (`https://demopri.qumulo.local`)
 2. Log in with username `admin` and password `!Qumulo123`
+3. On your **Windows workstation**, open a new Chrome tab and access the **Secondary Qumulo GUI** (`https://demosec.qumulo.local`)
+4. Log in with username `admin` and password `!Qumulo123`
 
-### **Navigate to Replication**
+### **Navigate to Replication on the Primary Qumulo Cluster**
 
 1. In the left sidebar, navigate to **Cluster > Replication**
 
@@ -221,7 +223,7 @@ net use \\demosec.qumulo.local\userdata /user:admin !Qumulo123
 
 ![replica view analytics](/static/images/haanddr/53_12.png)
 
-3. **Browse to the share on the secondary cluster** `\\demosec.qumulo.local\userdata`
+3. **Browse to the share on the secondary cluster `\\demosec.qumulo.local\userdata`
 4. **Note**: The directory should appear but will be **read-only** for client access
 
 
@@ -276,7 +278,7 @@ Make note of the replication relationship ID
 
 ![Active Replication CLI](/static/images/haanddr/53_16.png)
 
-:::alert[**Tip**: Get specific information about a source relationship using the command below. Make sure to replace `insert_id_here` with your actual replication ID.]{type="info"}
+**Get specific information about a source relationship**
 
 ```
 qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'

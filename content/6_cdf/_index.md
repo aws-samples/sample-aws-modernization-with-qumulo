@@ -8,17 +8,17 @@ weight: 6
 Qumulo Cloud Data Fabric (CDF) provides a unified, global file system that spans edge, core data center, and cloud environments. CDF enables organizations to share, access, and manage unstructured data seamlessly across locations with real-time collaboration, strict consistency, and minimal data movement.
 
 CDF uses a **hub-and-spoke architecture**:
-- **Hub:** Central Qumulo cluster hosting source data
-- **Spoke:** Remote Qumulo clusters accessing shared data
-- **Portal:** Directory-level links that control which data is shared
+- **Hub:** Central Qumulo cluster hosting source data.
+- **Spoke:** Remote Qumulo clusters accessing shared data.
+- **Portal:** Directory-level links that control which data is shared.
 
 CDF synchronizes **metadata instantly** while transferring **file data blocks** only when needed. Advanced caching (NeuralCache) serves most read requests locally, ensuring excellent performance and efficient WAN usage.
 
 ## **Key Takeaways**
-- **Global Data Accessibility:** Share and access data everywhere with guaranteed consistency
-- **Metadata First:** Directory structure and file details appear immediately; blocks of data transfer only on demand
-- **Intelligent Caching:** NeuralCache predicts and prefetches frequently used data for fast access
-- **Bidirectional Sync:** Changes at any endpoint are synchronized and reflected instantly
+- **Global Data Accessibility:** Share and access data everywhere with guaranteed consistency.
+- **Metadata First:** Directory structure and file details appear immediately; blocks of data transfer only on demand.
+- **Intelligent Caching:** NeuralCache predicts and prefetches frequently used data for fast access.
+- **Bidirectional Sync:** Changes at any endpoint are synchronized and reflected instantly.
 
 ---
 
@@ -28,7 +28,7 @@ CDF synchronizes **metadata instantly** while transferring **file data blocks** 
 
 ### **Step 1: Connect to Secondary Cluster and Create Data Directory with Test Data**
 
-Connect your Windows workstation (`qumulo-workshop-windows-instance`) SMB to the userdata share with admin privileges
+Connect your Windows desktop SMB to the userdata share with admin privileges from a powershell prompt:
 
 ```
 net use \\demopri.qumulo.local\userdata /delete /y
@@ -36,6 +36,8 @@ net use \\demosec.qumulo.local\userdata /delete /y
 net use \\demopri.qumulo.local\userdata /user:admin !Qumulo123
 net use \\demosec.qumulo.local\userdata /user:admin !Qumulo123
 ```
+
+![mount UNC shares](/static/images/cdf/60_01.png)
 
 Use this PowerShell script to create some sample content:
 
@@ -69,7 +71,7 @@ for ($i=1; $i -le 30; $i++) {
 
 ### **Step 2: Establish Portal Relationships Using qq Commands**
 
-From your Linux instance (`qumulo-workshop-linux-instance`), run the following bash script to set up a read / write portal to link `/userdata/GlobalData` between your primary (`demopri`) and secondary (`demosec`) clusters:
+From your Linux instance, run the following bash script to set up a read / write portal to link `/userdata/GlobalData` between your primary (`demopri`) and secondary (`demosec`) clusters:
 
 ```
 export PATH="$HOME/.local/bin:$PATH"
@@ -93,23 +95,30 @@ qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
 qq --host demopri.qumulo.local portal_accept_hub -i 1 --authorize-hub-roots --spoke-address $demosec_ip
 ```
 
+::alert[Please note that you can safely ignore the deprecation warnings from python in our CLI - these are caused by a package PIP installs (dataclasses_json) utilizing deprecated features of another package (marshmellow). ]{type="warning"} 
+
+![create portals](/static/images/cdf/60_02.png)
 ---
 
 ### **Step 3: Examine Directory Structure on Spoke**
 
-Access the spoke:  
+Connect to your Windows remote desktop and access the spoke:  
 `\\demosec.qumulo.local\userdata\GlobalData`
 
-- List files and folders (structure and metadata should appear immediately)
-- Check "size on disk": most files will show negligible usage, as only metadata is transferred until files are read
+- List files and folders (structure and metadata should appear immediately).
+- Check "size on disk": most files will show negligible usage, as only metadata is transferred until files are read.
+
+![cache file size](/static/images/cdf/60_03.png)
 
 ---
 
 ### **Step 4: Read Files from Spoke and Demonstrate Caching**
 
-- Open `BigTestFile.txt` on the spoke using Notepad (or any text editor)
+- Open `BigTestFile.txt` on the spoke using Notepad (or any text editor).
     - **First access:** File data transfers block-by-block from the hub (may be slower).
     - **Subsequent access:** File is served from local cache (much faster).
+
+![cache file size after read](/static/images/cdf/60_04.png)
 
 ---
 
@@ -142,10 +151,12 @@ for ($i=1; $i -le 30; $i++) {
     $string | Out-File -FilePath "$basePath\BigTestFile.txt" -Append
 }
 ```
-
+![hub file adds](/static/images/cdf/60_05.png)
 
 Check for new data on the spoke that was created in the hub.  Notice the size on disk of this new data.  
-`\\demopri.qumulo.local\userdata\GlobalData\HubAdds`
+`\\demosec.qumulo.local\userdata\GlobalData\HubAdds`
+
+![hub file adds on spoke](/static/images/cdf/60_06.png)
 
 ### **Step 6: Write New Data to Spoke and Verify on Hub**
 
@@ -180,6 +191,8 @@ for ($i=1; $i -le 30; $i++) {
 Check for this data on the hub which was written to the spoke.  Notice the size of this data on the hub. 
 
 `\\demopri.qumulo.local\userdata\GlobalData\SpokeAdds`
+
+![hub file adds on spoke](/static/images/cdf/60_07.png)
 
 ---
 

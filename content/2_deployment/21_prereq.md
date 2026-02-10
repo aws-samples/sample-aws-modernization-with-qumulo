@@ -8,7 +8,7 @@ Before deploying Cloud Native Qumulo (CNQ) on AWS, you need to ensure that your 
 
 ## **Learning Objective**
 By the end of this section, you will:
-- Identify and validate the essential AWS infrastructure requirements, IAM permissions, and network configurations needed for successful CNQ deployment, including VPC setup, subnet planning, and security group configurations
+- Identify and validate the essential AWS infrastructure requirements, IAM permissions, and network configurations needed for successful CNQ deployment, including VPC setup, subnet planning, and security group configurations.
 
 ---
 
@@ -27,37 +27,6 @@ Cloud Native Qumulo supports **two primary deployment methods** on AWS:
 - **Enterprise Use**: Popular for AWS-centric organizations
 
 ::alert[**Workshop Focus**: While CNQ supports both deployment methods, this workshop concentrates on **Terraform deployment** as it represents the most common customer implementation pattern. The pre-configured workshop environment includes ready-to-use Terraform configurations.]
-
----
-
-## **Essential AWS Prerequisites**
-
-### **AWS Account Requirements**
-- **Active AWS Account** with appropriate billing setup
-- **Administrative Permissions** for the deploying user/role
-- **Service Limits** verified for EC2, VPC, and storage resources
-- **Regional Support** in your target AWS region
-
-### **Network Infrastructure**
-- **VPC Configuration** with appropriate CIDR blocks
-- **Subnet Planning** across multiple Availability Zones
-- **Internet Gateway** for public subnet connectivity
-- **NAT Gateway** for private subnet outbound internet access
-- **Route Tables** properly configured for traffic 
-- **S3 Gateway Endpoint** properly configured S3 gateway endpoint is required in the deployment VPC
-
-### **Security Configuration**
-- **Security Groups** with appropriate ingress/egress rules
-- **IAM Roles and Policies** for CNQ service operations
-- **KMS Keys** for encryption (optional but recommended)
-- **SSH Key Pairs** for instance access
-
-### **Compute and Storage**
-- **EC2 Instance Types** appropriate for your workload requirements
-- **EBS Volume Types** and sizing for persistent storage
-- **Instance Limits** sufficient for your planned cluster size
-
----
 
 ## **Workshop Environment**
 
@@ -97,12 +66,11 @@ For comprehensive prerequisite information and deployment guidance:
 
 ## **Connecting to the Workshop Linux Instance**
 
-Throughout this workshop you will be using a pre-created Linux instance named **`qumulo-workshop-linux-instance`**.  This instance serves as both the terraform configuration server and a platform to test and view NFS based workloads.  You should connect to the instance through AWS Session Manager.  This enables you to access the Linux environment through your browser without external access and managing SSH security keys.
+Throughout this workshop you will be using a pre-created Linux instance.  This instance serves as both the terraform configuration server and a platform to test and view NFS based workloads.  You should connect to the instance through AwS Session Manager.  This enables you to access the Linux environment through your browser without external access and managing SSH security keys.
 
 ### **Linux Instance Connection**
-1. **Navigate to EC2 Console** and locate the instance named **`qumulo-workshop-linux-instance`**
-2. **Connect to Instance** using Session Manager
-3. **Set the Bash Environment** to properly configure the user interface - required every time you connect to the instance through session manager  ```bash -l```
+1. **Connect to Instance** using Session Manager
+2. **Set the Bash Environment** to properly configure the user interface - required every time you connect to the instance through session manager  ```bash -l```
 
 ![locate the linux instance connect button](/static/images/deployment/21_01.png)
 

@@ -20,7 +20,7 @@ From the workshop Terraform directory, we execute:
 - `update terraform.tfvars` and set term_protection = false
 - `terraform init` to initialize the Terraform configuration
 - `terraform apply` to enable terraform destroy command
-- `terraform destroy` to remove all compute resources, requires setting the term_protection flag to false in the terraform.tfvars file
+- `terraform destroy` to remove all compute resources, requires setting the term_protection flag to false in the terraform.tfvars file.
 
 ### Step 2: Persistent Storage Removal
 From the terraform persistent_storage directory, we execute:
@@ -50,27 +50,5 @@ cd /home/ssm-user/qumulo-workshop/scripts
 
 
 The cleanup script will automatically handle both the compute and storage layer removal across all deployed clusters.
-
----
-
-## Workshop Summary
-
-Congratulations on completing the **Cloud Native Qumulo on AWS Workshop**! 
-
-### What You've Accomplished
-
-- ✅ Deployed Cloud Native Qumulo with Terraform (Single-AZ and Multi-AZ)
-- ✅ Managed multi-protocol access (NFS, SMB, S3) and file shares
-- ✅ Scaled clusters dynamically (scale out/in, AZ conversion)
-- ✅ Implemented HA/DR with snapshots and replication
-- ✅ Configured Cloud Data Fabric for global data access
-
-### Next Steps
-
-- **AWS Marketplace**: [Subscribe to Qumulo on AWS Marketplace](https://aws.amazon.com/marketplace/seller-profile?id=99f3369a-39ad-4c2c-b30a-11669c033901)
-- **Documentation**: [care.qumulo.com](https://care.qumulo.com)
-- **Contact**: Reach out to your AWS account team for production deployment guidance
-
----
 
 Thank you for your time and participation in this workshop.  At this point you can close the AWS environment and end the workshop.  If you are interested in learning more about Cloud Native Qumulo on AWS, please reach out to your AWS account team for more information.

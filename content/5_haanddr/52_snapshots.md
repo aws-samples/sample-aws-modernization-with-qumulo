@@ -64,7 +64,7 @@ Now we'll set up a policy to automatically create frequent snapshots for ongoing
 
 ### **Create a Snapshot Policy**
 
-1. Still in **Cluster > Snapshots**, click the **"Snapshot Policies"** link
+1. Still in **Cluster > Snapshots**, click the **"Policies"** tab
 2. Click **"Create Policy"** button
 3. Configure the policy settings:
    
@@ -126,7 +126,7 @@ Policy-generated snapshots use automatic naming:
 
 ## Explore Snapshot Storage Efficiency
 
-Connect the Windows system to the share as the admin user. Open **Command Prompt** or **PowerShell** and run:
+Connect the Windows system to the share as the admin user:
 
 ```
 net use \\demopri.qumulo.local\userdata /delete /y
@@ -257,7 +257,7 @@ As you work through this section, note these important characteristics:
 - **Instant creation** - Snapshots appear immediately regardless of data size
 - **Minimal impact** - Ongoing filesystem operations continue normally during snapshot creation
 - **Space efficiency** - Storage consumption grows only with actual data changes
-- **User accessibility** - Snapshots are directly browsable by end users through `.snapshot`
+- **User accessibility** - Snapshots are directly browseable by end users through `.snapshot`
 - **Automated management** - Policies handle creation and cleanup without manual intervention
 
 ---

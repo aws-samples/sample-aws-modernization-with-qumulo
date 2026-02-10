@@ -45,9 +45,9 @@ Configure continuous replication between Qumulo clusters for disaster recovery:
 ::alert[**Note:** Replication relationships require authorization on both source and target clusters before data transfer begins.]
 
 ### Copy to/from S3
-Integrate with cloud storage for backup and archival:
+Qumulo Shift To / From S3 allows a customer to copy Qumulo data to an Amazon S3 bucket for backup, long term archive, etc.  There are a variety of use cases, and this is separate from the Qumulo persistent storage layer that also leverages Amazon S3.  
 
-Configure data movement between your cluster and S3-compatible storage for:
+Configure data movement between your cluster and Amazon S3 bucket:
 - **Cloud backup** and archival strategies
 - **Data migration** between environments
 - **Hybrid cloud** workflows
@@ -75,18 +75,10 @@ Configure comprehensive audit logging for compliance and security:
 ## Protocol Configuration
 
 ### File and Object Protocols
-Configure global settings for data access protocols:
-
-**FTP Settings:**
-**SMB Settings:**
-**S3 Settings:**
+This panel enables users to configure global settings for data access protocols like FTP, SMB, S3.
 
 ### Authentication & Authorization
-
-**Active Directory Integration:**
-**LDAP Configuration:**
-**Role Management:**
-**Local Users and Groups:**
+This panel allows users to configure settings for Active Directory, LDAP, and Local Users and Groups for the cluster.
 
 ## Exploration Exercise
 
@@ -100,7 +92,7 @@ Take time to explore the Cluster section:
 
 ---
 
-✅ **Key Takeaway:** The Cluster section provides centralized administration for all system-level configurations, from basic monitoring to advanced features like multitenancy and replication.
+✅ **Key Takeaway:** The Cluster section provides centralized administration for all system-level configurations, from basic monitoring to advanced features like multi-tenancy and replication.
 
 ---
 

@@ -435,6 +435,15 @@ Resources:
 
   EC2SSMRole:
     Type: AWS::IAM::Role
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W11
+            reason: "Many operations require wildcard resources (e.g., ec2:Describe*, sts:GetCallerIdentity, route53:List*). These are read-only or account-level operations that cannot be scoped to specific resources per AWS IAM documentation."
+          - id: W76
+            reason: "High SPCM required for comprehensive Qumulo workshop automation spanning EC2, ELB, IAM, Route53, S3, and SSM. Policy is properly scoped with namespace restrictions where possible (S3: *qumulo*/*qps*, SSM: /qumulo/*, PassRole: qum-*-qumulo-*). Time-limited workshop context with cleanup procedures."
+          - id: W40
+            reason: "Allowing all egress protocols is standard AWS best practice. Instances need outbound access to AWS APIs (HTTPS), package repos (HTTP/HTTPS), DNS (UDP 53), NTP (UDP 123), and Qumulo management endpoints. Security enforced via ingress rules (VPC-only), IAM role restrictions, and SSM Session Manager authentication."
     Properties:
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
@@ -804,15 +813,28 @@ Resources:
   
   DefaultInstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W9
+            reason: "VPC CIDR (10.0.0.0/16) required for dynamic multi-instance communication. Workshop deploys Qumulo clusters (4+ nodes), Windows workstation, NLB, and automation instances with DHCP-assigned IPs. Using /32 would break Terraform automation and scaling operations. VPC is isolated private network - not internet accessible."
+          - id: W5
+            reason: "Egress to 0.0.0.0/0 required for AWS service APIs, package repositories, Terraform providers, and software downloads. Follows AWS default security group pattern. Security enforced via ingress restrictions (VPC-only), IAM role scoping, and SSM Session Manager authentication. No public IPs assigned to instances."
+          - id: W42
+            reason: "Allowing all egress protocols is standard AWS best practice. Instances need outbound access to AWS APIs (HTTPS), package repos (HTTP/HTTPS), DNS (UDP 53), NTP (UDP 123), and Qumulo management endpoints. Security enforced via ingress rules (VPC-only), IAM role restrictions, and SSM Session Manager authentication."
+          - id: W40
+            reason: "Allowing all egress protocols is standard AWS best practice. Instances need outbound access to AWS APIs (HTTPS), package repos (HTTP/HTTPS), DNS (UDP 53), NTP (UDP 123), and Qumulo management endpoints. Security enforced via ingress rules (VPC-only), IAM role restrictions, and SSM Session Manager authentication."
     Properties:
       GroupDescription: Instance SG
       VpcId: !Ref QumuloVPC
       SecurityGroupIngress:
         - IpProtocol: -1
           CidrIp: 10.0.0.0/16
+          Description: Allow all traffic from VPC CIDR range
       SecurityGroupEgress:
         - IpProtocol: -1
           CidrIp: 0.0.0.0/0
+          Description: Allow all outbound traffic for AWS services and package
       Tags:
         - Key: Name
           Value: instance-default-sg
@@ -1309,6 +1331,11 @@ Resources:
 
   WorkshopUtilityBucket:
     Type: AWS::S3::Bucket
+    Metadata:
+      cfn_nag:
+        rules_to_suppress:
+          - id: W35
+            reason: "Access logging disabled to avoid circular dependency (cannot log to self) and unnecessary complexity for ephemeral workshop bucket. Bucket exists 2-4 hours, auto-deletes after 7 days, contains only workshop config files. Security enforced via PublicAccessBlock, SSE-S3 encryption, and IAM-only access. CloudTrail provides API-level logging."
     Properties:
       #BucketName: !Sub "qumulo-workshop-${AWS::AccountId}-${AWS::Region}-${AWS::StackId}"
       # No BucketName property - AWS will auto-generate a unique name

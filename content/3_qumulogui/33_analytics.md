@@ -6,8 +6,6 @@ weight: 33
 
 The Analytics section provides comprehensive monitoring and insights into your Qumulo cluster's performance, capacity usage, and activity patterns. This powerful toolset helps administrators understand system behavior, identify bottlenecks, and make data-driven decisions.
 
-Use the **Analytics dropdown menu** (shown below) to navigate between the different analytics views: Integrated Analytics, Capacity Explorer, Capacity Trends, and Activity hotspots.
-
 ![Analytics Main Screen](/static/images/qumulogui/33_01.png)
 
 ## What Analytics Provides
@@ -44,7 +42,7 @@ Navigate storage usage with interactive visualizations that respond to your expl
 
 ### Historical Usage
 
-::alert[**Note:** Historical usages is not real time, this is updated hourly so there may be no data in this section.  Check back later in the lab to see information.]
+::alert[**Note:** Historical usage is not real time, this is updated hourly so there may be no data in this section.  Check back later in the lab to see information.]
 
 Track storage consumption over selectable time periods:
 - **72 hours** - Short-term usage patterns

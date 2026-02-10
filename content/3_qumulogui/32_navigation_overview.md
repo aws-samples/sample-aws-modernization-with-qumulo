@@ -50,7 +50,7 @@ Shows current system activity:
 ### Historical Data Controls
 ![Historical Data](/static/images/qumulogui/32_04.png)
 
-Use the time selector (located at the bottom of the activity panel) to view:
+Use the time selector to view:
 - **Last 24 hours** (default view)
 - **Custom date ranges** for historical analysis
 - **Real-time updates** as data changes

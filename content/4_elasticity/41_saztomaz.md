@@ -50,8 +50,8 @@ cd /home/ssm-user/qumulo-workshop/scripts
 ### **What This Script Does**
 
 The preparation script performs several key functions:
-- **Generates Multi-AZ Terraform configuration** based on the original Single-AZ terraform deployment with proper zone distribution
-- **Updates instance types** if specified in the configuration.  We are not only converting from Single-AZ to Multi-AZ, but also changing the instance types from i4i instance generation and going to i7i instance generation.  The i7i instances give a ~20% performance improvement
+- **Generates Multi-AZ Terraform configuration** based on the original SingleAZ terraform deployment with proper zone distribution
+- **Updates instance types** if specified in the configuration.  We are not only converting from Single-AZ to Multi-AZ, but also changing the instance types from i4i instance generation and going to i7i instance generation.  The i7i instances give a ~20% performance improvement.
 - **Creates deployment directory structure** for the new cluster
 - **Validates network prerequisites** for Multi-AZ deployment
 
@@ -73,10 +73,10 @@ cat terraform.tfvars
 ```
 
 You will notice the original cluster var file has been copied over and we've updated the following items:
-- **private_subnet_id** updated from a single subnet (denoting Single-AZ deployment) to 3 subnet IDs (denoting Multi-AZ deployment)
+- **private_subnet_id** updated from a single subnet (denoting SingleAZ deployment) to 3 subnet IDs (denoting MultiAZ deployment)
 - **q_instance_type** updated to i7i.xlarge from i4i.xlarge which will replace the cluster with larger nodes (note you could also add additional nodes, but be aware MAZ cluster are 3 nodes or 5 or more nodes - you can't specify 4 or less than 3.)
 - **q_replacement_cluster** set to true to initiate a cluster replace operation
-- **q_existing_deployment_unique_name** set to the Single-AZ cluster unique deployment name
+- **q_existing_deployment_unique_name** set to the SingleAZ cluster unique deployment name
 
 ![maz tfvars 1](/static/images/elasticity/41_03.png)
 ![maz tfvars 2](/static/images/elasticity/41_04.png)
@@ -225,7 +225,7 @@ Access the Qumulo GUI and monitor the following during the cluster replace opera
 - **Capacity and performance metrics** updating in real-time.  You might notice decreased latencies and increased IOPs/Throughput from the load test instances taking advantage of the i7i infrastructure.  
 ![GUI performance changes](/static/images/elasticity/41_06.png)
 - **Availability zone distribution** showing the new Multi-AZ topology and updated instance types can be seen in the AWS EC2 console:
-![multiaz instances](/static/images/elasticity/41_12.png)
+![multi-az instances](/static/images/elasticity/41_12.png)
 - **Service health indicators** confirming operational status can be checked from the Cluster Overview section of the GUI
 ![cluster health](/static/images/elasticity/41_13.png)
 #### **Network Configuration**

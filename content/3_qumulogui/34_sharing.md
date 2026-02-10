@@ -25,6 +25,8 @@ Let's create an SMB share for the `/userdata` directory that we'll use in later 
 1. Click **Sharing** → **SMB Shares**
 2. Click **"Create SMB Share"**
 
+![SMB Share Menu](/static/images/qumulogui/34_06.png)
+
 ### Step 2: Configure the Share
 Fill out the share configuration:
 
@@ -35,11 +37,13 @@ Fill out the share configuration:
   - ☑ Enable access-based enumeration
   - ☐ Require encryption (leave unchecked for workshop)
 
+![SMB Share](/static/images/qumulogui/34_03.png)
+
 ### Step 3: Set Permissions
 - **Share Permissions**: Leave as default (Everyone - Full Control) for workshop purposes
 - Click **Create Share**
 
-![SMB Share](/static/images/qumulogui/34_03.png)
+![SMB Share Permissions Detail](/static/images/qumulogui/34_07.png)
 
 ::alert[**Workshop Note:** We're using simplified permissions for workshop purposes. In production environments, you should implement proper access controls and consider requiring encryption.]
 ## Directory Quotas Overview
@@ -68,8 +72,8 @@ NFS exports enable POSIX-compliant access for Linux and Unix clients:
 **Key Capabilities:**
 - **Export any directory** as an NFS mount point
 - **Host access rules** control client permissions
-- **NFSv3 and v4 protocol** support with standard POSIX semantics
-- **Rule ordering** matters - specific rules should be listed first
+- **NFSv3 and v4 protocol** support with standard POSIX semantics and full support for NFS V4.1 ACEs
+- **Rule ordering** matters - Qumulo core enforces NFS export host access rules based on sequential ordering from top to bottom.  Rules should be ordered with most specific rules first, and broad rules at the bottom
 
 ## S3 Bucket Overview
 
@@ -102,7 +106,7 @@ Take a few minutes to explore each section:
 1. **Browse existing quotas** - See what storage limits might be in place
 2. **Review NFS exports** - Observe any existing filesystem exports
 3. **Check S3 bucket configuration** - Understand object storage setup
-4. **Verify your SMB share** - Confirm the `/userdata` share was created successfully
+4. **Verify your SMB share** - Confirm the `/userdata` share was created successfully by checking in the Qumulo UI section
 
 ---
 

@@ -6,7 +6,7 @@ weight: 22
 
 ## **Learning Objective**
 By the end of this section, you will:
-- Comprehend the role of persistent storage in CNQ architecture and gain hands-on experience deploying the storage layer using Terraform configurations, understanding how this foundation supports data durability and cluster operations
+- Comprehend the role of persistent storage in CNQ architecture and gain hands-on experience deploying the storage layer using Terraform configurations, understanding how this foundation supports data durability and cluster operations.
 
 ---
 
@@ -59,7 +59,7 @@ cat terraform.tfvars
 
 ## **AWS Console: Exploring Created S3 Buckets**
 
-After the persistent storage deployment completes, multiple S3 buckets are created with multiple prefixes to create paralellism and increase performance, to store your file system data, across multiple objects. Let's explore these in the AWS Console.
+After the persistent storage deployment completes, multiple S3 buckets are created with multiple prefixes to create parallelism and increase performance, to store your file system data, across multiple objects. Let's explore these in the AWS Console.
 
 ### **Accessing S3 in the AWS Console**
 

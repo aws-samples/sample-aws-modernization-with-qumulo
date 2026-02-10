@@ -10,7 +10,7 @@ Before we explore the Qumulo interface, let's set up some realistic activity on 
 
 To make our GUI exploration more meaningful, we'll start some background activity on your cluster. This will populate the interface with real data and metrics.
 
-1. **Connect to your Linux instance** (`qumulo-workshop-linux-instance`) using the connection method you established earlier
+1. **Connect to your Linux instance** using the connection method you established earlier
 2. **Start the load testing script** by running the following command:
 
 ```bash
@@ -34,7 +34,7 @@ The load will continue running in the background, providing live data for us to 
 
 Now let's connect to your cluster's web interface:
 
-1. **Connect to your Windows workshop workstation** (`qumulo-workshop-windows-instance`) using Fleet Manager
+1. **Connect to your Windows workshop workstation** using your preferred method (RDP, AWS Systems Manager, etc.)
 
 2. **Open Google Chrome** from the desktop
 
