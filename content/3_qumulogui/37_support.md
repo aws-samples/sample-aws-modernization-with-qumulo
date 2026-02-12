@@ -31,7 +31,7 @@ Your primary resource for support and product information:
 
 **Product Information:**
 - **Latest software releases** and release notes
-- **Feature roadmaps** and upcoming capabilities
+- **Feature roadmap** and upcoming capabilities
 - **Training materials** and certification programs
 
 Access Qumulo Care at: [care.qumulo.com](http://care.qumulo.com/)

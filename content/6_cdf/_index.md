@@ -37,6 +37,8 @@ net use \\demopri.qumulo.local\userdata /user:admin !Qumulo123
 net use \\demosec.qumulo.local\userdata /user:admin !Qumulo123
 ```
 
+![mount UNC shares](/static/images/cdf/60_01.png)
+
 Use this PowerShell script to create some sample content:
 
 ```
@@ -93,15 +95,20 @@ qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
 qq --host demopri.qumulo.local portal_accept_hub -i 1 --authorize-hub-roots --spoke-address $demosec_ip
 ```
 
+::alert[Please note that you can safely ignore the deprecation warnings from python in our CLI - these are caused by a package PIP installs (dataclasses_json) utilizing deprecated features of another package (marshmellow). ]{type="warning"} 
+
+![create portals](/static/images/cdf/60_02.png)
 ---
 
 ### **Step 3: Examine Directory Structure on Spoke**
 
-Access the spoke:  
+Connect to your Windows remote desktop and access the spoke:  
 `\\demosec.qumulo.local\userdata\GlobalData`
 
 - List files and folders (structure and metadata should appear immediately)
 - Check "size on disk": most files will show negligible usage, as only metadata is transferred until files are read
+
+![cache file size](/static/images/cdf/60_03.png)
 
 ---
 
@@ -110,6 +117,8 @@ Access the spoke:
 - Open `BigTestFile.txt` on the spoke using Notepad (or any text editor)
     - **First access:** File data transfers block-by-block from the hub (may be slower).
     - **Subsequent access:** File is served from local cache (much faster).
+
+![cache file size after read](/static/images/cdf/60_04.png)
 
 ---
 
@@ -142,10 +151,12 @@ for ($i=1; $i -le 30; $i++) {
     $string | Out-File -FilePath "$basePath\BigTestFile.txt" -Append
 }
 ```
-
+![hub file adds](/static/images/cdf/60_05.png)
 
 Check for new data on the spoke that was created in the hub.  Notice the size on disk of this new data.  
-`\\demopri.qumulo.local\userdata\GlobalData\HubAdds`
+`\\demosec.qumulo.local\userdata\GlobalData\HubAdds`
+
+![hub file adds on spoke](/static/images/cdf/60_06.png)
 
 ### **Step 6: Write New Data to Spoke and Verify on Hub**
 
@@ -180,6 +191,8 @@ for ($i=1; $i -le 30; $i++) {
 Check for this data on the hub which was written to the spoke.  Notice the size of this data on the hub. 
 
 `\\demopri.qumulo.local\userdata\GlobalData\SpokeAdds`
+
+![hub file adds on spoke](/static/images/cdf/60_07.png)
 
 ---
 

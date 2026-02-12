@@ -18,7 +18,7 @@ access to your data. Within those regions or local zones CNQ can be deployed in 
 
 
 ## 2. Cloud-Native Qumulo Architecture
-Cloud-Native Qumulo (CNQ) can deploy as a Single-Availability Zone (SAZ) or Multi-Availability Zone (MAZ) Deployment 
+Cloud-Native Qumulo (CNQ) can deploy as a Single-Availability Zone (SAZ) or Multi-Availability Zone (MAZ) Deployment  
 ![CNQ architecture SAZ](/static/images/CNQ_SAZ.png)
 
 ![CNQ architecture MAZ](/static/images/CNQ_MAZ.png)

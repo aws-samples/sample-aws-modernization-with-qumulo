@@ -225,7 +225,7 @@ Access the Qumulo GUI and monitor the following during the cluster replace opera
 - **Capacity and performance metrics** updating in real-time.  You might notice decreased latencies and increased IOPs/Throughput from the load test instances taking advantage of the i7i infrastructure.  
 ![GUI performance changes](/static/images/elasticity/41_06.png)
 - **Availability zone distribution** showing the new Multi-AZ topology and updated instance types can be seen in the AWS EC2 console:
-![multiaz instances](/static/images/elasticity/41_12.png)
+![multi-az instances](/static/images/elasticity/41_12.png)
 - **Service health indicators** confirming operational status can be checked from the Cluster Overview section of the GUI
 ![cluster health](/static/images/elasticity/41_13.png)
 #### **Network Configuration**

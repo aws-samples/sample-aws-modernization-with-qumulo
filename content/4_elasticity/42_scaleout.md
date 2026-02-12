@@ -123,7 +123,7 @@ Access the Qumulo GUI and monitor the following during the node addition operati
 
 ![node add GUI 2](/static/images/elasticity/42_03.png)
 
-::alert[**Why does it appear that no clients are rebalanced to new nodes??** In Multi-AZ clusters we utilize Network Load Blancing to direct clients to nodes.  Stick sessions are enabled and thus existing clients being directed to specific cluster nodes will not immediately get directed to added nodes.  As connections are started, stopped, and added over time they will begin to be directed by AWS NLB to the new nodes.  
+::alert[**Why does it appear that no clients are rebalanced to new nodes??** In Multi-AZ clusters we utilize Network Load Balancing to direct clients to nodes.  Stick sessions are enabled and thus existing clients being directed to specific cluster nodes will not immediately get directed to added nodes.  As connections are started, stopped, and added over time they will begin to be directed by AWS NLB to the new nodes.  
 
 In a Single-AZ cluster we use floating IP addresses, those will move with node adds and clients using those migrated floating IPs will immediately begin using the new nodes.]
 

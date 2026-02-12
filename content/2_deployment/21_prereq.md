@@ -28,37 +28,6 @@ Cloud Native Qumulo supports **two primary deployment methods** on AWS:
 
 ::alert[**Workshop Focus**: While CNQ supports both deployment methods, this workshop concentrates on **Terraform deployment** as it represents the most common customer implementation pattern. The pre-configured workshop environment includes ready-to-use Terraform configurations.]
 
----
-
-## **Essential AWS Prerequisites**
-
-### **AWS Account Requirements**
-- **Active AWS Account** with appropriate billing setup
-- **Administrative Permissions** for the deploying user/role
-- **Service Limits** verified for EC2, VPC, and storage resources
-- **Regional Support** in your target AWS region
-
-### **Network Infrastructure**
-- **VPC Configuration** with appropriate CIDR blocks
-- **Subnet Planning** across multiple Availability Zones
-- **Internet Gateway** for public subnet connectivity
-- **NAT Gateway** for private subnet outbound internet access
-- **Route Tables** properly configured for traffic 
-- **S3 Gateway Endpoint** properly configured S3 gateway endpoint is required in the deployment VPC
-
-### **Security Configuration**
-- **Security Groups** with appropriate ingress/egress rules
-- **IAM Roles and Policies** for CNQ service operations
-- **KMS Keys** for encryption (optional but recommended)
-- **SSH Key Pairs** for instance access
-
-### **Compute and Storage**
-- **EC2 Instance Types** appropriate for your workload requirements
-- **EBS Volume Types** and sizing for persistent storage
-- **Instance Limits** sufficient for your planned cluster size
-
----
-
 ## **Workshop Environment**
 
 ### **Pre-Configured Infrastructure**

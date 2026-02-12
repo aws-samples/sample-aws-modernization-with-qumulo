@@ -47,7 +47,7 @@ The Qumulo REST API provides programmatic access to all cluster functionality:
 - **Snapshot operations** - Create, manage, and restore snapshots
 - **Replication control** - Configure and monitor data replication
 - **Cluster administration** - Manage nodes, networks, and protocols
-- **Multitenancy** - Configure isolated environments
+- **Multi-tenancy** - Configure isolated environments
 
 ## Workshop Exercise
 

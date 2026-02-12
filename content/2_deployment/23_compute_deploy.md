@@ -57,7 +57,7 @@ cat terraform.tfvars
 **AWS Variables**
 - **`aws_region`** - AWS region for compute resources
 - **`aws_vpc_id`** - VPC where compute instances will be deployed
-- **`ec2_key_pair`** - Preconfigured EC2 key pair in the region
+- **`ec2_key_pair`** - Pre-configured EC2 key pair in the region
 - **`private_subnet_id`** - **Single subnet ID** for SAZ deployment
 - **`term_protection`** - Set to false for workshop - true required for production
 

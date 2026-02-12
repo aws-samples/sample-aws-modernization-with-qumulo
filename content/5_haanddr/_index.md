@@ -38,7 +38,7 @@ By the end of this module, participants will be able to:
 - Handling version compatibility requirements across different Qumulo Core releases
 
 ### **Failover and Failback Operations**
-- Planning and executing planned failovers with minimal data loss
+- Planning and executing planned failover with minimal data loss
 - Managing emergency failover scenarios when source clusters become unavailable
 - Understanding the "Make Target Writable" process for disaster scenarios
 - Implementing proper failback procedures using "Reconnect Relationship" functionality

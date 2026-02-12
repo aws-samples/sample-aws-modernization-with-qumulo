@@ -59,7 +59,7 @@ cat terraform.tfvars
 
 ## **AWS Console: Exploring Created S3 Buckets**
 
-After the persistent storage deployment completes, multiple S3 buckets are created with multiple prefixes to create paralellism and increase performance, to store your file system data, across multiple objects. Let's explore these in the AWS Console.
+After the persistent storage deployment completes, multiple S3 buckets are created with multiple prefixes to create parallelism and increase performance, to store your file system data, across multiple objects. Let's explore these in the AWS Console.
 
 ### **Accessing S3 in the AWS Console**
 
