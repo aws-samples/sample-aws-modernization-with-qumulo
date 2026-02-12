@@ -16,6 +16,12 @@ Throughout this workshop, we will cover the **deployment, configuration, scalabi
 
 This workshop can be deployed in a customer owned account or in the Workshop Studio environment.  
 
+## **Supported AWS Regions**
+This workshop is available in the following AWS regions:
+- **us-west-2** (US West - Oregon)
+- **us-east-2** (US East - Ohio)
+- **us-east-1** (US East - N. Virginia)
+
 ## **What to Expect**  
 - **Hands-on Learning**: Deploy and configure Qumulo on AWS using CloudFormation.  
 - **Real-World Scenarios**: Learn best practices for **high availability (HA)**, **disaster recovery (DR)**, and **cloud data fabric (CDF) architectures**.  
@@ -38,7 +44,7 @@ The diagram below illustrates the environment that is deployed throughout the wo
 ![workshop architecture](/static/images/qumulo-workshop-diagram.png)
 
 ## **Estimated Workshop Cost**
-This workshop is designed to be cost-effective. However, please note that running AWS resources may incur charges based on usage. The estimated cost for this workshop is approximately $43 per day ($1305.06 per month), depending on the duration and the specific AWS services utilized.  In a production environment the customer will also incur metered usage for Qumulo software on top of the referenced AWS infrastructure charges.  For detailed Qumulo cost estimation please visit the Qumulo AWS TCO Calculator: https://qumulo.com/product/aws/cnq-tco-calculator/  
+This workshop is designed to be cost-effective. However, please note that running AWS resources may incur charges based on usage. The estimated cost for this workshop is approximately $48 per day ($1,433.25 per month), depending on the duration and the specific AWS services utilized.  In a production environment the customer will also incur metered usage for Qumulo software on top of the referenced AWS infrastructure charges. For detailed Qumulo cost estimation please visit the Qumulo AWS TCO Calculator: https://qumulo.com/product/aws/cnq-tco-calculator/  
 
 Please ** Cleanup your Environment ** to avoid excessive charges.  (10_cleanup.html)
 
@@ -48,14 +54,19 @@ A breakdown is as follows:
 |---------|----------------------------------------------------|-------------:|
 | EC2     | Primary Qumulo Cluster EC2 (i4i.xlarge x 3)        | $751.17      |
 | EC2     | Secondary Qumulo Cluster EC2 (i4i.xlarge x 1)      | $250.39      |
-| EC2     | Windows Workstation (t3.large)                     | $80.88       |
+| EC2     | Windows Workstation (t3.xlarge)                    | $107.84      |
 | EC2     | Linux Workstation (m5.large)                       | $70.08       |
-| EC2     | Load Instances (t3.medium x 5)                     | $151.84      |
+| EC2     | Load Instances (t3.medium x 5)                     | $253.07      |
 | S3      | Bucket Storage for 30 GB (test data)               | $0.70        |
-|         | **Total Estimated Cost (Monthly)**                 | **$1,305.06** |
+|         | **Total Estimated Cost (Monthly)**                 | **$1,433.25**|
+
+::alert[**Cross-AZ Data Transfer Charges**: When you convert the primary cluster from Single-AZ to Multi-AZ configuration during the workshop, additional data transfer charges will apply for traffic between Availability Zones. These charges are typically $0.01 per GB transferred and are not included in the cost estimate above.]{type="info"}
 
 ## **Prerequisites and suggested background knowledge**
 The workshop is designed to guide participants with minimal enterprise storage and AWS experience.  However, general knowledge of Microsoft Windows and Linux operating systems is suggested.  
+
+## **Estimated Workshop Duration**
+This workshop takes approximately **3-4 hours** to complete, depending on your pace and depth of exploration.
 
 ## **Let's Get Started!**  
 We’re excited to have you here. Let’s dive in and explore how Qumulo on AWS can help you **simplify data management, enhance performance, and achieve cloud agility at scale**.  

@@ -6,7 +6,7 @@ weight: 23
 
 ## **Learning Objective**
 By the end of this section, you will:
-- Master the deployment of CNQ compute nodes that provide file system services, exploring both Single-AZ and Multi-AZ configurations while understanding how compute resources connect to the persistent storage layer to deliver scalable file services.
+- Master the deployment of CNQ compute nodes that provide file system services, exploring both Single-AZ and Multi-AZ configurations while understanding how compute resources connect to the persistent storage layer to deliver scalable file services
 
 ---
 
@@ -199,7 +199,7 @@ These can also be viewed in the AWS Console by navigating to Systems Manager, Pa
 
 ### **Accessing Your Qumulo Cluster**
 
-With compute deployment complete, the next step is to verify cluster connectivity.  The workshop creates a text file containing all connectivity information for the clusters deployed.  As you progress through the workshop the content of this file will change:
+With compute deployment complete, the next step is to verify cluster connectivity.  The workshop creates a text file named **`cluster-access-info.txt`** containing all connectivity information for the clusters deployed.  As you progress through the workshop the content of this file will change:
 
 **From the Linux Instance:**
 ```
@@ -209,9 +209,10 @@ cat /home/ssm-user/qumulo-workshop/cluster-access-info.txt
 ![cluster access info text file](/static/images/deployment/23_09.png)
 
 **From the Windows Instance:**
-1. **RDP to Windows instance** using Fleet Manager
-2. **Open browser** to the cluster web UI URL
-3. **Login** with admin credentials from access info
+1. **Navigate to EC2 Console** and locate the instance named **`qumulo-workshop-windows-instance`**
+2. **RDP to Windows instance** using Fleet Manager (username: **Administrator**)
+3. **Open browser** to the cluster web UI URL: **`https://demopri.qumulo.local`**
+4. **Login** with admin credentials from **`cluster-access-info.txt`** file on the desktop
 
 ![locate the windows instance connect button](/static/images/deployment/23_12.png)
 

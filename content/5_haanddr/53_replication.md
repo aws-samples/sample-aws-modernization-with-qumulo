@@ -223,7 +223,7 @@ net use \\demosec.qumulo.local\userdata /user:admin !Qumulo123
 
 ![replica view analytics](/static/images/haanddr/53_12.png)
 
-3. **Browse to the share on the secondary cluster `\\demosec.qumulo.local\userdata`
+3. **Browse to the share on the secondary cluster** `\\demosec.qumulo.local\userdata`
 4. **Note**: The directory should appear but will be **read-only** for client access
 
 
@@ -278,7 +278,7 @@ Make note of the replication relationship ID
 
 ![Active Replication CLI](/static/images/haanddr/53_16.png)
 
-**Get specific information about a source relationship**
+:::alert[**Tip**: Get specific information about a source relationship using the command below. Make sure to replace `insert_id_here` with your actual replication ID.]{type="info"}
 
 ```
 qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
