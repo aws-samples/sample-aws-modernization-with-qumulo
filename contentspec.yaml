@@ -1,0 +1,60 @@
+version: 2.0
+
+# BEGIN Locale
+defaultLocaleCode: en-US
+localeCodes:
+  - en-US
+# END Locale
+
+params:
+  author: Qumulo team
+  description: Qumulo & AWS - Modernization Workshop
+
+additionalLinks:
+  - title: "AWS Modernization with Qumulo"
+    link: "https://qumulo-on-aws.awsworkshop.io/"
+
+# START Infrastructure
+infrastructure:
+  cloudformationTemplates:
+    - templateLocation: static/infrastructure/qumulo-workshop-deployment-cft.yaml
+      label: Qumulo Workshop CFT Template
+
+# END Infrastructure
+
+# START Accounts
+awsAccountConfig:
+  accountSources:
+    - workshop_studio
+  serviceLinkedRoles:
+    - appsync.amazonaws.com
+  participantRole:
+    iamPolicies:
+      - static/participant_policy.json
+    managedPolicies:
+
+      - "arn:aws:iam::aws:policy/IAMReadOnlyAccess"
+      - "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+      - "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"      
+
+      
+    trustedPrincipals:
+      service:
+        - ec2.amazonaws.com
+        - lambda.amazonaws.com
+        - elasticloadbalancing.amazonaws.com
+
+  regionConfiguration:
+    minAccessibleRegions: 1
+    maxAccessibleRegions: 3
+    accessibleRegions:
+      recommended:
+        - us-west-2
+        - us-east-1
+        - us-east-2
+    deployableRegions:
+      recommended:
+        - us-west-2
+        - us-east-1
+        - us-east-2
+# END Accounts
