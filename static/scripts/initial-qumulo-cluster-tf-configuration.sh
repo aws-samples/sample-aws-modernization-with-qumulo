@@ -305,7 +305,7 @@ configure_root_tfvars() {
     # Set up Qumulo DNS Resolver
     sed -i "s/^q_cluster_fqdn[[:space:]]*=.*/q_cluster_fqdn = \"demopri.qumulo.local\"/" "$tfvars_file"
 
-0    # Replace the tags section with proper formatting
+    # Replace the tags section with proper formatting
     sed -i "0,/^tags[[:space:]]*=.*/{s/^tags[[:space:]]*=.*/tags = { \"department\" = \"se\", \"owner\" = \"awsworkshop\", \"purpose\" = \"aws-workshop\", \"long_running\" = \"false\" }/}" "$tfvars_file"
 
     # Append the floating IPs line to the end of the file

@@ -5,16 +5,13 @@ weight: 2
 ---
 
 ## 1. Overview
-Cloud Native Qumulo (CNQ) on AWS is the only file data service that offers the performance and scale your most demanding workloads need, at a comparable total cost of ownership to on-premises storage.
+Cloud Native Qumulo (CNQ) on AWS is a file data service designed to offer the performance and scale your most demanding workloads need, at a comparable total cost of ownership to on-premises storage.
 
 CNQ was engineered specifically to leverage native cloud compute, object storage, and networking resources to create the only fully scalable, fully elastic file and object data service available on AWS today. CNQ’s fully customizable architecture can be configured for the specific capacity, throughput, and IOPS requirements of virtually any file or object based workload. It also means that CNQ can deliver comparable performance and services to on-premises file storage, and at a similar TCO.
 
-Beyond the inherent scalability and dynamic elasticity in every deployment, CNQ supports enterprise-class features such snapshots,replication, quotas, and multi-protocol support – NFS, SMB, REST and S3 – for all your data. 
+Beyond the inherent scalability and dynamic elasticity in every deployment, CNQ supports enterprise-class features such as snapshots, replication, quotas, and multi-protocol support – NFS, SMB, REST and S3 – for all your data. 
 
-CNQ is also the only file service on AWS that can run in any
-AWS Local Zone as easily as in any AWS region worldwide,
-giving even your on-premises data centers the fastest possible
-access to your data. Within those regions or local zones CNQ can be deployed in a Single Availability Zone (SAZ) or for production workloads or those instances where availability is paramount CNQ can be deployed in a Multi-Availability configuration without the need to duplicate data.
+CNQ is a file service on AWS that can run in any AWS Local Zone as easily as in any AWS region worldwide, giving even your on-premises data centers the fastest possible access to your data. Within those regions or local zones CNQ can be deployed in a Single Availability Zone (SAZ) or for production workloads or those instances where availability is paramount CNQ can be deployed in a Multi-Availability configuration without the need to duplicate data.
 
 
 ## 2. Cloud-Native Qumulo Architecture
