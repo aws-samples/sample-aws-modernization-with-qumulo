@@ -41,7 +41,7 @@ Before removing nodes, ensure:
 
 Run the automated node removal script:
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/scripts
 ./remove-cluster-node.sh
 ```
@@ -109,7 +109,7 @@ The node removal script executes a **two-phase terraform process** to safely rem
 #### **Terraform Configuration Changes**
 The script first updates the terraform configuration to initiate node removal, this will not be visible after the node removal because our script performs the second step, but the initial configuration would look like the following:
 
-```
+```bash
 # View the current terraform configuration
 cd /home/ssm-user/qumulo-workshop/terraform_deployment_primary_maz
 cat terraform.tfvars | grep -E "q_node_count|q_target_node_count"
@@ -153,7 +153,7 @@ After successful node removal from the cluster, the script updates the configura
 - q_node_count = 3
 - q_target_node_count = null
 
-```
+```bash
 # View the current terraform configuration
 cd /home/ssm-user/qumulo-workshop/terraform_deployment_primary_maz
 cat terraform.tfvars | grep -E "q_node_count|q_target_node_count"

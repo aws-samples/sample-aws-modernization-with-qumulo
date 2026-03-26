@@ -128,7 +128,7 @@ Policy-generated snapshots use automatic naming:
 
 Connect the Windows system to the share as the admin user: Open **PowerShell** and run:
 
-```
+```powershell
 net use \\demopri.qumulo.local\userdata /delete /y
 net use \\demopri.qumulo.local\userdata /user:admin !Qumulo123
 ```
@@ -162,14 +162,14 @@ Since the Analytics > Capacity Trends page updates only hourly, we'll use the `q
 
 On your **Linux workshop instance**, open a terminal and run:
 
-```
+```bash
 qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
 qq --host demopri.qumulo.local snapshot_get_total_used_capacity
 ```
 
 ![total space consumption](/static/images/haanddr/52_10.png)
 
-```
+```bash
 qq --host demopri.qumulo.local snapshot_list_statuses | jq --argjson capacity "$(qq --host demopri.qumulo.local snapshot_get_capacity_used_per_snapshot)" '.entries[] as $snap | $capacity.entries[] | select(.id == $snap.id) | {name: $snap.name, capacity_MB: ((.capacity_used_bytes | tonumber) / 1024 / 1024 | floor), capacity_bytes: (.capacity_used_bytes | tonumber)}' | jq -s 'sort_by(.capacity_bytes) | reverse[]'
 ```
 
@@ -187,7 +187,7 @@ This command shows each snapshot with its storage consumption in both megabytes 
 
 3. Run the snapshot space command again to see how deleted data affects snapshot storage:
 
-```
+```bash
 qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
 qq --host demopri.qumulo.local snapshot_get_total_used_capacity
 qq --host demopri.qumulo.local snapshot_list_statuses | jq --argjson capacity "$(qq --host demopri.qumulo.local snapshot_get_capacity_used_per_snapshot)" '.entries[] as $snap | $capacity.entries[] | select(.id == $snap.id) | {name: $snap.name, capacity_MB: ((.capacity_used_bytes | tonumber) / 1024 / 1024 | floor), capacity_bytes: (.capacity_used_bytes | tonumber)}' | jq -s 'sort_by(.capacity_bytes) | reverse[]'
@@ -206,7 +206,7 @@ Qumulo makes snapshots accessible through a special hidden directory that client
 1. In **File Explorer**, navigate to the primary Qumulo cluster userdata share.
 2. Type the following path in the address bar:
 
-```
+```text
 \\demopri.qumulo.local\userdata\.snapshot
 ```
 

@@ -22,7 +22,7 @@ The compute deployment demonstrates CNQ's flexible architecture - the same persi
 
 Navigate to your compute deployment directory and examine the configuration:
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/terraform_deployment_primary_saz
 ls -la
 ```
@@ -40,7 +40,7 @@ You'll see the compute infrastructure files alongside the persistent storage dir
 
 The compute `terraform.tfvars` file contains the specific configuration for your Qumulo cluster. Open this file to explore the key settings:
 
-```
+```bash
 cat terraform.tfvars
 ```
 
@@ -137,7 +137,7 @@ Floating IP addresses are **virtual IP addresses** that:
 
 Check your cluster's floating IP configuration:
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/terraform_deployment_primary_saz
 terraform output
 ```
@@ -172,7 +172,7 @@ For the purposes of this workshop we are utilizing round robin DNS in a private 
 
 The deployment stores detailed IP address information in Systems Manager Parameter Store for reference:
 
-```
+```bash
 # View cluster IP information from parameter store
 aws ssm get-parameters --names $(aws ssm describe-parameters --parameter-filters Key=Name,Values="/qumulo/qum-wks-cls-pri",Option=Contains --query "Parameters[?contains(Name, 'float-ips') || contains(Name, 'node-ips')].Name" --output text)
 ```
@@ -202,7 +202,7 @@ These can also be viewed in the AWS Console by navigating to Systems Manager, Pa
 With compute deployment complete, the next step is to verify cluster connectivity.  The workshop creates a text file named **`cluster-access-info.txt`** containing all connectivity information for the clusters deployed.  As you progress through the workshop the content of this file will change:
 
 **From the Linux Instance:**
-```
+```bash
 # Check cluster access information
 cat /home/ssm-user/qumulo-workshop/cluster-access-info.txt
 ```

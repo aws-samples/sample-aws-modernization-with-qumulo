@@ -209,7 +209,7 @@ The destination share needs to be created.
 
 2. **Connect your Windows desktop SMB to the userdata share with admin privileges**
 
-```
+```powershell
 net use \\demopri.qumulo.local\userdata /delete /y
 net use \\demosec.qumulo.local\userdata /delete /y
 net use \\demopri.qumulo.local\userdata /user:admin !Qumulo123
@@ -269,7 +269,7 @@ You can use the `qq` CLI to get detailed replication status as well:
 
 **Retrieve Source Relationships**
 
-```
+```bash
 qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
 qq --host demopri.qumulo.local replication_list_source_relationships
 ```
@@ -280,7 +280,7 @@ Make note of the replication relationship ID
 
 :::alert[**Tip**: Get specific information about a source relationship using the command below. Make sure to replace `insert_id_here` with your actual replication ID.]{type="info"}
 
-```
+```bash
 qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
 # Make sure to enter your specific replication ID into the following command
 qq --host demopri.qumulo.local replication_get_source_relationship_status --id "insert_id_here"

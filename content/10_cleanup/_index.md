@@ -41,7 +41,7 @@ To execute the complete cleanup process, run the following command from your wor
 
 
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/scripts
 ./cleanup-qumulo-environment.sh
 ```
