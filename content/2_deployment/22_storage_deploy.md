@@ -22,7 +22,7 @@ The persistent storage layer consists of multiple S3 buckets distributed across 
 
 Navigate to your workshop environment and examine the persistent storage configuration:
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/terraform_deployment_primary_saz/persistent-storage
 ls -la
 ```
@@ -39,7 +39,7 @@ You'll see the key files that define your persistent storage deployment:
 
 The `terraform.tfvars` file contains the specific configuration for your persistent storage deployment. Open this file to explore the key settings:
 
-```
+```bash
 cat terraform.tfvars
 ```
 
@@ -119,7 +119,7 @@ The persistent storage deployment creates several critical parameters:
 
 These parameters follow a specific naming convention:
 
-```
+```text
 /qumulo/{storage-deployment-name}{unique-identifier}/{parameter-name}
 ```
 
@@ -138,7 +138,7 @@ These parameters follow a specific naming convention:
 
 The persistent storage deployment creates a **local Terraform state file** that tracks the created resources, in a customer deployment it is recommended to use S3 state file storage:
 
-```
+```bash
 # View the state file (if curious)
 ls -la terraform.tfstate*
 

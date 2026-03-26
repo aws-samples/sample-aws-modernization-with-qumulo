@@ -30,7 +30,7 @@ CDF synchronizes **metadata instantly** while transferring **file data blocks** 
 
 Connect your Windows workstation (`qumulo-workshop-windows-instance`) SMB to the userdata share with admin privileges
 
-```
+```powershell
 net use \\demopri.qumulo.local\userdata /delete /y
 net use \\demosec.qumulo.local\userdata /delete /y
 net use \\demopri.qumulo.local\userdata /user:admin !Qumulo123
@@ -41,7 +41,7 @@ net use \\demosec.qumulo.local\userdata /user:admin !Qumulo123
 
 Use this PowerShell script to create some sample content:
 
-```
+```powershell
 $basePath = "\\demopri.qumulo.local\userdata\GlobalData"
 New-Item -Path "$basePath" -ItemType Directory
 # Use the .NET RandomNumberGenerator class for cryptographically strong randomness
@@ -73,7 +73,7 @@ for ($i=1; $i -le 30; $i++) {
 
 From your Linux instance (`qumulo-workshop-linux-instance`), run the following bash script to set up a read / write portal to link `/userdata/GlobalData` between your primary (`demopri`) and secondary (`demosec`) clusters:
 
-```
+```bash
 export PATH="$HOME/.local/bin:$PATH"
 # Resolve IP addresses for demopri and demosec clusters
 demopri_ip=$(nslookup demopri.qumulo.local | awk '/^Address: / {print $2}' | tail -n1)
@@ -126,7 +126,7 @@ Connect to your Windows remote desktop and access the spoke:
 
 Create a new data on the hub, then verify immediate presence on the spoke:
 
-```
+```powershell
 $basePath = "\\demopri.qumulo.local\userdata\GlobalData\HubAdds"
 New-Item -Path "$basePath" -ItemType Directory
 # Use the .NET RandomNumberGenerator class for cryptographically strong randomness
@@ -162,7 +162,7 @@ Check for new data on the spoke that was created in the hub.  Notice the size on
 
 Create some new data on the Spoke and check presence on the Hub:
 
-```
+```powershell
 $basePath = "\\demosec.qumulo.local\userdata\GlobalData\SpokeAdds"
 New-Item -Path "$basePath" -ItemType Directory
 # Use the .NET RandomNumberGenerator class for cryptographically strong randomness

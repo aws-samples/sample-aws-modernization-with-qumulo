@@ -40,7 +40,7 @@ Before initiating the cluster replace process it is important to consider your o
 
 Execute the preparation script to generate the Multi-AZ configuration:
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/scripts
 ./primary-qumulo-cluster-saz-to-maz.sh
 ```
@@ -67,7 +67,7 @@ The script output will display:
 
 We can explore the newly created terraform workspace by this script:
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/terraform_deployment_primary_maz
 cat terraform.tfvars
 ```
@@ -89,7 +89,7 @@ You will notice the original cluster var file has been copied over and we've upd
 
 Now execute the cluster replace operation:
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/scripts
 ./cluster-replace.sh "/home/ssm-user/qumulo-workshop/terraform_deployment_primary_maz" "Multi-AZ replacement cluster with NLB"
 ```
@@ -165,7 +165,7 @@ During the cluster replace operation, the script performs these additional steps
 
 Let's examine the terraform configuration file to understand what changed during the automated process:
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/terraform_deployment_primary_maz
 cat terraform.tfvars
 ```
@@ -198,7 +198,7 @@ After the automated cleanup completes, you can verify the process worked correct
 
 #### **Terraform State Verification**
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/terraform_deployment_primary_maz
 terraform state list
 ```
@@ -230,7 +230,7 @@ Access the Qumulo GUI and monitor the following during the cluster replace opera
 ![cluster health](/static/images/elasticity/41_13.png)
 #### **Network Configuration**
 - **Floating IP address removal** examining the terraform output will show that the floating IPs were removed in favor of a network load balancer configuration:
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/terraform_deployment_primary_maz/
 terraform output
 ```

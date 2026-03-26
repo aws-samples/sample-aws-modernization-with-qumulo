@@ -13,7 +13,7 @@ You will build that cluster with two helper scripts that ship with the workshop 
 
 ## Generate Terraform config
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/scripts
 ./secondary-qumulo-cluster-tf-configuration.sh
 ```
@@ -35,7 +35,7 @@ Inspect `compute.tfvars` if you are curious; note the variable `node_count = 1` 
 
 ## Deploy the cluster
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/scripts
 ./deploy-qumulo-cluster.sh /home/ssm-user/qumulo-workshop/terraform_deployment_secondary "Secondary Workshop Qumulo One Node Instance"
 ```
@@ -66,7 +66,7 @@ The workshop Linux instance already has the Qumulo command-line tool **`qq`** in
 
 ### Log in to the primary cluster
 
-```
+```bash
 qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
 qq --host demopri.qumulo.local nodes_list
 ```
@@ -77,7 +77,7 @@ The second command returns the node table for the primary (multi-node) cluster.
 
 ### Log in to the new secondary cluster
 
-```
+```bash
 qq --host demosec.qumulo.local login --u admin --p '!Qumulo123'
 qq --host demosec.qumulo.local nodes_list
 ```

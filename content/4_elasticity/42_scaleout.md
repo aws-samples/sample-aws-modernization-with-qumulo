@@ -40,7 +40,7 @@ Before adding nodes, ensure:
 
 Run the automated node addition script:
 
-```
+```bash
 cd /home/ssm-user/qumulo-workshop/scripts
 ./add-cluster-node.sh
 ```
