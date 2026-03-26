@@ -5,7 +5,8 @@
       "Sid": "EC2ReadOnly",
       "Effect": "Allow",
       "Action": [
-        "ec2:Describe*"
+        "ec2:Describe*",
+        "ec2:GetPasswordData"
       ],
       "Resource": "*"
     },
@@ -28,7 +29,10 @@
         "ssm:TerminateSession",
         "ssm:ResumeSession",
         "ssm:DescribeSessions",
-        "ssm:GetConnectionStatus"
+        "ssm:GetConnectionStatus",
+        "ssm:DescribeInstanceProperties",
+        "ssm:GetCommandInvocation",
+        "ssm:GetInventorySchema"
       ],
       "Resource": "*"
     },
@@ -47,8 +51,10 @@
       "Sid": "FleetManagerRDP",
       "Effect": "Allow",
       "Action": [
+        "ssm-guiconnect:CancelConnection",
+        "ssm-guiconnect:GetConnection",
         "ssm-guiconnect:StartConnection",
-        "ssm-guiconnect:GetConnection"
+        "ssm-guiconnect:ListConnections"
       ],
       "Resource": "*"
     },
