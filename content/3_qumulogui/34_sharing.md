@@ -23,7 +23,7 @@ Let's create an SMB share for the `/userdata` directory that we'll use in later 
 
 ### Step 1: Navigate to SMB Shares
 1. Click **Sharing** → **SMB Shares**
-2. Click **"Create SMB Share"**
+2. Click **"Create Share"**
 
 ![SMB Share Menu](/static/images/qumulogui/34_06.png)
 

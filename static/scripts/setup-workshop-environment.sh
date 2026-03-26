@@ -48,75 +48,65 @@ print_header() {
 # Function to get AWS region using IMDSv2
 get_aws_region() {
     print_status "Detecting AWS region using IMDSv2..."
-    
+
     # Get IMDSv2 token
     TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" \
         -H "X-aws-ec2-metadata-token-ttl-seconds: 21600" -s 2>/dev/null)
-    
+
     if [ $? -eq 0 ] && [ -n "$TOKEN" ]; then
         # Use token to get region
         AWS_REGION=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
             http://169.254.169.254/latest/meta-data/placement/region -s 2>/dev/null)
-        
+
         if [ $? -eq 0 ] && [ -n "$AWS_REGION" ]; then
             print_status "Detected region: $AWS_REGION"
             echo "$AWS_REGION"
             return 0
         fi
     fi
-    
-    # Fallback to IMDSv1 for older instances
-    print_warning "IMDSv2 failed, trying IMDSv1..."
-    AWS_REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/region 2>/dev/null)
-    
-    if [ -n "$AWS_REGION" ]; then
-        print_status "Detected region (IMDSv1): $AWS_REGION"
-        echo "$AWS_REGION"
-        return 0
-    fi
-    
-    # Final fallback
-    print_error "Could not detect region, using default: us-east-2"
-    echo "us-east-2"
+
+    print_error "IMDSv2 is unavailable. Cannot detect AWS region."
     return 1
 }
+
 
 # Function to discover CloudFormation stack name
 get_stack_name() {
     local region="$1"
     print_status "Discovering CloudFormation stack name..."
-    
-    # Get instance ID
+
+    # Get instance ID using IMDSv2
     TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" \
         -H "X-aws-ec2-metadata-token-ttl-seconds: 21600" -s 2>/dev/null)
-    
-    if [ -n "$TOKEN" ]; then
-        INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
-            http://169.254.169.254/latest/meta-data/instance-id -s 2>/dev/null)
-    else
-        INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id 2>/dev/null)
+
+    if [ $? -ne 0 ] || [ -z "$TOKEN" ]; then
+        print_error "IMDSv2 is unavailable. Cannot get instance ID."
+        return 1
     fi
-    
+
+    INSTANCE_ID=$(curl -H "X-aws-ec2-metadata-token: $TOKEN" \
+        http://169.254.169.254/latest/meta-data/instance-id -s 2>/dev/null)
+
     if [ -z "$INSTANCE_ID" ]; then
         print_error "Could not get instance ID"
         return 1
     fi
-    
+
     print_status "Instance ID: $INSTANCE_ID"
-    
+
     # Method 1: Check CloudFormation stack tag
     STACK_NAME=$(aws ec2 describe-instances \
         --instance-id "$INSTANCE_ID" \
         --query 'Reservations[*].Instances[*].Tags[?Key==`aws:cloudformation:stack-name`].Value' \
         --region "$region" \
         --output text 2>/dev/null)
-    
+
     if [ -n "$STACK_NAME" ] && [ "$STACK_NAME" != "None" ]; then
         print_status "Found stack name from tags: $STACK_NAME"
         echo "$STACK_NAME"
         return 0
     fi
-    
+
     # Method 2: CloudFormation resource lookup
     print_status "Trying CloudFormation resource lookup..."
     STACK_NAME=$(aws cloudformation describe-stack-resources \
@@ -124,18 +114,19 @@ get_stack_name() {
         --query 'StackResources[0].StackName' \
         --region "$region" \
         --output text 2>/dev/null)
-    
+
     if [ -n "$STACK_NAME" ] && [ "$STACK_NAME" != "None" ]; then
         print_status "Found stack name from CloudFormation: $STACK_NAME"
         echo "$STACK_NAME"
         return 0
     fi
-    
+
     # Method 3: Default fallback
     print_warning "Could not auto-detect stack name, using default: qumulo-workshop-base"
     echo "qumulo-workshop-base"
     return 1
 }
+
 
 # Function to get parameter from Parameter Store
 get_parameter() {
@@ -380,7 +371,7 @@ configure_workshop_logging() {
     ln -sf /home/ssm-user/qumulo-workshop/logs /var/log/workshop
     
     # Set initial /var/log permissions
-    chmod 777 /var/log
+    chmod 755 /var/log
     
     print_status "Workshop logging configured successfully"
 }
