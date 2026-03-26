@@ -981,7 +981,7 @@ Resources:
       SecurityGroupIds:
         - !Ref DefaultInstanceSecurityGroup
       BlockDeviceMappings:
-        - DeviceName: /dev/xvda
+        - DeviceName: /dev/sda1
           Ebs:
             Encrypted: true
             VolumeSize: 30
