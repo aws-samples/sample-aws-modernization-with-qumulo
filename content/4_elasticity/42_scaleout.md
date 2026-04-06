@@ -184,7 +184,6 @@ After node addition:
 
 Adding nodes increases:
 - **EC2 instance costs** for additional compute resources
-- **Storage costs** for expanded persistent storage
 - **Network transfer costs** for Multi-AZ communication
 - **Overall operational costs** for expanded infrastructure
 

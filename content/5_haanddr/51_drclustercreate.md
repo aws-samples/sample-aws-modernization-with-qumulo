@@ -49,12 +49,12 @@ When it finishes, a single EC2 instance boots and automatically forms a Qumulo c
 
 ## Access the cluster
 
-* **Windows Workstation** – open Chrome and click the bookmark **“Secondary Qumulo GUI”** (URL `https://demosec.qumulo.local`).  
+* **Windows Workstation** – open Edge and click the bookmark **“Secondary Qumulo GUI”** (URL `https://demosec.qumulo.local`).  
   The default admin credentials are:
 
   | User | Password |
   |------|----------|
-  | `admin` | `!Qumulo123` |
+  | `admin` | Password listed in Secrets Manager or environment variable file on the Linux instance |
 
 * **DNS note** – the private Route 53 zone `qumulo.local` is pre-configured in your lab account, so both Linux and Windows hosts resolve `demosec.qumulo.local` automatically.
 
@@ -67,7 +67,7 @@ The workshop Linux instance already has the Qumulo command-line tool **`qq`** in
 ### Log in to the primary cluster
 
 ```bash
-qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
+qq --host demopri.qumulo.local login --u admin --p "$QumuloPassword"
 qq --host demopri.qumulo.local nodes_list
 ```
 
@@ -78,7 +78,7 @@ The second command returns the node table for the primary (multi-node) cluster.
 ### Log in to the new secondary cluster
 
 ```bash
-qq --host demosec.qumulo.local login --u admin --p '!Qumulo123'
+qq --host demosec.qumulo.local login --u admin --p "$QumuloPassword"
 qq --host demosec.qumulo.local nodes_list
 ```
 

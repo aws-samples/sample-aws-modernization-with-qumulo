@@ -210,7 +210,22 @@ get_cloudformation_variables() {
     PRIVATE_KEY_ID=$(get_parameter "/${stack_name}/private-key-id" "$region")
     STACK_NAME_PARAM=$(get_parameter "/${stack_name}/stack-name" "$region")
     ACCOUNT_ID=$(get_parameter "/${stack_name}/account-id" "$region")
-    QUMULO_PASSWD=$(get_parameter "/${stack_name}/qumulo-environment-password" "$region")
+    #QUMULO_PASSWD=$(get_parameter "/${stack_name}/qumulo-environment-password" "$region")
+    
+    # Get the secret ARN from SSM, then retrieve the actual password from Secrets Manager
+    QUMULO_SECRET_ARN=$(get_parameter "/${stack_name}/qumulo-environment-password-secret-arn" "$region")
+    if [ -n "$QUMULO_SECRET_ARN" ]; then
+    SECRET_JSON=$(aws secretsmanager get-secret-value \
+        --secret-id "$QUMULO_SECRET_ARN" \
+        --query 'SecretString' --output text \
+        --region "$region" 2>/dev/null)
+    QUMULO_PASSWD=$(echo "$SECRET_JSON" | jq -r '.password')
+    print_status "Retrieved Qumulo password from Secrets Manager"
+    else
+    print_error "Could not retrieve secret ARN from Parameter Store"
+    QUMULO_PASSWD=""
+    fi
+    
     PHZ_ZONE_ID=$(get_parameter "/${stack_name}/private-hosted-zone-id" "$region")
     LOAD_INSTANCE_1_ID=$(get_parameter "/${stack_name}/load-testing-instance-id-1" "$region")
     LOAD_INSTANCE_2_ID=$(get_parameter "/${stack_name}/load-testing-instance-id-2" "$region")
@@ -442,6 +457,19 @@ main() {
     if ! create_environment_files "$STACK_NAME" "$AWS_REGION"; then
         print_error "Failed to create environment files"
         exit 1
+    fi
+
+    # Step 5.5: Ensure workshop vars auto-load for ssm-user shells
+    if ! grep -q 'cloudformation-variables.env' /home/ssm-user/.bashrc 2>/dev/null; then
+        cat >> /home/ssm-user/.bashrc << 'BASHRC_EOF'
+
+# Auto-load workshop environment variables
+if [ -f "$HOME/qumulo-workshop/cloudformation-variables.env" ]; then
+    . "$HOME/qumulo-workshop/cloudformation-variables.env"
+fi
+
+BASHRC_EOF
+        print_status "Added auto-load of workshop variables to .bashrc"
     fi
     
     # Step 6: Load variables into current session

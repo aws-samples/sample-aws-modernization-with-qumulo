@@ -33,8 +33,8 @@ Connect your Windows workstation (`qumulo-workshop-windows-instance`) SMB to the
 ```powershell
 net use \\demopri.qumulo.local\userdata /delete /y
 net use \\demosec.qumulo.local\userdata /delete /y
-net use \\demopri.qumulo.local\userdata /user:admin !Qumulo123
-net use \\demosec.qumulo.local\userdata /user:admin !Qumulo123
+net use \\demopri.qumulo.local\userdata /user:admin
+net use \\demosec.qumulo.local\userdata /user:admin
 ```
 
 ![mount UNC shares](/static/images/cdf/60_01.png)
@@ -83,13 +83,13 @@ echo "Primary (Hub) Cluster IP: "$demopri_ip
 echo "Secondary (Spoke) Cluster IP: "$demosec_ip
 
 # Log into spoke cluster
-qq --host demosec.qumulo.local login --u admin --p '!Qumulo123'
+qq --host demosec.qumulo.local login --u admin --p "$QumuloPassword"
 
 # Create portal request from spoke to hub
 qq --host demosec.qumulo.local portal_create --hub-address $demopri_ip --hub-root /userdata/GlobalData --spoke-root /userdata/GlobalData
 
 # Log into hub cluster
-qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
+qq --host demopri.qumulo.local login --u admin --p "$QumuloPassword"
 
 # Authorize the hub portal request (typically ID 1 for the first portal)
 qq --host demopri.qumulo.local portal_accept_hub -i 1 --authorize-hub-roots --spoke-address $demosec_ip

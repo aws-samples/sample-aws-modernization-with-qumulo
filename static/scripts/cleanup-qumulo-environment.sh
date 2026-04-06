@@ -30,6 +30,12 @@ CLEANUP_LOG="$LOG_DIR/qumulo-workshop-cleanup-$(date +%Y%m%d-%H%M%S).log"
 CLUSTER_REGISTRY="$WORKSHOP_DIR/cluster-access-info.json"
 VARIABLES_FILE="$WORKSHOP_DIR/cloudformation-variables.json"
 
+# Optionally load workshop env vars (including QumuloPassword) if present
+if [[ -f "${WORKSHOP_DIR}/cloudformation-variables.env" ]]; then
+  # shellcheck disable=SC1090
+  source "${WORKSHOP_DIR}/cloudformation-variables.env"
+fi
+
 # Color codes for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
