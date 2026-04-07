@@ -72,7 +72,6 @@ load_variables() {
   # Extract variables from JSON file
   AWS_REGION=$(jq -r '.AWSRegion' "$VARIABLES_FILE")
   VPC_ID=$(jq -r '.VPCId' "$VARIABLES_FILE")
-  PRIVATE_KEY_ID=$(jq -r '.PrivateKeyID' "$VARIABLES_FILE")
   PRIVATE_SUBNET_A=$(jq -r '.PrivateSubnetA' "$VARIABLES_FILE")
   PRIVATE_SUBNET_B=$(jq -r '.PrivateSubnetB' "$VARIABLES_FILE")
   PRIVATE_SUBNET_C=$(jq -r '.PrivateSubnetC' "$VARIABLES_FILE")
@@ -80,8 +79,8 @@ load_variables() {
   WORKSHOP_PASSWORD=$(jq -r '.QumuloPassword' "$VARIABLES_FILE")
   QUMULO_VERSION=$(jq -r '.QumuloVersion' "$VARIABLES_FILE")
 
-  # Lookup Private Key Name from ID with AWS CLI
-  KEY_NAME=$(aws ec2 describe-key-pairs --key-pair-ids "$PRIVATE_KEY_ID" --region "$AWS_REGION" --query 'KeyPairs[0].KeyName' --output text)
+  # Key pair name provided by Workshop Studio
+  KEY_NAME=$(jq -r '.KeyPairName' "$VARIABLES_FILE")
 
   # Randomly select one of the three private subnets
   SUBNETS=("$PRIVATE_SUBNET_A" "$PRIVATE_SUBNET_B" "$PRIVATE_SUBNET_C")
@@ -91,7 +90,7 @@ load_variables() {
   log_info "Loaded variables:"
   log_info "  AWS Region: $AWS_REGION"
   log_info "  VPC ID: $VPC_ID"
-  log_info "  Private Key ID: $PRIVATE_KEY_ID"
+  log_info "  Key Pair Name: $KEY_NAME"
   log_info "  Available Subnets: A=$PRIVATE_SUBNET_A, B=$PRIVATE_SUBNET_B, C=$PRIVATE_SUBNET_C"
   log_info "  Randomly Selected Subnet: $SELECTED_SUBNET (Index: $RANDOM_INDEX)"
   log_info "  Workshop Utility Bucket: $WORKSHOP_UTILITY_BUCKET"

@@ -78,19 +78,18 @@ load_variables() {
   # Extract variables from JSON file
   AWS_REGION=$(jq -r '.AWSRegion' "$VARIABLES_FILE")
   VPC_ID=$(jq -r '.VPCId' "$VARIABLES_FILE")
-  PRIVATE_KEY_ID=$(jq -r '.PrivateKeyID' "$VARIABLES_FILE")
   PRIVATE_SUBNET_A=$(jq -r '.PrivateSubnetA' "$VARIABLES_FILE")
   WORKSHOP_UTILITY_BUCKET=$(jq -r '.WorkshopUtilityBucket' "$VARIABLES_FILE")
   WORKSHOP_PASSWORD=$(jq -r '.QumuloPassword' "$VARIABLES_FILE")
   QUMULO_VERSION=$(jq -r '.QumuloVersion' "$VARIABLES_FILE")
 
-  # Lookup Private Key Name from ID with AWS CLI
-  KEY_NAME=$(aws ec2 describe-key-pairs --key-pair-ids "$PRIVATE_KEY_ID" --region "$AWS_REGION" --query 'KeyPairs[0].KeyName' --output text)
+  # Key pair name provided by Workshop Studio
+  KEY_NAME=$(jq -r '.KeyPairName' "$VARIABLES_FILE")
 
   log_info "Loaded variables:"
   log_info "  AWS Region: $AWS_REGION"
   log_info "  VPC ID: $VPC_ID"
-  log_info "  Private Key ID: $PRIVATE_KEY_ID"
+  log_info "  Key Pair Name: $KEY_NAME"
   log_info "  Private Subnet A: $PRIVATE_SUBNET_A"
   log_info "  Workshop Utility Bucket: $WORKSHOP_UTILITY_BUCKET"
   log_info "  Workshop Password: $WORKSHOP_PASSWORD"

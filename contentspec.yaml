@@ -19,10 +19,14 @@ infrastructure:
   cloudformationTemplates:
     - templateLocation: static/infrastructure/qumulo-workshop-deployment-cft.yaml
       label: Qumulo Workshop CFT Template
+      parameters:
+        - templateParameter: EC2KeyPairName
+          defaultValue: "{{.EC2KeyPairName}}"
 # END Infrastructure
 
 # START Accounts
 awsAccountConfig:
+  ec2KeyPair: true
   accountSources:
     - workshop_studio
   serviceLinkedRoles:
