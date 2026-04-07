@@ -34,11 +34,6 @@ Parameters:
     Default: "0aGc1269bB5vEYxdzbKtFyijQn6RZ6jHzFvapWll"
     NoEcho: true
 
-  EC2KeyPairName:
-    Type: String
-    Description: Name of the EC2 key pair provided by Workshop Studio
-    Default: "ws-default-keypair"
-
 Resources:
 
   QumuloVPC:
@@ -337,6 +332,15 @@ Resources:
         - Key: Name
           Value: qumulo-workshop-vpce-s3
 
+  # New EC2 KeyPair resource
+  QumuloWorkshopKeyPair:
+    Type: AWS::EC2::KeyPair
+    Properties:
+      KeyName: qumulo-workshop-keypair
+      Tags:
+        - Key: Name
+          Value: qumulo-workshop-keypair
+
   #QumuloSecretsManager Password Declaration
   QumuloEnvironmentPassword:
     Type: AWS::SecretsManager::Secret
@@ -395,7 +399,8 @@ Resources:
                   - !Sub "arn:aws:s3:::${WorkshopUtilityBucket}/*"
 
               # ------------------------------------------------------------------
-              # Workshop: SSM parameter access (stack parameters)
+              # Workshop: SSM parameter access (stack + keypair)
+              # /${StackName}/* for environment; /ec2/keypair/* for SSH private key
               # ------------------------------------------------------------------
               - Effect: Allow
                 Action:
@@ -403,6 +408,7 @@ Resources:
                   - ssm:GetParameters
                 Resource:
                   - !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${AWS::StackName}/*"
+                  - !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/ec2/keypair/*"
 
               # ------------------------------------------------------------------
               # S3 - Qumulo/QPS buckets (scoped to Qumulo namespaces)
@@ -758,7 +764,7 @@ Resources:
   LinuxInstance:
     Type: AWS::EC2::Instance
     Properties:
-      KeyName: !Ref EC2KeyPairName
+      KeyName: !Ref QumuloWorkshopKeyPair
       ImageId: !Sub '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64}}'
       InstanceType: m5.large
       IamInstanceProfile: !Ref EC2SSMInstanceProfile
@@ -893,7 +899,7 @@ Resources:
   WindowsInstance:
     Type: AWS::EC2::Instance
     Properties:
-      KeyName: !Ref EC2KeyPairName
+      KeyName: !Ref QumuloWorkshopKeyPair
       ImageId: !Sub '{{resolve:ssm:/aws/service/ami-windows-latest/Windows_Server-2025-English-Full-Base}}'
       InstanceType: t3.xlarge
       IamInstanceProfile: !Ref EC2SSMInstanceProfile
@@ -1012,7 +1018,7 @@ Resources:
   LoadTestingInstance1:
     Type: AWS::EC2::Instance
     Properties:
-      KeyName: !Ref EC2KeyPairName
+      KeyName: !Ref QumuloWorkshopKeyPair
       ImageId: !Sub '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64}}'
       InstanceType: t3.medium
       IamInstanceProfile: !Ref EC2SSMInstanceProfile
@@ -1057,7 +1063,7 @@ Resources:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: !Sub '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64}}'
-      KeyName: !Ref EC2KeyPairName
+      KeyName: !Ref QumuloWorkshopKeyPair
       InstanceType: t3.medium
       SubnetId: !Ref PrivateSubnetB
       SecurityGroupIds:
@@ -1100,7 +1106,7 @@ Resources:
   LoadTestingInstance3:
     Type: AWS::EC2::Instance
     Properties:
-      KeyName: !Ref EC2KeyPairName
+      KeyName: !Ref QumuloWorkshopKeyPair
       ImageId: !Sub '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64}}'
       InstanceType: t3.medium
       SubnetId: !Ref PrivateSubnetC
@@ -1144,7 +1150,7 @@ Resources:
   LoadTestingInstance4:
     Type: AWS::EC2::Instance
     Properties:
-      KeyName: !Ref EC2KeyPairName
+      KeyName: !Ref QumuloWorkshopKeyPair
       ImageId: !Sub '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64}}'
       InstanceType: t3.medium
       SubnetId: !Ref PrivateSubnetA
@@ -1188,7 +1194,7 @@ Resources:
   LoadTestingInstance5:
     Type: AWS::EC2::Instance
     Properties:
-      KeyName: !Ref EC2KeyPairName
+      KeyName: !Ref QumuloWorkshopKeyPair
       ImageId: !Sub '{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64}}'
       InstanceType: t3.medium
       SubnetId: !Ref PrivateSubnetB
@@ -1358,6 +1364,14 @@ Resources:
       Value: !Ref WorkshopUtilityBucket
       Description: Workshop utility bucket name
 
+  PrivateKeyIdParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/${AWS::StackName}/private-key-id"
+      Type: String
+      Value: !GetAtt QumuloWorkshopKeyPair.KeyPairId
+      Description: Private key ID for workshop instances
+
   StackNameParameter:
     Type: AWS::SSM::Parameter
     Properties:
@@ -1491,6 +1505,24 @@ Outputs:
     Description: Status of workshop content copy operation
     Value: !Ref CopyWorkshopFiles
     
+  QumuloWorkshopKeyPair:
+    Description: Name of the created KeyPair for Qumulo workshop
+    Value: !Ref QumuloWorkshopKeyPair
+    Export:
+      Name: !Sub "${AWS::StackName}-KeyPair"
+  
+  QumuloWorkshopKeyPairId:
+    Description: ID of the created KeyPair (for SSM Parameter Store access)
+    Value: !GetAtt QumuloWorkshopKeyPair.KeyPairId
+    Export:
+      Name: !Sub "${AWS::StackName}-KeyPairId"
+  
+  PrivateKeySSMParameter:
+    Description: SSM Parameter Store path for the private key
+    Value: !Sub "/ec2/keypair/${QumuloWorkshopKeyPair.KeyPairId}"
+    Export:
+      Name: !Sub "${AWS::StackName}-PrivateKeyParameter"
+  
   ParameterStorePrefix:
     Description: Parameter Store prefix for all workshop variables
     Value: !Sub "/${AWS::StackName}/"
@@ -1538,6 +1570,12 @@ Outputs:
     Value: !Sub "/${AWS::StackName}/utility-bucket-name"
     Export:
       Name: !Sub "${AWS::StackName}-WorkshopUtilityBucketParameter"
+  
+  PrivateKeyIdParameter:
+    Description: SSM Parameter Store path for Private Key ID
+    Value: !Sub "/${AWS::StackName}/private-key-id"
+    Export:
+      Name: !Sub "${AWS::StackName}-PrivateKeyIdParameter"
   
   StackNameParameter:
     Description: SSM Parameter Store path for Stack Name

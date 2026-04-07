@@ -207,6 +207,7 @@ get_cloudformation_variables() {
     AWS_REGION_PARAM=$(get_parameter "/${stack_name}/aws-region" "$region")
     DEFAULT_SECURITY_GROUP=$(get_parameter "/$stack_name/default-instance-security-group" "$region")
     UTILITY_BUCKET=$(get_parameter "/${stack_name}/utility-bucket-name" "$region")
+    PRIVATE_KEY_ID=$(get_parameter "/${stack_name}/private-key-id" "$region")
     STACK_NAME_PARAM=$(get_parameter "/${stack_name}/stack-name" "$region")
     ACCOUNT_ID=$(get_parameter "/${stack_name}/account-id" "$region")
     #QUMULO_PASSWD=$(get_parameter "/${stack_name}/qumulo-environment-password" "$region")
@@ -249,6 +250,7 @@ get_cloudformation_variables() {
     echo "  AWS Region: $AWS_REGION" >&2
     echo "  Default Security Group: $DEFAULT_SECURITY_GROUP" >&2
     echo "  Utility Bucket: $UTILITY_BUCKET" >&2
+    echo "  Private Key ID: $PRIVATE_KEY_ID" >&2
     echo "  Stack Name: $STACK_NAME_PARAM" >&2
     echo "  Account ID: $ACCOUNT_ID" >&2
     echo "  Qumulo Environment Password: $QUMULO_PASSWD" >&2
@@ -262,6 +264,30 @@ get_cloudformation_variables() {
     echo "" >&2
     
     return 0
+}
+
+# Function to retrieve and save private key
+retrieve_private_key() {
+    local private_key_id="$1"
+    local region="$2"
+    
+    print_status "Retrieving SSH private key..."
+    if [ -n "$private_key_id" ]; then
+        PRIVATE_KEY_PARAM="/ec2/keypair/$private_key_id"
+        print_status "Downloading private key from parameter: $PRIVATE_KEY_PARAM"
+
+        if aws ssm get-parameter --name "$PRIVATE_KEY_PARAM" --with-decryption --query Parameter.Value --output text --region "$region" > /home/ssm-user/qumulo-workshop/qumulo-workshop-keypair.pem 2>/dev/null; then
+            chmod 600 /home/ssm-user/qumulo-workshop/qumulo-workshop-keypair.pem
+            print_status "Private key saved to: /home/ssm-user/qumulo-workshop/qumulo-workshop-keypair.pem"
+            return 0
+        else
+            print_warning "Could not retrieve private key from Parameter Store"
+            return 1
+        fi
+    else
+        print_warning "Private Key ID not found in Parameter Store"
+        return 1
+    fi
 }
 
 # Function to create environment files
@@ -290,7 +316,8 @@ export DefaultSecurityGroup="$DEFAULT_SECURITY_GROUP"
 
 # Workshop Resources
 export WorkshopUtilityBucket="$UTILITY_BUCKET"
-export KeyPairName="ws-default-keypair"
+export PrivateKeyID="$PRIVATE_KEY_ID"
+export PrivateKeyFile="/home/ssm-user/qumulo-workshop/qumulo-workshop-keypair.pem"
 export QumuloPassword="$QUMULO_PASSWD"
 export QumuloVersion="$QUMULO_VERSION"
 export LoadTestInstance1ID="$LOAD_INSTANCE_1_ID"
@@ -306,7 +333,7 @@ export AccountId="$ACCOUNT_ID"
 # Usage Instructions
 echo "CloudFormation variables loaded automatically"
 echo "Variables file: /home/ssm-user/qumulo-workshop/cloudformation-variables.env"
-echo "Key pair name: ws-default-keypair"
+echo "Private key: /home/ssm-user/qumulo-workshop/qumulo-workshop-keypair.pem"
 echo "Qumulo version: $QUMULO_VERSION"
 VARS_EOF
 
@@ -321,7 +348,8 @@ VARS_EOF
   "AWSRegion": "$region",
   "DefaultSecurityGroup": "$DEFAULT_SECURITY_GROUP",
   "WorkshopUtilityBucket": "$UTILITY_BUCKET",
-  "KeyPairName": "ws-default-keypair",
+  "PrivateKeyID": "$PRIVATE_KEY_ID",
+  "PrivateKeyFile": "/home/ssm-user/qumulo-workshop/qumulo-workshop-keypair.pem",
   "StackName": "$STACK_NAME_PARAM",
   "AccountId": "$ACCOUNT_ID",
   "GeneratedAt": "$(date -Iseconds)",
@@ -420,7 +448,12 @@ main() {
         exit 1
     fi
     
-    # Step 4: Create Environment Files
+    # Step 4: Retrieve Private Key
+    if ! retrieve_private_key "$PRIVATE_KEY_ID" "$AWS_REGION"; then
+        print_warning "Private key retrieval failed, continuing without it"
+    fi
+    
+    # Step 5: Create Environment Files
     if ! create_environment_files "$STACK_NAME" "$AWS_REGION"; then
         print_error "Failed to create environment files"
         exit 1
