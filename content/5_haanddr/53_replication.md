@@ -89,7 +89,7 @@ Now let's create a continuous replication relationship between your primary and 
 
 1. On your **Windows workstation**, open Edge and access the **Primary Qumulo GUI** (`https://demopri.qumulo.local`)
 2. Log in with username `admin` and password contained in Secrets Manager or in your Linux environment variable file.
-3. On your **Windows workstation**, open a new E tab and access the **Secondary Qumulo GUI** (`https://demosec.qumulo.local`)
+3. On your **Windows workstation**, open a new Edge tab and access the **Secondary Qumulo GUI** (`https://demosec.qumulo.local`)
 4. Log in with username `admin` and password contained in Secrets Manager or in your Linux environment variable file.
 
 ### **Navigate to Replication on the Primary Qumulo Cluster**

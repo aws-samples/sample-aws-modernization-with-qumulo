@@ -812,8 +812,7 @@ Resources:
           echo "Installing essential packages..."
           dnf install -y --skip-broken wget unzip git vim htop tree jq python3 python3-pip
           
-          # Get latest Terraform version and install (hardcoded for a race condition)
-          TERRAFORM_VERSION=$(curl -s https://api.releases.hashicorp.com/v1/releases/terraform/latest | jq -r '.version')
+          # Get latest Terraform version and install (with fallback for API unavailability)
           TERRAFORM_VERSION=$(curl -s https://api.releases.hashicorp.com/v1/releases/terraform/latest | jq -r '.version')
           if [ -z "$TERRAFORM_VERSION" ] || [ "$TERRAFORM_VERSION" = "null" ]; then
             TERRAFORM_VERSION="1.14.8"
