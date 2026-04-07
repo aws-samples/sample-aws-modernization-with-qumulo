@@ -36,10 +36,10 @@ First, we'll create a baseline snapshot of the primary cluster to establish our 
 
 ### **Access the Primary Cluster UI**
 
-1. On your **Windows workstation**, open Chrome and click the **"Primary Qumulo GUI"** bookmark (`https://demopri.qumulo.local`)
+1. On your **Windows workstation**, open Edge and click the **"Primary Qumulo GUI"** bookmark (`https://demopri.qumulo.local`)
 2. Log in with:
    - **Username**: `admin`
-   - **Password**: `!Qumulo123`
+   - **Password**: Password listed in Secrets Manager or in the environment variable file on the Linux workstation.
 
 ### **Create the Baseline Snapshot**
 
@@ -130,7 +130,7 @@ Connect the Windows system to the share as the admin user: Open **PowerShell** a
 
 ```powershell
 net use \\demopri.qumulo.local\userdata /delete /y
-net use \\demopri.qumulo.local\userdata /user:admin !Qumulo123
+net use \\demopri.qumulo.local\userdata /user:admin
 ```
 
 ### **Generate Some File Changes**
@@ -163,7 +163,7 @@ Since the Analytics > Capacity Trends page updates only hourly, we'll use the `q
 On your **Linux workshop instance**, open a terminal and run:
 
 ```bash
-qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
+qq --host demopri.qumulo.local login --u admin --p "$QumuloPassword"
 qq --host demopri.qumulo.local snapshot_get_total_used_capacity
 ```
 
@@ -188,7 +188,7 @@ This command shows each snapshot with its storage consumption in both megabytes 
 3. Run the snapshot space command again to see how deleted data affects snapshot storage:
 
 ```bash
-qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
+qq --host demopri.qumulo.local login --u admin --p "$QumuloPassword"
 qq --host demopri.qumulo.local snapshot_get_total_used_capacity
 qq --host demopri.qumulo.local snapshot_list_statuses | jq --argjson capacity "$(qq --host demopri.qumulo.local snapshot_get_capacity_used_per_snapshot)" '.entries[] as $snap | $capacity.entries[] | select(.id == $snap.id) | {name: $snap.name, capacity_MB: ((.capacity_used_bytes | tonumber) / 1024 / 1024 | floor), capacity_bytes: (.capacity_used_bytes | tonumber)}' | jq -s 'sort_by(.capacity_bytes) | reverse[]'
 ```

@@ -255,6 +255,12 @@ After the cluster replace completes, verify:
 
 ## **Post-Replacement Considerations**
 
+### **Cost Implications**
+
+Converting from Single-AZ to Multi-AZ Qumulo Infrastructure:
+- **Network transfer costs** for Multi-AZ communication
+- **No Duplication of Data** for Multi-AZ clusters - Qumulo clusters use S3 which is a regional service, aside from Cross-AZ network charges, there are no additional costs to running a Multi-AZ cluster compared to Single-AZ.
+
 ### **Operational Updates**
 
 After successful cluster replace:

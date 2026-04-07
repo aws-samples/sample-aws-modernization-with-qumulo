@@ -36,15 +36,17 @@ Now let's connect to your cluster's web interface:
 
 1. **Connect to your Windows workshop workstation** (`qumulo-workshop-windows-instance`) using Fleet Manager
 
-2. **Open Google Chrome** from the desktop
+2. **Open Microsoft Edge** from the desktop
 
-3. **Navigate to your cluster** by clicking on **"Primary Qumulo"** under the Managed Bookmarks toolbar
+3. **Navigate to your cluster** by clicking on **"Primary Qumulo"** under the Managed Favorites toolbar, bypass the certificate error.
+
+![Qumulo Certificate Error](/static/images/qumulogui/31_04.png)
 
 ![Qumulo Login Page](/static/images/qumulogui/31_01.png)
 
 4. **Log in using the default credentials:**
    - **Username:** `admin`  
-   - **Password:** `!Qumulo123`
+   - **Password:** Retrieved from environment variable or secrets manager.  This is also listed in the environment variables file on your Linux instance.
 
 ![Qumulo Login Screen](/static/images/qumulogui/31_02.png)
 
@@ -76,7 +78,7 @@ If you encounter issues connecting:
 | Step | Action | Status |
 |------|---------|--------|
 | 1 | Started cluster load testing | ✅ |
-| 2 | Opened Chrome browser | ✅ |  
+| 2 | Opened Edge browser | ✅ |  
 | 3 | Navigated to Qumulo interface | ✅ |
 | 4 | Logged in with admin credentials | ✅ |
 | 5 | Ready to explore GUI | ✅ |

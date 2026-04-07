@@ -87,10 +87,10 @@ Now let's create a continuous replication relationship between your primary and 
 
 ### **Access the Primary and Secondary Cluster UI**
 
-1. On your **Windows workstation**, open Chrome and access the **Primary Qumulo GUI** (`https://demopri.qumulo.local`)
-2. Log in with username `admin` and password `!Qumulo123`
-3. On your **Windows workstation**, open a new Chrome tab and access the **Secondary Qumulo GUI** (`https://demosec.qumulo.local`)
-4. Log in with username `admin` and password `!Qumulo123`
+1. On your **Windows workstation**, open Edge and access the **Primary Qumulo GUI** (`https://demopri.qumulo.local`)
+2. Log in with username `admin` and password contained in Secrets Manager or in your Linux environment variable file.
+3. On your **Windows workstation**, open a new E tab and access the **Secondary Qumulo GUI** (`https://demosec.qumulo.local`)
+4. Log in with username `admin` and password contained in Secrets Manager or in your Linux environment variable file.
 
 ### **Navigate to Replication on the Primary Qumulo Cluster**
 
@@ -121,7 +121,7 @@ Now let's create a continuous replication relationship between your primary and 
 
 ### **Advanced Settings**
 
-- **NFS ID Mapping**: Checked
+- **Map Local User/Group IDs to Associated NFS IDs**: Not Checked
 - **Blackout Windows**: None configured initially
 
 ![Advanced Settings](/static/images/haanddr/53_04.png)
@@ -143,7 +143,7 @@ The replication relationship must be authorized on the target cluster before dat
 ### **Access the Secondary Cluster UI**
 
 1. Open a new browser tab and access the **Secondary Qumulo GUI** (`https://demosec.qumulo.local`)
-2. Log in with username `admin` and password `!Qumulo123`
+2. Log in with username `admin` and password  contained in Secrets Manager or in your Linux environment variable file.
 
 ### **Authorize the Relationship**
 
@@ -212,8 +212,8 @@ The destination share needs to be created.
 ```powershell
 net use \\demopri.qumulo.local\userdata /delete /y
 net use \\demosec.qumulo.local\userdata /delete /y
-net use \\demopri.qumulo.local\userdata /user:admin !Qumulo123
-net use \\demosec.qumulo.local\userdata /user:admin !Qumulo123
+net use \\demopri.qumulo.local\userdata /user:admin
+net use \\demosec.qumulo.local\userdata /user:admin
 ```
 
 ### **Check Target Directory on Secondary Cluster**
@@ -270,7 +270,7 @@ You can use the `qq` CLI to get detailed replication status as well:
 **Retrieve Source Relationships**
 
 ```bash
-qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
+qq --host demopri.qumulo.local login --u admin --p "$QumuloPassword"
 qq --host demopri.qumulo.local replication_list_source_relationships
 ```
 
@@ -281,7 +281,7 @@ Make note of the replication relationship ID
 :::alert[**Tip**: Get specific information about a source relationship using the command below. Make sure to replace `insert_id_here` with your actual replication ID.]{type="info"}
 
 ```bash
-qq --host demopri.qumulo.local login --u admin --p '!Qumulo123'
+qq --host demopri.qumulo.local login --u admin --p "$QumuloPassword"
 # Make sure to enter your specific replication ID into the following command
 qq --host demopri.qumulo.local replication_get_source_relationship_status --id "insert_id_here"
 ```
