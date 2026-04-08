@@ -49,7 +49,7 @@ When it finishes, a single EC2 instance boots and automatically forms a Qumulo c
 
 ## Access the cluster
 
-* **Windows Workstation** – open Edge and click the bookmark **“Secondary Qumulo GUI”** (URL `https://demosec.qumulo.local`).  
+* **Windows Workstation** – open Edge and click the bookmark **“Secondary Qumulo GUI”** (URL `https://demosec.qumulo.local`). Accept the certificate warning by clicking **Advanced** → **Continue to demosec.qumulo.local (unsafe)**.  
   The default admin credentials are:
 
   | User | Password |

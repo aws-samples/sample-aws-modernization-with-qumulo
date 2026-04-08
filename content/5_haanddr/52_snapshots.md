@@ -128,6 +128,8 @@ Policy-generated snapshots use automatic naming:
 
 Connect the Windows system to the share as the admin user: Open **PowerShell** and run:
 
+::alert[**Note:** The `net use /delete` command may show an error if no existing connection exists — this is expected and can be safely ignored.]{type="info"}
+
 ```powershell
 net use \\demopri.qumulo.local\userdata /delete /y
 net use \\demopri.qumulo.local\userdata /user:admin
