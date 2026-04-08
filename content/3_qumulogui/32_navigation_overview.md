@@ -77,4 +77,4 @@ Take a few minutes to:
 
 ---
 
-**Next:** Proceed to **Section 3.3 – File System Explorer** where we'll dive into browsing and managing your cluster's directory structure.
+**Next:** Proceed to **Analytics Overview** where we'll dive into browsing and managing your cluster's directory structure.

@@ -90,6 +90,6 @@ You should see **exactly one node** in the output, confirming the single-node de
 
 ## Next step
 
-Proceed to **Section 5.2 – Snapshot Management** where you will create snapshots on both clusters and begin configuring replication.
+Proceed to **Snapshot Management** where you will create snapshots on both clusters and begin configuring replication.
 
 ---

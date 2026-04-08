@@ -266,6 +266,6 @@ As you work through this section, note these important characteristics:
 
 ## Next Steps
 
-In **Section 5.3**, we'll configure continuous replication relationships between your primary and secondary clusters, using snapshots as the foundation for cross-cluster data protection.
+In the next section, we'll configure continuous replication relationships between your primary and secondary clusters, using snapshots as the foundation for cross-cluster data protection.
 
 ::alert[**Best Practice**: In production environments, consider multiple snapshot policies with different frequencies and retention periods - for example, frequent snapshots for recent changes and longer-term snapshots for historical recovery points.]

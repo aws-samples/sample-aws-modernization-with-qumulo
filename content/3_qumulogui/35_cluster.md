@@ -96,4 +96,4 @@ Take time to explore the Cluster section:
 
 ---
 
-**Next:** Proceed to **Section 3.6 – APIs & Tools** where we'll explore developer resources and automation capabilities.
+**Next:** Proceed to **APIs & Tools** where we'll explore developer resources and automation capabilities.
