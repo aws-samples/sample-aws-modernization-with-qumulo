@@ -198,6 +198,6 @@ Check for this data on the hub which was written to the spoke.  Notice the size 
 
 ## Next step
 
-Proceed to **Section 10.0 – Resource Cleanup** to end the workshop and cleanup the environment.
+Proceed to **Resource Cleanup** to end the workshop and cleanup the environment.
 
 ::alert[The examples, scripts, and sample code provided in this workshop are intended for instructional use in a controlled environment. For production deployments, always consult your Qumulo or AWS account teams for recommended practices and cluster provisioning.]{type="warning"}

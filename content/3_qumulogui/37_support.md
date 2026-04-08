@@ -56,4 +56,4 @@ Manage cluster software updates directly from the interface:
 
 **Congratulations!** You've completed the Qumulo GUI overview. You now understand the interface layout and key capabilities available through the web console.
 
-**Next:** Proceed to **Section 4 - Scaling Qumulo in the Cloud** where we'll explore Qumulo's dynamic scaling capabilities and learn how to add and remove nodes from your cluster.
+**Next:** Proceed to **Scaling Qumulo in the Cloud** where we'll explore Qumulo's dynamic scaling capabilities and learn how to add and remove nodes from your cluster.

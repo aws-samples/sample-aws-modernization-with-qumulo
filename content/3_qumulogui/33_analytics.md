@@ -92,4 +92,4 @@ With your load testing running, explore the Analytics section:
 
 ---
 
-**Next:** Proceed to **Section 3.4 – Sharing Management** where we'll explore how to configure NFS exports, SMB shares, and S3 buckets.
+**Next:** Proceed to **Sharing Management** where we'll explore how to configure NFS exports, SMB shares, and S3 buckets.

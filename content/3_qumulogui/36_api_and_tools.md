@@ -64,4 +64,4 @@ Take a few minutes to explore the API documentation:
 
 ---
 
-**Next:** Proceed to **Section 3.7 – Support Resources** where we'll explore help documentation and troubleshooting tools.
+**Next:** Proceed to **Support Resources** where we'll explore help documentation and troubleshooting tools.

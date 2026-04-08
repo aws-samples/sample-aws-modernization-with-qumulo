@@ -114,4 +114,4 @@ Take a few minutes to explore each section:
 
 ---
 
-**Next:** Proceed to **Section 3.5 – Cluster Administration** where we'll explore system configuration and management tools.
+**Next:** Proceed to **Cluster Administration** where we'll explore system configuration and management tools.

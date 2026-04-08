@@ -339,6 +339,6 @@ Once the relationship is removed, the target directory is instantly switched fro
 
 ## Next step
 
-Proceed to **Section 6.0 – Cloud Data Fabric** explore Qumulo's Cloud Data Fabric (CDF) technology.
+Proceed to **Cloud Data Fabric (CDF)** to explore Qumulo's Cloud Data Fabric (CDF) technology.
 
 ---

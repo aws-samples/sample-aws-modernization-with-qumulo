@@ -85,4 +85,4 @@ If you encounter issues connecting:
 
 ---
 
-**Next:** Proceed to **Section 3.2 – Dashboard Overview** where we'll explore the main interface and understand what all those live metrics are telling us about your cluster.
+**Next:** Proceed to **Navigation Overview** where we'll explore the main interface and understand what all those live metrics are telling us about your cluster.
