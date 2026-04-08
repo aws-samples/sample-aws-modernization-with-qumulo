@@ -209,6 +209,8 @@ The destination share needs to be created.
 
 2. **Connect your Windows desktop SMB to the userdata share with admin privileges**
 
+::alert[**Note:** The `net use /delete` commands may show errors if no existing connections exist — this is expected and can be safely ignored.]{type="info"}
+
 ```powershell
 net use \\demopri.qumulo.local\userdata /delete /y
 net use \\demosec.qumulo.local\userdata /delete /y
