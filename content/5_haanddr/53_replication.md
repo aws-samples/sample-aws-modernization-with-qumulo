@@ -163,7 +163,7 @@ Once authorized, the initial synchronization begins automatically:
 
 1. **Return to the primary cluster UI**
 2. Navigate back to **Cluster > Replication**
-3. Observe the relationship status change from "Pending" to "Running"
+3. Observe the relationship status change from "Pending" to "Replicating"
 
 ![Replication Running](/static/images/haanddr/53_09.png)
 
@@ -198,7 +198,7 @@ Monitor the replication progress through:
 
 Let's verify that the target directory is properly configured and receiving data.
 
-### **Create the destination userdata share**
+### **Create the destination userdata share (Secondary Cluster)**
 
 The destination share needs to be created.  
 
