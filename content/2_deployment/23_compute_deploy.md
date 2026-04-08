@@ -215,7 +215,11 @@ cat /home/ssm-user/qumulo-workshop/cluster-access-info.txt
 ::alert[**Getting the RDP Password:** In the AWS Console, navigate to **Secrets Manager**, search for **QumuloAdmin**, click the secret, then click **Retrieve secret value**. Copy the `password` field and use it as the Administrator password in Fleet Manager RDP.]{type="info"}
 
 3. **Open browser** to the cluster web UI URL: **`https://demopri.qumulo.local`**
-4. **Login** with admin credentials from **`cluster-access-info.txt`** file on the desktop
+4. **Accept the certificate warning** — the workshop uses a self-signed certificate. Click **Advanced** → **Continue to demopri.qumulo.local (unsafe)**.
+
+![Qumulo Certificate Error](/static/images/qumulogui/31_04.png)
+
+5. **Login** with admin credentials from **`cluster-access-info.txt`** file on the desktop
 
 ![locate the windows instance connect button](/static/images/deployment/23_12.png)
 
