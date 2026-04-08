@@ -108,10 +108,11 @@ The persistent storage deployment creates **Systems Manager (SSM) parameters** t
 The persistent storage deployment creates several critical parameters:
 
 **Storage Configuration Parameters:**
-- **Storage bucket names** - List of all created S3 buckets
-- **Deployment unique name** - Identifier linking storage to compute
-- **Storage configuration** - Technical settings for bucket access
-- **Encryption keys** - KMS key information for data encryption
+- **bucket-arns** - ARNs of the S3 buckets created for persistent storage
+- **bucket-names** - Names of the S3 buckets
+- **bucket-region** - AWS region where buckets are located
+- **bucket-uris** - S3 URIs for bucket access
+- **soft-capacity-limit** - Storage capacity configuration
 
 ![storage SSM parameter store detail](/static/images/deployment/22_05.png)
 
@@ -126,7 +127,7 @@ These parameters follow a specific naming convention:
 **How Compute Uses These Parameters:**
 - **Bucket Discovery**: Compute infrastructure reads bucket names from parameters
 - **Configuration Consistency**: Ensures compute and storage configurations match
-- **Security**: Encryption keys and access patterns stored securely
+- **Security**: All parameter values are stored as encrypted SecureStrings
 
 ::alert[**Workshop Note**: These parameters are automatically created and managed by Terraform. Manual modification can break the connection between storage and compute infrastructure.]{type="warning"}
 
