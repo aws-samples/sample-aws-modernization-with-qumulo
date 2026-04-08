@@ -43,7 +43,7 @@ First, we'll create a baseline snapshot of the primary cluster to establish our 
 
 ### **Create the Baseline Snapshot**
 
-1. Navigate to **Cluster > Snapshots** in the left sidebar
+1. Navigate to **Cluster > Saved Snapshots** in the left sidebar
 2. Click **"Take Snapshot"** button in the upper right
 3. Configure the snapshot:
    - **Name**: `userdata_baseline`
