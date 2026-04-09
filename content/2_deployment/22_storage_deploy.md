@@ -99,7 +99,7 @@ The persistent storage deployment creates **Systems Manager (SSM) parameters** t
 
 1. **Navigate to Systems Manager** in the AWS Console
 2. **Select Parameter Store** from the left navigation
-3. **Filter parameters** by your deployment unique name ```/qumulo/qum-wks-cls-pri```
+3. **Filter parameters** by your storage deployment name ```/qumulo/qum-wks-cls-pri-str```
 
 ![storage SSM parameter store](/static/images/deployment/22_04.png)
 
