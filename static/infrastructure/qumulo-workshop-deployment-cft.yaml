@@ -549,6 +549,15 @@ Resources:
               # Includes: EC2, ELB, IAM (except PassRole), CloudWatch, Route53,
               #           Resource Groups, KMS, STS, CloudFormation, and Tags
               # ------------------------------------------------------------------
+              - Sid: AllowELBServiceLinkedRoleCreation
+                Effect: Allow
+                Action:
+                  - iam:CreateServiceLinkedRole
+                Resource: "*"
+                Condition:
+                  StringEquals:
+                    iam:AWSServiceName: elasticloadbalancing.amazonaws.com
+
               - Effect: Allow
                 Action:
                   - cloudformation:DescribeStackResources
