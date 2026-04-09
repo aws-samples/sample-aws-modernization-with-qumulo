@@ -282,10 +282,8 @@ configure_compute_tfvars() {
     's/^term_protection *=.*/term_protection = false/' \
     "$tfvars_file"
 
-  # q_cluster_admin_password (default: "")
-  sed -i \
-    "s/^q_cluster_admin_password *=.*/q_cluster_admin_password = \"$WORKSHOP_PASSWORD\"/" \
-    "$tfvars_file"
+  # q_cluster_admin_password — set via TF_VAR_q_cluster_admin_password env var
+  # (exported in setup-workshop-environment.sh from Secrets Manager)
 
   # q_cluster_name (default: "")
   sed -i \
