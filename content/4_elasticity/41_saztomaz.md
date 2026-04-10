@@ -81,6 +81,8 @@ You will notice the original cluster var file has been copied over and we've upd
 ![maz tfvars 1](/static/images/elasticity/41_03.png)
 ![maz tfvars 2](/static/images/elasticity/41_04.png)
 
+::alert[**Note:** The `q_cluster_admin_password` visible in the tfvars is the initial deployment password. Terraform uses the password stored in **Secrets Manager** for all subsequent cluster operations. See the security note in the [Compute Deployment](/2_deployment/23_compute_deploy.html) section for production best practices.]{type="info"}
+
 ---
 
 ## **Step 2: Execute Cluster Replace Operation**
