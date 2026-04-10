@@ -117,8 +117,8 @@ Watch the automated policy create snapshots over the next few minutes.
 ### **Snapshot Naming Convention**
 
 Policy-generated snapshots use automatic naming:
-- **Format**: `policy-name_YYYY-MM-DD_HH-MM-SS`
-- **Example**: `frequent-protection_2025-07-25_15-10-00`
+- **Format**: `policy-name_sharename`
+- **Example**: `frequent-protection_userdata`
 
 ![snapshots](/static/images/haanddr/52_05.png)
 

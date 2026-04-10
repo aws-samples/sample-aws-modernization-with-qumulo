@@ -95,17 +95,6 @@
         "secretsmanager:ListSecrets"
       ],
       "Resource": "*"
-    },
-    {
-      "Sid": "ServiceLinkedRoleCreation",
-      "Effect": "Allow",
-      "Action": "iam:CreateServiceLinkedRole",
-      "Resource": "arn:aws:iam::*:role/aws-service-role/*",
-      "Condition": {
-        "StringLike": {
-          "iam:AWSServiceName": "elasticloadbalancing.amazonaws.com"
-        }
-      }
     }
   ]
 }
