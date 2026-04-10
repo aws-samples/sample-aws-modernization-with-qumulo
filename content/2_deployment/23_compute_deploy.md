@@ -68,6 +68,8 @@ cat terraform.tfvars
 - **`q_cluster_version`** - Qumulo software version
 - **`q_cluster_admin_password`** - Administrative password
 
+::alert[**Production Security Note:** The `q_cluster_admin_password` is stored in plaintext in `terraform.tfvars` for initial cluster deployment. This is standard practice for Qumulo's initial provisioning — after deployment, Qumulo recommends [changing the cluster admin password](https://docs.qumulo.com/cloud-native-aws-administrator-guide/getting-started/terraform.html) via the Qumulo UI and updating the corresponding value in **AWS Secrets Manager**. Terraform uses the Secrets Manager value for all subsequent cluster operations. For production environments, also consider using [Terraform sensitive variables](https://developer.hashicorp.com/terraform/tutorials/configuration-language/sensitive-variables) to avoid storing passwords in plaintext configuration files.]{type="warning"}
+
 **Qumulo Cluster Config Options**
 - **`q_persistent_storage_type`** - Storage backend type (default to hot_s3_int)
 - **`q_instance_type`** - EC2 instance type (i4i.xlarge for workshop, not recommended for production)
